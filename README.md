@@ -1,8 +1,9 @@
 # ML Guides
 
-- Learning similarity search
+- Similarity search
   - Sparse embedding
      - TF-IDF 
   - Dense embedding
      - Sentence bert
-- Learning Transformers `Trainer`
+- Transformers `Trainer`
+- Retriaval augmented generation
