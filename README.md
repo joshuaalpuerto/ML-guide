@@ -7,4 +7,4 @@
      - Sentence bert
 - Transformers `Trainer`
 - Retriaval augmented generation
-- Prompt engineering experiments
+- Prompt engineering experimentation
