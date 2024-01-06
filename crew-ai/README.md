@@ -28,3 +28,9 @@ conda install poetry
 ```bash
 poetry install
 ```
+
+> There is a known [issue](https://github.com/python-poetry/poetry/issues/7936) with poetry when adding new package. If you encounter issue about `'HTTPResponse' object has no attribute 'strict'` run the command below ([fix](https://github.com/python-poetry/poetry/issues/7936#issuecomment-1636969981) )
+
+```bash
+  pip install -U requests==2.28.2 urllib3==1.26.15
+```
