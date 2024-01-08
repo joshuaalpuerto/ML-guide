@@ -11,6 +11,8 @@ python = "^3.10"
 crewai = "^0.1.17"
 urllib3 = "^1.26.16"  # Needed cause of a bug in poetry
 duckduckgo-search = "^4.1.1"
+fireworks-ai = "^0.11.0"
+python-dotenv = "^1.0.0"
 
 
 [build-system]
