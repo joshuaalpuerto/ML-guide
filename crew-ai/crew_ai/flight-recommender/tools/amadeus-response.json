@@ -1,0 +1,2002 @@
+[
+  {
+    "type": "flight-offer",
+    "id": "1",
+    "source": "GDS",
+    "instantTicketingRequired": "False",
+    "nonHomogeneous": "False",
+    "oneWay": "False",
+    "lastTicketingDate": "2024-01-10",
+    "lastTicketingDateTime": "2024-01-10",
+    "numberOfBookableSeats": 9,
+    "itineraries": [
+      {
+        "duration": "PT10H10M",
+        "segments": [
+          {
+            "departure": {
+              "iataCode": "BOS",
+              "terminal": "E",
+              "at": "2024-01-30T19:50:00"
+            },
+            "arrival": {
+              "iataCode": "KEF",
+              "at": "2024-01-31T06:05:00"
+            },
+            "carrierCode": "FI",
+            "number": "630",
+            "aircraft": {
+              "code": "76W"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT5H15M",
+            "id": "1",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          },
+          {
+            "departure": {
+              "iataCode": "KEF",
+              "at": "2024-01-31T07:35:00"
+            },
+            "arrival": {
+              "iataCode": "CDG",
+              "terminal": "1",
+              "at": "2024-01-31T12:00:00"
+            },
+            "carrierCode": "FI",
+            "number": "542",
+            "aircraft": {
+              "code": "7M8"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT3H25M",
+            "id": "2",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          }
+        ]
+      },
+      {
+        "duration": "PT10H40M",
+        "segments": [
+          {
+            "departure": {
+              "iataCode": "CDG",
+              "terminal": "1",
+              "at": "2024-02-14T13:10:00"
+            },
+            "arrival": {
+              "iataCode": "KEF",
+              "at": "2024-02-14T15:50:00"
+            },
+            "carrierCode": "FI",
+            "number": "545",
+            "aircraft": {
+              "code": "7M8"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT3H40M",
+            "id": "7",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          },
+          {
+            "departure": {
+              "iataCode": "KEF",
+              "at": "2024-02-14T17:05:00"
+            },
+            "arrival": {
+              "iataCode": "BOS",
+              "terminal": "E",
+              "at": "2024-02-14T17:50:00"
+            },
+            "carrierCode": "FI",
+            "number": "631",
+            "aircraft": {
+              "code": "76W"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT5H45M",
+            "id": "8",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          }
+        ]
+      }
+    ],
+    "price": {
+      "currency": "EUR",
+      "total": "394.80",
+      "base": "23.00",
+      "fees": [
+        {
+          "amount": "0.00",
+          "type": "SUPPLIER"
+        },
+        {
+          "amount": "0.00",
+          "type": "TICKETING"
+        }
+      ],
+      "grandTotal": "394.80",
+      "additionalServices": [
+        {
+          "amount": "142.00",
+          "type": "CHECKED_BAGS"
+        }
+      ]
+    },
+    "pricingOptions": {
+      "fareType": ["PUBLISHED"],
+      "includedCheckedBagsOnly": "False"
+    },
+    "validatingAirlineCodes": ["FI"],
+    "travelerPricings": [
+      {
+        "travelerId": "1",
+        "fareOption": "STANDARD",
+        "travelerType": "ADULT",
+        "price": {
+          "currency": "EUR",
+          "total": "394.80",
+          "base": "23.00"
+        },
+        "fareDetailsBySegment": [
+          {
+            "segmentId": "1",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "2",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "7",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "8",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "flight-offer",
+    "id": "2",
+    "source": "GDS",
+    "instantTicketingRequired": "False",
+    "nonHomogeneous": "False",
+    "oneWay": "False",
+    "lastTicketingDate": "2024-01-10",
+    "lastTicketingDateTime": "2024-01-10",
+    "numberOfBookableSeats": 9,
+    "itineraries": [
+      {
+        "duration": "PT10H10M",
+        "segments": [
+          {
+            "departure": {
+              "iataCode": "BOS",
+              "terminal": "E",
+              "at": "2024-01-30T19:50:00"
+            },
+            "arrival": {
+              "iataCode": "KEF",
+              "at": "2024-01-31T06:05:00"
+            },
+            "carrierCode": "FI",
+            "number": "630",
+            "aircraft": {
+              "code": "76W"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT5H15M",
+            "id": "1",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          },
+          {
+            "departure": {
+              "iataCode": "KEF",
+              "at": "2024-01-31T07:35:00"
+            },
+            "arrival": {
+              "iataCode": "CDG",
+              "terminal": "1",
+              "at": "2024-01-31T12:00:00"
+            },
+            "carrierCode": "FI",
+            "number": "542",
+            "aircraft": {
+              "code": "7M8"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT3H25M",
+            "id": "2",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          }
+        ]
+      },
+      {
+        "duration": "PT10H50M",
+        "segments": [
+          {
+            "departure": {
+              "iataCode": "CDG",
+              "terminal": "1",
+              "at": "2024-02-14T13:00:00"
+            },
+            "arrival": {
+              "iataCode": "KEF",
+              "at": "2024-02-14T15:40:00"
+            },
+            "carrierCode": "FI",
+            "number": "543",
+            "aircraft": {
+              "code": "7M8"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT3H40M",
+            "id": "9",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          },
+          {
+            "departure": {
+              "iataCode": "KEF",
+              "at": "2024-02-14T17:05:00"
+            },
+            "arrival": {
+              "iataCode": "BOS",
+              "terminal": "E",
+              "at": "2024-02-14T17:50:00"
+            },
+            "carrierCode": "FI",
+            "number": "631",
+            "aircraft": {
+              "code": "76W"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT5H45M",
+            "id": "10",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          }
+        ]
+      }
+    ],
+    "price": {
+      "currency": "EUR",
+      "total": "394.80",
+      "base": "23.00",
+      "fees": [
+        {
+          "amount": "0.00",
+          "type": "SUPPLIER"
+        },
+        {
+          "amount": "0.00",
+          "type": "TICKETING"
+        }
+      ],
+      "grandTotal": "394.80",
+      "additionalServices": [
+        {
+          "amount": "142.00",
+          "type": "CHECKED_BAGS"
+        }
+      ]
+    },
+    "pricingOptions": {
+      "fareType": ["PUBLISHED"],
+      "includedCheckedBagsOnly": "False"
+    },
+    "validatingAirlineCodes": ["FI"],
+    "travelerPricings": [
+      {
+        "travelerId": "1",
+        "fareOption": "STANDARD",
+        "travelerType": "ADULT",
+        "price": {
+          "currency": "EUR",
+          "total": "394.80",
+          "base": "23.00"
+        },
+        "fareDetailsBySegment": [
+          {
+            "segmentId": "1",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "2",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "9",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "10",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "flight-offer",
+    "id": "3",
+    "source": "GDS",
+    "instantTicketingRequired": "False",
+    "nonHomogeneous": "False",
+    "oneWay": "False",
+    "lastTicketingDate": "2024-01-10",
+    "lastTicketingDateTime": "2024-01-10",
+    "numberOfBookableSeats": 9,
+    "itineraries": [
+      {
+        "duration": "PT10H20M",
+        "segments": [
+          {
+            "departure": {
+              "iataCode": "BOS",
+              "terminal": "E",
+              "at": "2024-01-30T19:50:00"
+            },
+            "arrival": {
+              "iataCode": "KEF",
+              "at": "2024-01-31T06:05:00"
+            },
+            "carrierCode": "FI",
+            "number": "630",
+            "aircraft": {
+              "code": "76W"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT5H15M",
+            "id": "3",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          },
+          {
+            "departure": {
+              "iataCode": "KEF",
+              "at": "2024-01-31T07:45:00"
+            },
+            "arrival": {
+              "iataCode": "CDG",
+              "terminal": "1",
+              "at": "2024-01-31T12:10:00"
+            },
+            "carrierCode": "FI",
+            "number": "544",
+            "aircraft": {
+              "code": "7M8"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT3H25M",
+            "id": "4",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          }
+        ]
+      },
+      {
+        "duration": "PT10H40M",
+        "segments": [
+          {
+            "departure": {
+              "iataCode": "CDG",
+              "terminal": "1",
+              "at": "2024-02-14T13:10:00"
+            },
+            "arrival": {
+              "iataCode": "KEF",
+              "at": "2024-02-14T15:50:00"
+            },
+            "carrierCode": "FI",
+            "number": "545",
+            "aircraft": {
+              "code": "7M8"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT3H40M",
+            "id": "7",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          },
+          {
+            "departure": {
+              "iataCode": "KEF",
+              "at": "2024-02-14T17:05:00"
+            },
+            "arrival": {
+              "iataCode": "BOS",
+              "terminal": "E",
+              "at": "2024-02-14T17:50:00"
+            },
+            "carrierCode": "FI",
+            "number": "631",
+            "aircraft": {
+              "code": "76W"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT5H45M",
+            "id": "8",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          }
+        ]
+      }
+    ],
+    "price": {
+      "currency": "EUR",
+      "total": "394.80",
+      "base": "23.00",
+      "fees": [
+        {
+          "amount": "0.00",
+          "type": "SUPPLIER"
+        },
+        {
+          "amount": "0.00",
+          "type": "TICKETING"
+        }
+      ],
+      "grandTotal": "394.80",
+      "additionalServices": [
+        {
+          "amount": "142.00",
+          "type": "CHECKED_BAGS"
+        }
+      ]
+    },
+    "pricingOptions": {
+      "fareType": ["PUBLISHED"],
+      "includedCheckedBagsOnly": "False"
+    },
+    "validatingAirlineCodes": ["FI"],
+    "travelerPricings": [
+      {
+        "travelerId": "1",
+        "fareOption": "STANDARD",
+        "travelerType": "ADULT",
+        "price": {
+          "currency": "EUR",
+          "total": "394.80",
+          "base": "23.00"
+        },
+        "fareDetailsBySegment": [
+          {
+            "segmentId": "3",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "4",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "7",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "8",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "flight-offer",
+    "id": "4",
+    "source": "GDS",
+    "instantTicketingRequired": "False",
+    "nonHomogeneous": "False",
+    "oneWay": "False",
+    "lastTicketingDate": "2024-01-10",
+    "lastTicketingDateTime": "2024-01-10",
+    "numberOfBookableSeats": 9,
+    "itineraries": [
+      {
+        "duration": "PT10H20M",
+        "segments": [
+          {
+            "departure": {
+              "iataCode": "BOS",
+              "terminal": "E",
+              "at": "2024-01-30T19:50:00"
+            },
+            "arrival": {
+              "iataCode": "KEF",
+              "at": "2024-01-31T06:05:00"
+            },
+            "carrierCode": "FI",
+            "number": "630",
+            "aircraft": {
+              "code": "76W"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT5H15M",
+            "id": "3",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          },
+          {
+            "departure": {
+              "iataCode": "KEF",
+              "at": "2024-01-31T07:45:00"
+            },
+            "arrival": {
+              "iataCode": "CDG",
+              "terminal": "1",
+              "at": "2024-01-31T12:10:00"
+            },
+            "carrierCode": "FI",
+            "number": "544",
+            "aircraft": {
+              "code": "7M8"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT3H25M",
+            "id": "4",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          }
+        ]
+      },
+      {
+        "duration": "PT10H50M",
+        "segments": [
+          {
+            "departure": {
+              "iataCode": "CDG",
+              "terminal": "1",
+              "at": "2024-02-14T13:00:00"
+            },
+            "arrival": {
+              "iataCode": "KEF",
+              "at": "2024-02-14T15:40:00"
+            },
+            "carrierCode": "FI",
+            "number": "543",
+            "aircraft": {
+              "code": "7M8"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT3H40M",
+            "id": "9",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          },
+          {
+            "departure": {
+              "iataCode": "KEF",
+              "at": "2024-02-14T17:05:00"
+            },
+            "arrival": {
+              "iataCode": "BOS",
+              "terminal": "E",
+              "at": "2024-02-14T17:50:00"
+            },
+            "carrierCode": "FI",
+            "number": "631",
+            "aircraft": {
+              "code": "76W"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT5H45M",
+            "id": "10",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          }
+        ]
+      }
+    ],
+    "price": {
+      "currency": "EUR",
+      "total": "394.80",
+      "base": "23.00",
+      "fees": [
+        {
+          "amount": "0.00",
+          "type": "SUPPLIER"
+        },
+        {
+          "amount": "0.00",
+          "type": "TICKETING"
+        }
+      ],
+      "grandTotal": "394.80",
+      "additionalServices": [
+        {
+          "amount": "142.00",
+          "type": "CHECKED_BAGS"
+        }
+      ]
+    },
+    "pricingOptions": {
+      "fareType": ["PUBLISHED"],
+      "includedCheckedBagsOnly": "False"
+    },
+    "validatingAirlineCodes": ["FI"],
+    "travelerPricings": [
+      {
+        "travelerId": "1",
+        "fareOption": "STANDARD",
+        "travelerType": "ADULT",
+        "price": {
+          "currency": "EUR",
+          "total": "394.80",
+          "base": "23.00"
+        },
+        "fareDetailsBySegment": [
+          {
+            "segmentId": "3",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "4",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "9",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "10",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "flight-offer",
+    "id": "5",
+    "source": "GDS",
+    "instantTicketingRequired": "False",
+    "nonHomogeneous": "False",
+    "oneWay": "False",
+    "lastTicketingDate": "2024-01-10",
+    "lastTicketingDateTime": "2024-01-10",
+    "numberOfBookableSeats": 9,
+    "itineraries": [
+      {
+        "duration": "PT10H10M",
+        "segments": [
+          {
+            "departure": {
+              "iataCode": "BOS",
+              "terminal": "E",
+              "at": "2024-01-30T19:50:00"
+            },
+            "arrival": {
+              "iataCode": "KEF",
+              "at": "2024-01-31T06:05:00"
+            },
+            "carrierCode": "FI",
+            "number": "630",
+            "aircraft": {
+              "code": "76W"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT5H15M",
+            "id": "1",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          },
+          {
+            "departure": {
+              "iataCode": "KEF",
+              "at": "2024-01-31T07:35:00"
+            },
+            "arrival": {
+              "iataCode": "CDG",
+              "terminal": "1",
+              "at": "2024-01-31T12:00:00"
+            },
+            "carrierCode": "FI",
+            "number": "542",
+            "aircraft": {
+              "code": "7M8"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT3H25M",
+            "id": "2",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          }
+        ]
+      },
+      {
+        "duration": "PT27H25M",
+        "segments": [
+          {
+            "departure": {
+              "iataCode": "CDG",
+              "terminal": "1",
+              "at": "2024-02-14T13:10:00"
+            },
+            "arrival": {
+              "iataCode": "KEF",
+              "at": "2024-02-14T15:50:00"
+            },
+            "carrierCode": "FI",
+            "number": "545",
+            "aircraft": {
+              "code": "7M8"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT3H40M",
+            "id": "5",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          },
+          {
+            "departure": {
+              "iataCode": "KEF",
+              "at": "2024-02-15T10:00:00"
+            },
+            "arrival": {
+              "iataCode": "BOS",
+              "terminal": "E",
+              "at": "2024-02-15T10:35:00"
+            },
+            "carrierCode": "FI",
+            "number": "635",
+            "aircraft": {
+              "code": "7M8"
+            },
+            "operating": {
+              "carrierCode": "FI"
+            },
+            "duration": "PT5H35M",
+            "id": "6",
+            "numberOfStops": 0,
+            "blacklistedInEU": "False"
+          }
+        ]
+      }
+    ],
+    "price": {
+      "currency": "EUR",
+      "total": "396.14",
+      "base": "23.00",
+      "fees": [
+        {
+          "amount": "0.00",
+          "type": "SUPPLIER"
+        },
+        {
+          "amount": "0.00",
+          "type": "TICKETING"
+        }
+      ],
+      "grandTotal": "396.14",
+      "additionalServices": [
+        {
+          "amount": "142.00",
+          "type": "CHECKED_BAGS"
+        }
+      ]
+    },
+    "pricingOptions": {
+      "fareType": ["PUBLISHED"],
+      "includedCheckedBagsOnly": "False"
+    },
+    "validatingAirlineCodes": ["FI"],
+    "travelerPricings": [
+      {
+        "travelerId": "1",
+        "fareOption": "STANDARD",
+        "travelerType": "ADULT",
+        "price": {
+          "currency": "EUR",
+          "total": "396.14",
+          "base": "23.00"
+        },
+        "fareDetailsBySegment": [
+          {
+            "segmentId": "1",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "2",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "5",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          },
+          {
+            "segmentId": "6",
+            "cabin": "ECONOMY",
+            "fareBasis": "XJ2MUSLT",
+            "brandedFare": "LIGHT",
+            "brandedFareLabel": "ECONOMY LIGHT",
+            "class": "X",
+            "includedCheckedBags": {
+              "quantity": 0
+            },
+            "amenities": [
+              {
+                "description": "CHECKED BAG UP TO 23KG",
+                "isChargeable": "True",
+                "amenityType": "BAGGAGE",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "ALCOHOLIC DRINK",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "NON ALCOHOLIC DRINK",
+                "isChargeable": "False",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "MEAL",
+                "isChargeable": "True",
+                "amenityType": "MEAL",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "USB POWER",
+                "isChargeable": "False",
+                "amenityType": "ENTERTAINMENT",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              },
+              {
+                "description": "PREMIUM SEAT",
+                "isChargeable": "True",
+                "amenityType": "BRANDED_FARES",
+                "amenityProvider": {
+                  "name": "BrandedFare"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
