@@ -15,7 +15,7 @@ class Tasks:
     def suggest(self, agent):
         return Task(
             description=dedent(
-                f"""Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best iterenary that requires fastest travel time, less layovers and date align with user travel date.
+                f"""Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.
       """
             ),
             agent=agent,

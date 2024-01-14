@@ -14,6 +14,7 @@ duckduckgo-search = "^4.1.1"
 fireworks-ai = "^0.11.0"
 python-dotenv = "^1.0.0"
 amadeus = "^9.0.0"
+airportsdata = "^20231230"
 
 
 [build-system]

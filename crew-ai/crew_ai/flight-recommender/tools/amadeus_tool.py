@@ -15,69 +15,26 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("amadeus")
 
 
-class GetAmadeusFlightOffers(BaseModel):
-    originLocationCode: str = Field(
-        description="City/airport IATA code from which the traveler will depart, e.g., BOS for Boston"
-    )
-    destinationLocationCode: str = Field(
-        description="City/airport IATA code to which the traveler is going, e.g., PAR for Paris"
-    )
-    departureDate: str = Field(
-        description="The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format"
-    )
-    adults: int = Field(
-        description="The number of adult travelers (age 12 or older on the date of departure)"
-    )
-    returnDate: Optional[str] = Field(
-        description="The date on which the traveler will return from the destination to the origin, in YYYY-MM-DD format"
-    )
-    children: Optional[int] = Field(
-        description="The number of child travelers (older than age 2 and younger than age 12 on the date of departure)"
-    )
-    infants: Optional[int] = Field(
-        description="The number of infant travelers (age 2 or younger on the date of departure)"
-    )
-    travelClass: Optional[str] = Field(
-        description="Travel class (ECONOMY, PREMIUM_ECONOMY, BUSINESS, FIRST)"
-    )
-    includedAirlineCodes: Optional[str] = Field(
-        description="IATA airline codes to include, comma-separated"
-    )
-    excludedAirlineCodes: Optional[str] = Field(
-        description="IATA airline codes to exclude, comma-separated"
-    )
-    nonStop: Optional[str] = Field(
-        description="If set to 'true', only non-stop flights are considered"
-    )
-    currencyCode: Optional[str] = Field(
-        description="Preferred currency for the flight offers, in ISO 4217 format"
-    )
-    maxPrice: Optional[int] = Field(description="Maximum price per traveler")
-    max: Optional[int] = Field(description="Maximum number of flight offers to return")
-
-
 class GetFlightOffers(BaseTool):
     name = "get_flight_offers"
-    description = "Search for flight information."
-    args_schema: Type[BaseModel] = GetAmadeusFlightOffers
+    description = dedent(
+        """
+    Search for flight information. Remember for ActionInput you have to return a json dump format below.
+    {{
+        "originLocationCode": <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,
+        "destinationLocationCode": <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,
+        "departureDate": <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>
+        )
+        "adults": <The number of adult travelers (age 12 or older on the date of departure) (Required>,
+    }}
+    """
+    )
+
     return_direct = True
 
     def _run(
         self,
-        originLocationCode,
-        destinationLocationCode,
-        departureDate,
-        adults=1,
-        returnDate=None,
-        children=None,
-        infants=None,
-        travelClass=None,
-        includedAirlineCodes=None,
-        excludedAirlineCodes=None,
-        nonStop="false",
-        currencyCode="EUR",
-        maxPrice=None,
-        max=5,
+        input_string,
     ):
         """
         Pulls the flight data from the amadeus server.
@@ -88,22 +45,20 @@ class GetFlightOffers(BaseTool):
             client_id=config.AMADEUS_API_KEY, client_secret=config.AMADEUS_SECRET
         )
 
+        logger.debug("input_string: %s with type %s", input_string, type(input_string))
+
+        try:
+            parsed_params = json.loads(input_string)
+        except json.JSONDecodeError:
+            raise Exception("Invalid input format. Expected JSON string.")
+
+        adults = parsed_params.get("adults", 1)
         # Set up the parameters for the request
         params = {
-            "originLocationCode": originLocationCode,
-            "destinationLocationCode": destinationLocationCode,
-            "departureDate": departureDate,
+            **parsed_params,
             "adults": adults,
-            "returnDate": returnDate,
-            "children": children,
-            "infants": infants,
-            "travelClass": travelClass,
-            "includedAirlineCodes": includedAirlineCodes,
-            "excludedAirlineCodes": excludedAirlineCodes,
-            "nonStop": nonStop,
-            "currencyCode": currencyCode,
-            "maxPrice": maxPrice,
-            "max": max,
+            "currencyCode": "EUR",
+            "max": 5,
         }
 
         # Remove None values
@@ -119,7 +74,7 @@ class GetFlightOffers(BaseTool):
             # price, number of stops, etc.
             result = [self.format_item_result(item) for item in response.data]
 
-            return "\n\n".join(result)
+            return "------".join(result)
         except ResponseError as error:
             logger.error(f"An error occurred: {error}")
             logger.error(f"Error code: {error.code}")
@@ -132,8 +87,14 @@ class GetFlightOffers(BaseTool):
 
     def format_item_result(self, data):
         itineraries = data["itineraries"]
+        price = data["price"]["total"]
 
-        itineraries_summary = dedent(f"""Flight offer {data['id']}""")
+        itineraries_summary = dedent(
+            f"""
+            Flight offer {data['id']}
+            Price: {price}
+            """
+        )
         for idx, iterenary in enumerate(itineraries):
             layovers = self.get_layovers_info_from_iterenary(iterenary)
 
@@ -190,20 +151,7 @@ if __name__ == "__main__":
     search_flight_offers_with_amadeus_client_tool = GetFlightOffers()
     result = search_flight_offers_with_amadeus_client_tool.run(
         {
-            "originLocationCode": "BOS",
-            "destinationLocationCode": "PAR",
-            "departureDate": "2024-01-30",
-            "returnDate": "2024-02-14",
-            "adults": 1,
-            "returnDate": None,
-            "children": None,
-            "infants": None,
-            "travelClass": None,
-            "includedAirlineCodes": None,
-            "excludedAirlineCodes": None,
-            "nonStop": "false",
-            "currencyCode": "EUR",
-            "maxPrice": None,
-            "max": 5,
+            "input_string": '{\n    "originLocationCode": "BOS",\n    "destinationLocationCode": "PAR",\n    "departureDate": "2024-04-10"\n}\n'
         }
     )
+    print(result)

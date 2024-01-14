@@ -1,12 +1,11 @@
-import os
 from crew_ai.config import config
-from crewai import Agent, Task, Crew, Process
-
+from crewai import Crew, Process
 from langchain_community.chat_models.fireworks import ChatFireworks
 from langchain.globals import set_llm_cache, set_debug
 from langchain.cache import InMemoryCache
 
-from tools.amadeus_tool import GetFlightOffers
+from agent import Agents
+from tasks import Tasks
 
 set_llm_cache(InMemoryCache())
 # Turn this on only if you want to debug other wise it's hard to see the conversations.
@@ -18,24 +17,26 @@ llm = ChatFireworks(
     model_kwargs={"temperature": 0.5, "max_tokens": 4096},
 )
 
-
 if __name__ == "__main__":
-    search_flight_offers_with_amadeus_client_tool = GetFlightOffers()
-    search_flight_offers_with_amadeus_client_tool.run({
-        "originLocationCode":"BOS",
-        "destinationLocationCode":"PAR",
-        "departureDate":"2024-01-30",
-        "returnDate":"2024-02-14",
-        "adults":1,
-        "returnDate":None,
-        "children":None,
-        "infants":None,
-        "travelClass":None,
-        "includedAirlineCodes":None,
-        "excludedAirlineCodes":None,
-        "nonStop":"false",
-        "currencyCode":"EUR",
-        "maxPrice":None,
-        "max":5,
-    })
+    # query = input("""Please enter your travel infomration:""")
+    query = "I want to go to Paris on April 10, 2024. Currently I'm in Boston."
 
+    agents = Agents(llm=llm, verbose=True)
+    tasks = Tasks()
+
+    researcher = agents.researcher()
+    travel_agent = agents.travel_agent()
+
+    research_task = tasks.research(query=query, agent=researcher)
+    suggest_task = tasks.suggest(agent=travel_agent)
+
+    # Instantiate your crew with a sequential process
+    crew = Crew(
+        agents=[agents.researcher(), agents.travel_agent()],
+        tasks=[research_task, suggest_task],
+        verbose=2,  # Crew verbose more will let you know what tasks are being worked on, you can set it to 1 or 2 to different logging levels
+        process=Process.sequential,  # Sequential process will have tasks executed one after the other and the outcome of the previous one is passed as extra content into this next.
+    )
+
+    # Get your crew to work!
+    crew.kickoff()

@@ -113,6 +113,18 @@ files = [
 frozenlist = ">=1.1.0"
 
 [[package]]
+name = "airportsdata"
+version = "20231230"
+description = "Extensive database of location and timezone data for nearly every airport and landing strip in the world."
+category = "main"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "airportsdata-20231230-py3-none-any.whl", hash = "sha256:512682b408b3d4424e1a55dc632164b17dae9341d5e0c66953f7cd80224943fd"},
+    {file = "airportsdata-20231230.tar.gz", hash = "sha256:0fbc3c70a294c77905479a1629d8858c8309789c1900a00f6c6c11ad2d935fed"},
+]
+
+[[package]]
 name = "amadeus"
 version = "9.0.0"
 description = "Python module for the Amadeus travel APIs"
@@ -1794,4 +1806,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4ff837adf042d7579533d3df789813ea7cb73b1517d759b0cf6aa512efbb1a86"
+content-hash = "77cfcf40e8a1664e72776b057fd47d1b80b663abe575ce48ae168053c0cb9013"

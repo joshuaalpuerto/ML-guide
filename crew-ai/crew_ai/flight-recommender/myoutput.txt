@@ -1,0 +1,801 @@
+Working Agent: Flight data researcher
+Starting Task: Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor] Entering Chain run with input:
+[0m{
+  "input": "Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.",
+  "tool_names": "get_flight_offers",
+  "tools": "get_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n",
+  "chat_history": ""
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence] Entering Chain run with input:
+[0m{
+  "input": "Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.",
+  "tool_names": "get_flight_offers",
+  "tools": "get_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history>] Entering Chain run with input:
+[0m{
+  "input": "Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.",
+  "tool_names": "get_flight_offers",
+  "tools": "get_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 4:chain:RunnableLambda] Entering Chain run with input:
+[0m{
+  "input": "Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.",
+  "tool_names": "get_flight_offers",
+  "tools": "get_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 4:chain:RunnableLambda] [0ms] Exiting Chain run with output:
+[0m{
+  "output": "Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston."
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 5:chain:RunnableLambda] Entering Chain run with input:
+[0m{
+  "input": "Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.",
+  "tool_names": "get_flight_offers",
+  "tools": "get_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 5:chain:RunnableLambda] [0ms] Exiting Chain run with output:
+[0m{
+  "output": "get_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n"
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 6:chain:RunnableLambda] Entering Chain run with input:
+[0m{
+  "input": "Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.",
+  "tool_names": "get_flight_offers",
+  "tools": "get_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 6:chain:RunnableLambda] [0ms] Exiting Chain run with output:
+[0m{
+  "output": "get_flight_offers"
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 7:chain:RunnableLambda] Entering Chain run with input:
+[0m{
+  "input": "Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.",
+  "tool_names": "get_flight_offers",
+  "tools": "get_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 7:chain:RunnableLambda] [0ms] Exiting Chain run with output:
+[0m{
+  "output": ""
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 8:chain:RunnableLambda] Entering Chain run with input:
+[0m{
+  "input": "Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.",
+  "tool_names": "get_flight_offers",
+  "tools": "get_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 8:chain:RunnableLambda] [0ms] Exiting Chain run with output:
+[0m{
+  "output": ""
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history>] [2ms] Exiting Chain run with output:
+[0m{
+  "input": "Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.",
+  "tools": "get_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n",
+  "tool_names": "get_flight_offers",
+  "agent_scratchpad": "",
+  "chat_history": ""
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 9:prompt:PromptTemplate] Entering Prompt run with input:
+[0m{
+  "input": "Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.",
+  "tools": "get_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n",
+  "tool_names": "get_flight_offers",
+  "agent_scratchpad": "",
+  "chat_history": ""
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 9:prompt:PromptTemplate] [0ms] Exiting Prompt run with output:
+[0m{
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain",
+    "prompts",
+    "base",
+    "StringPromptValue"
+  ],
+  "kwargs": {
+    "text": "You are Flight data researcher.\nYou are a Flight data researcher. Your expertise lies on gathering information about cheap flights. You also strictly translate the user query into the correct arguments for the function `get_flight_offers`\n\nYour personal goal is: Get list of cheap flights data that the Travel agent can use.TOOLS:\n------\nYou have access to the following tools:\n\nget_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n\n\nTo use a tool, please use the exact following format:\n\n```\nThought: Do I need to use a tool? Yes\nAction: the action to take, should be one of [get_flight_offers], just the name.\nAction Input: the input to the action\nObservation: the result of the action\n```\n\nWhen you have a response for your task, or if you do not need to use a tool, you MUST use the format:\n\n```\nThought: Do I need to use a tool? No\nFinal Answer: [your response here]This is the summary of your work so far:\nBegin! This is VERY important to you, your job depends on it!\n\nCurrent Task: Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.\n"
+  }
+}
+[32;1m[1;3m[llm/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 10:llm:ChatFireworks] Entering LLM run with input:
+[0m{
+  "prompts": [
+    "Human: You are Flight data researcher.\nYou are a Flight data researcher. Your expertise lies on gathering information about cheap flights. You also strictly translate the user query into the correct arguments for the function `get_flight_offers`\n\nYour personal goal is: Get list of cheap flights data that the Travel agent can use.TOOLS:\n------\nYou have access to the following tools:\n\nget_flight_offers: \nSearch for flight information. Remember for ActionInput you have to return a json dump format below.\n{{\n    originLocationCode: <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,\n    destinationLocationCode: <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,\n    departureDate: <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>\n    )\n    adults: <The number of adult travelers (age 12 or older on the date of departure) (Required>,\n}}\n\n\nTo use a tool, please use the exact following format:\n\n```\nThought: Do I need to use a tool? Yes\nAction: the action to take, should be one of [get_flight_offers], just the name.\nAction Input: the input to the action\nObservation: the result of the action\n```\n\nWhen you have a response for your task, or if you do not need to use a tool, you MUST use the format:\n\n```\nThought: Do I need to use a tool? No\nFinal Answer: [your response here]This is the summary of your work so far:\nBegin! This is VERY important to you, your job depends on it!\n\nCurrent Task: Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston."
+  ]
+}
+[36;1m[1;3m[llm/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 10:llm:ChatFireworks] [1.31s] Exiting LLM run with output:
+[0m{
+  "generations": [
+    [
+      {
+        "text": "Thought: Do I need to use a tool? Yes\nAction: get_flight_offers\nAction Input: {\n\"originLocationCode\": \"BOS\",\n\"destinationLocationCode\": \"PAR\",\n\"departureDate\": \"2024-04-10\"\n}\n",
+        "generation_info": {
+          "finish_reason": "stop"
+        },
+        "type": "ChatGeneration",
+        "message": {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain",
+            "schema",
+            "messages",
+            "AIMessage"
+          ],
+          "kwargs": {
+            "content": "Thought: Do I need to use a tool? Yes\nAction: get_flight_offers\nAction Input: {\n\"originLocationCode\": \"BOS\",\n\"destinationLocationCode\": \"PAR\",\n\"departureDate\": \"2024-04-10\"\n}\n",
+            "additional_kwargs": {}
+          }
+        }
+      }
+    ]
+  ],
+  "llm_output": {
+    "model": "accounts/fireworks/models/mistral-7b-instruct-4k"
+  },
+  "run": null
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 11:parser:CrewAgentOutputParser] Entering Parser run with input:
+[0m[inputs]
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 11:parser:CrewAgentOutputParser] [4ms] Exiting Parser run with output:
+[0m{
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain",
+    "schema",
+    "agent",
+    "AgentAction"
+  ],
+  "kwargs": {
+    "tool": "get_flight_offers",
+    "tool_input": "{\n\"originLocationCode\": \"BOS\",\n\"destinationLocationCode\": \"PAR\",\n\"departureDate\": \"2024-04-10\"\n}\n",
+    "log": "Thought: Do I need to use a tool? Yes\nAction: get_flight_offers\nAction Input: {\n\"originLocationCode\": \"BOS\",\n\"destinationLocationCode\": \"PAR\",\n\"departureDate\": \"2024-04-10\"\n}\n"
+  }
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence] [1.31s] Exiting Chain run with output:
+[0m[outputs]
+[32;1m[1;3m[tool/start][0m [1m[1:chain:CrewAgentExecutor > 12:tool:get_flight_offers] Entering Tool run with input:
+[0m"{
+"originLocationCode": "BOS",
+"destinationLocationCode": "PAR",
+"departureDate": "2024-04-10"
+}"
+input_string: {
+"originLocationCode": "BOS",
+"destinationLocationCode": "PAR",
+"departureDate": "2024-04-10"
+}
+ with type <class 'str'>
+Request parameters: {'originLocationCode': 'BOS', 'destinationLocationCode': 'PAR', 'departureDate': '2024-04-10', 'adults': 1, 'currencyCode': 'EUR', 'max': 5}
+[36;1m[1;3m[tool/end][0m [1m[1:chain:CrewAgentExecutor > 12:tool:get_flight_offers] [5.36s] Exiting Tool run with output:
+[0m"Flight offer 1
+Price: 294.45
+
+Itinerary 1:
+Layover(s): Joao Paulo II Airport
+
+Departure: General Edward Lawrence Logan International Airport
+Terminal: E
+Date: 2024-04-10T21:15:00
+
+Arrival: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T06:20:00
+
+
+Departure: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T07:30:00
+
+Arrival: Charles de Gaulle International Airport
+Terminal: 1
+Date: 2024-04-11T13:10:00
+
+------
+Flight offer 2
+Price: 383.44
+
+Itinerary 1:
+Layover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport
+
+Departure: General Edward Lawrence Logan International Airport
+Terminal: E
+Date: 2024-04-10T21:15:00
+
+Arrival: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T06:20:00
+
+
+Departure: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T08:20:00
+
+Arrival: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T11:40:00
+
+
+Departure: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T14:00:00
+
+Arrival: Paris-Orly Airport
+Terminal: 1
+Date: 2024-04-11T17:10:00
+
+------
+Flight offer 3
+Price: 383.44
+
+Itinerary 1:
+Layover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport
+
+Departure: General Edward Lawrence Logan International Airport
+Terminal: E
+Date: 2024-04-10T21:15:00
+
+Arrival: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T06:20:00
+
+
+Departure: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T08:20:00
+
+Arrival: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T11:40:00
+
+
+Departure: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T19:45:00
+
+Arrival: Paris-Orly Airport
+Terminal: 1
+Date: 2024-04-11T22:55:00
+
+------
+Flight offer 4
+Price: 383.44
+
+Itinerary 1:
+Layover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport
+
+Departure: General Edward Lawrence Logan International Airport
+Terminal: E
+Date: 2024-04-10T21:15:00
+
+Arrival: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T06:20:00
+
+
+Departure: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T15:20:00
+
+Arrival: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T18:40:00
+
+
+Departure: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T19:45:00
+
+Arrival: Paris-Orly Airport
+Terminal: 1
+Date: 2024-04-11T22:55:00
+
+------
+Flight offer 5
+Price: 388.07
+
+Itinerary 1:
+Layover(s): Joao Paulo II Airport, Lisbon Portela Airport
+
+Departure: General Edward Lawrence Logan International Airport
+Terminal: E
+Date: 2024-04-10T21:15:00
+
+Arrival: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T06:20:00
+
+
+Departure: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T08:25:00
+
+Arrival: Lisbon Portela Airport
+Terminal: 1
+Date: 2024-04-11T11:40:00
+
+
+Departure: Lisbon Portela Airport
+Terminal: 1
+Date: 2024-04-11T16:50:00
+
+Arrival: Paris-Orly Airport
+Terminal: 1
+Date: 2024-04-11T20:15:00"
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor] [6.68s] Exiting Chain run with output:
+[0m{
+  "output": "\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n"
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:LLMChain] Entering Chain run with input:
+[0m{
+  "summary": "",
+  "new_lines": "Human: Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.\nAI: \nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n"
+}
+[32;1m[1;3m[llm/start][0m [1m[1:chain:LLMChain > 2:llm:ChatFireworks] Entering LLM run with input:
+[0m{
+  "prompts": [
+    "Human: Progressively summarize the lines of conversation provided, adding onto the previous summary returning a new summary.\n\nEXAMPLE\nCurrent summary:\nThe human asks what the AI thinks of artificial intelligence. The AI thinks artificial intelligence is a force for good.\n\nNew lines of conversation:\nHuman: Why do you think artificial intelligence is a force for good?\nAI: Because artificial intelligence will help humans reach their full potential.\n\nNew summary:\nThe human asks what the AI thinks of artificial intelligence. The AI thinks artificial intelligence is a force for good because it will help humans reach their full potential.\nEND OF EXAMPLE\n\nCurrent summary:\n\n\nNew lines of conversation:\nHuman: Analyze the user query about its trip and conduct a comprehensive research to get cheap flights. Query: I want to go to Paris on April 10, 2024. Currently I'm in Boston.\nAI: \nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n\n\nNew summary:"
+  ]
+}
+[36;1m[1;3m[llm/end][0m [1m[1:chain:LLMChain > 2:llm:ChatFireworks] [1.24s] Exiting LLM run with output:
+[0m{
+  "generations": [
+    [
+      {
+        "text": "The human asks the AI to help them find a cheap flight to Paris on April 10, 2024, from Boston. The AI provides four flight options with varying prices and itineraries, including layovers at Joao Paulo II Airport and Francisco de Sa Carneiro Airport.",
+        "generation_info": {
+          "finish_reason": "stop"
+        },
+        "type": "ChatGeneration",
+        "message": {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain",
+            "schema",
+            "messages",
+            "AIMessage"
+          ],
+          "kwargs": {
+            "content": "The human asks the AI to help them find a cheap flight to Paris on April 10, 2024, from Boston. The AI provides four flight options with varying prices and itineraries, including layovers at Joao Paulo II Airport and Francisco de Sa Carneiro Airport.",
+            "additional_kwargs": {}
+          }
+        }
+      }
+    ]
+  ],
+  "llm_output": {
+    "model": "accounts/fireworks/models/mistral-7b-instruct-4k"
+  },
+  "run": null
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:LLMChain] [1.24s] Exiting Chain run with output:
+[0m{
+  "text": "The human asks the AI to help them find a cheap flight to Paris on April 10, 2024, from Boston. The AI provides four flight options with varying prices and itineraries, including layovers at Joao Paulo II Airport and Francisco de Sa Carneiro Airport."
+}
+
+
+[Flight data researcher] Task output: 
+Flight offer 1
+Price: 294.45
+
+Itinerary 1:
+Layover(s): Joao Paulo II Airport
+
+Departure: General Edward Lawrence Logan International Airport
+Terminal: E
+Date: 2024-04-10T21:15:00
+
+Arrival: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T06:20:00
+
+
+Departure: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T07:30:00
+
+Arrival: Charles de Gaulle International Airport
+Terminal: 1
+Date: 2024-04-11T13:10:00
+
+------
+Flight offer 2
+Price: 383.44
+
+Itinerary 1:
+Layover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport
+
+Departure: General Edward Lawrence Logan International Airport
+Terminal: E
+Date: 2024-04-10T21:15:00
+
+Arrival: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T06:20:00
+
+
+Departure: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T08:20:00
+
+Arrival: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T11:40:00
+
+
+Departure: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T14:00:00
+
+Arrival: Paris-Orly Airport
+Terminal: 1
+Date: 2024-04-11T17:10:00
+
+------
+Flight offer 3
+Price: 383.44
+
+Itinerary 1:
+Layover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport
+
+Departure: General Edward Lawrence Logan International Airport
+Terminal: E
+Date: 2024-04-10T21:15:00
+
+Arrival: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T06:20:00
+
+
+Departure: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T08:20:00
+
+Arrival: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T11:40:00
+
+
+Departure: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T19:45:00
+
+Arrival: Paris-Orly Airport
+Terminal: 1
+Date: 2024-04-11T22:55:00
+
+------
+Flight offer 4
+Price: 383.44
+
+Itinerary 1:
+Layover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport
+
+Departure: General Edward Lawrence Logan International Airport
+Terminal: E
+Date: 2024-04-10T21:15:00
+
+Arrival: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T06:20:00
+
+
+Departure: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T15:20:00
+
+Arrival: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T18:40:00
+
+
+Departure: Francisco de Sa Carneiro Airport
+Terminal: 
+Date: 2024-04-11T19:45:00
+
+Arrival: Paris-Orly Airport
+Terminal: 1
+Date: 2024-04-11T22:55:00
+
+------
+Flight offer 5
+Price: 388.07
+
+Itinerary 1:
+Layover(s): Joao Paulo II Airport, Lisbon Portela Airport
+
+Departure: General Edward Lawrence Logan International Airport
+Terminal: E
+Date: 2024-04-10T21:15:00
+
+Arrival: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T06:20:00
+
+
+Departure: Joao Paulo II Airport
+Terminal: 
+Date: 2024-04-11T08:25:00
+
+Arrival: Lisbon Portela Airport
+Terminal: 1
+Date: 2024-04-11T11:40:00
+
+
+Departure: Lisbon Portela Airport
+Terminal: 1
+Date: 2024-04-11T16:50:00
+
+Arrival: Paris-Orly Airport
+Terminal: 1
+Date: 2024-04-11T20:15:00
+
+
+
+
+Working Agent: Travel agent
+Starting Task: Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.
+
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor] Entering Chain run with input:
+[0m{
+  "input": "Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n",
+  "tool_names": "",
+  "tools": "",
+  "chat_history": ""
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence] Entering Chain run with input:
+[0m{
+  "input": "Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n",
+  "tool_names": "",
+  "tools": "",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history>] Entering Chain run with input:
+[0m{
+  "input": "Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n",
+  "tool_names": "",
+  "tools": "",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 5:chain:RunnableLambda] Entering Chain run with input:
+[0m{
+  "input": "Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n",
+  "tool_names": "",
+  "tools": "",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 5:chain:RunnableLambda] [0ms] Exiting Chain run with output:
+[0m{
+  "output": "Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n"
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 4:chain:RunnableLambda] Entering Chain run with input:
+[0m{
+  "input": "Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n",
+  "tool_names": "",
+  "tools": "",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 4:chain:RunnableLambda] [1ms] Exiting Chain run with output:
+[0m{
+  "output": ""
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 7:chain:RunnableLambda] Entering Chain run with input:
+[0m{
+  "input": "Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n",
+  "tool_names": "",
+  "tools": "",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 7:chain:RunnableLambda] [0ms] Exiting Chain run with output:
+[0m{
+  "output": ""
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 8:chain:RunnableLambda] Entering Chain run with input:
+[0m{
+  "input": "Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n",
+  "tool_names": "",
+  "tools": "",
+  "chat_history": "",
+  "intermediate_steps": []
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history> > 8:chain:RunnableLambda] [0ms] Exiting Chain run with output:
+[0m{
+  "output": ""
+}
+\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n",
+  "tool_names": "",
+  "tools": "",
+  "chat_history": "",
+  "intermediate_steps": []
+}                  c        �9`   ,                                                                                                               >a90                                           >a90   >a90               "messages",
+        �@   essage"
+      P             "kwargs": {
+            "content": "The human asks the AI to help them find a cheap flight to Paris on April 10, 2024, from Boston. The AI provides four flight options with varying prices and itineraries, including layovers at Joao Paulo II         cnd Fran x5`   �Sa Carneiro Airport.",
+            "additional_kwargs": {}
+          }
+        }
+      }
+    ]
+  ],
+  "llm_output": {
+    "model": "accounts/fireworks/models/mistral-7b-instruct-4k"
+  },
+  "run": null
+} .��>�^Y��_SE�k��H�����߳��ۧ��]��
+rQ�a�ʯ�����
+Y]�\�䖭[`ڮ��9��v �hL!�5��U���AZ���ot�k3M�(����;�������q$��)��'V52_�9�1�����w웫�/c�B_�g�d��/�n&�3�ӵ��b�1Q%z��ke�mM0�e�he�'t��[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 3:chain:RunnableParallel<input,tools,tool_names,agent_scratchpad,chat_history>] [6ms] Exiting Chain run with output:
+[0m{
+  "input": "Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n",
+  "tools": "",
+  "tool_names": "",
+  "agent_scratchpad": "",
+  "chat_history": ""
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 9:prompt:PromptTemplate] Entering Prompt run with input:
+[0m{
+  "input": "Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n",
+  "tools": "",
+  "tool_names": "",
+  "agent_scratchpad": "",
+  "chat_history": ""
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 9:prompt:PromptTemplate] [0ms] Exiting Prompt run with output:
+[0m{
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain",
+    "prompts",
+    "base",
+    "StringPromptValue"
+  ],
+  "kwargs": {
+    "text": "You are Travel agent.\nYou are a knowledgeable travel consultant and will provide helpful suggestion to user travel needs.\n\nYour personal goal is: Using Provide the best iterenary best on number of layovers and schedule closest to the user travel date. You don't have access to any tools so you have to rely ONLY on context you have.TOOLS:\n------\nYou have access to the following tools:\n\n\n\nTo use a tool, please use the exact following format:\n\n```\nThought: Do I need to use a tool? Yes\nAction: the action to take, should be one of [], just the name.\nAction Input: the input to the action\nObservation: the result of the action\n```\n\nWhen you have a response for your task, or if you do not need to use a tool, you MUST use the format:\n\n```\nThought: Do I need to use a tool? No\nFinal Answer: [your response here]This is the summary of your work so far:\nBegin! This is VERY important to you, your job depends on it!\n\nCurrent Task: Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n\n"
+  }
+}
+[32;1m[1;3m[llm/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 10:llm:ChatFireworks] Entering LLM run with input:
+[0m{
+  "prompts": [
+    "Human: You are Travel agent.\nYou are a knowledgeable travel consultant and will provide helpful suggestion to user travel needs.\n\nYour personal goal is: Using Provide the best iterenary best on number of layovers and schedule closest to the user travel date. You don't have access to any tools so you have to rely ONLY on context you have.TOOLS:\n------\nYou have access to the following tools:\n\n\n\nTo use a tool, please use the exact following format:\n\n```\nThought: Do I need to use a tool? Yes\nAction: the action to take, should be one of [], just the name.\nAction Input: the input to the action\nObservation: the result of the action\n```\n\nWhen you have a response for your task, or if you do not need to use a tool, you MUST use the format:\n\n```\nThought: Do I need to use a tool? No\nFinal Answer: [your response here]This is the summary of your work so far:\nBegin! This is VERY important to you, your job depends on it!\n\nCurrent Task: Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00"
+  ]
+}
+[36;1m[1;3m[llm/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 10:llm:ChatFireworks] [15.29s] Exiting LLM run with output:
+[0m{
+  "generations": [
+    [
+      {
+        "text": "Thought: Do I need to use a tool? No\n\nFinal Answer: Based on the given context, the cheapest flight for the user is Flight offer 1 with a price of 294.45. The itinerary has the fastest travel time, with the shortest layover at Joao Paulo II Airport. The departure and arrival dates align with the user's travel date of 2024-04-10T21:15:00 and 2024-04-11T06:20:00, respectively.\n\nThis is the summary of your work so far:\n\n* Flight offer 1: Price = 294.45, Layover(s) = Joao Paulo II Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00\n* Flight offer 2: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T14:00:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T17:10:00\n* Flight offer 3: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 4: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T15:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T18:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 5: Price = 388.07, Layover(s) = Joao Paulo II Airport, Lisbon Portela Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:25:00, Arrival = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T11:40:00, Departure = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T16:50:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T20:15:00",
+        "generation_info": {
+          "finish_reason": "stop"
+        },
+        "type": "ChatGeneration",
+        "message": {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain",
+            "schema",
+            "messages",
+            "AIMessage"
+          ],
+          "kwargs": {
+            "content": "Thought: Do I need to use a tool? No\n\nFinal Answer: Based on the given context, the cheapest flight for the user is Flight offer 1 with a price of 294.45. The itinerary has the fastest travel time, with the shortest layover at Joao Paulo II Airport. The departure and arrival dates align with the user's travel date of 2024-04-10T21:15:00 and 2024-04-11T06:20:00, respectively.\n\nThis is the summary of your work so far:\n\n* Flight offer 1: Price = 294.45, Layover(s) = Joao Paulo II Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00\n* Flight offer 2: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T14:00:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T17:10:00\n* Flight offer 3: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 4: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T15:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T18:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 5: Price = 388.07, Layover(s) = Joao Paulo II Airport, Lisbon Portela Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:25:00, Arrival = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T11:40:00, Departure = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T16:50:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T20:15:00",
+            "additional_kwargs": {}
+          }
+        }
+      }
+    ]
+  ],
+  "llm_output": {
+    "model": "accounts/fireworks/models/mistral-7b-instruct-4k"
+  },
+  "run": null
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 11:parser:CrewAgentOutputParser] Entering Parser run with input:
+[0m[inputs]
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence > 11:parser:CrewAgentOutputParser] [0ms] Exiting Parser run with output:
+[0m{
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain",
+    "schema",
+    "agent",
+    "AgentFinish"
+  ],
+  "kwargs": {
+    "return_values": {
+      "output": "Based on the given context, the cheapest flight for the user is Flight offer 1 with a price of 294.45. The itinerary has the fastest travel time, with the shortest layover at Joao Paulo II Airport. The departure and arrival dates align with the user's travel date of 2024-04-10T21:15:00 and 2024-04-11T06:20:00, respectively.\n\nThis is the summary of your work so far:\n\n* Flight offer 1: Price = 294.45, Layover(s) = Joao Paulo II Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00\n* Flight offer 2: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T14:00:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T17:10:00\n* Flight offer 3: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 4: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T15:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T18:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 5: Price = 388.07, Layover(s) = Joao Paulo II Airport, Lisbon Portela Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:25:00, Arrival = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T11:40:00, Departure = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T16:50:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T20:15:00"
+    },
+    "log": "Thought: Do I need to use a tool? No\n\nFinal Answer: Based on the given context, the cheapest flight for the user is Flight offer 1 with a price of 294.45. The itinerary has the fastest travel time, with the shortest layover at Joao Paulo II Airport. The departure and arrival dates align with the user's travel date of 2024-04-10T21:15:00 and 2024-04-11T06:20:00, respectively.\n\nThis is the summary of your work so far:\n\n* Flight offer 1: Price = 294.45, Layover(s) = Joao Paulo II Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00\n* Flight offer 2: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T14:00:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T17:10:00\n* Flight offer 3: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 4: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T15:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T18:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 5: Price = 388.07, Layover(s) = Joao Paulo II Airport, Lisbon Portela Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:25:00, Arrival = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T11:40:00, Departure = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T16:50:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T20:15:00"
+  }
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor > 2:chain:RunnableSequence] [15.29s] Exiting Chain run with output:
+[0m[outputs]
+[36;1m[1;3m[chain/end][0m [1m[1:chain:CrewAgentExecutor] [15.30s] Exiting Chain run with output:
+[0m{
+  "output": "Based on the given context, the cheapest flight for the user is Flight offer 1 with a price of 294.45. The itinerary has the fastest travel time, with the shortest layover at Joao Paulo II Airport. The departure and arrival dates align with the user's travel date of 2024-04-10T21:15:00 and 2024-04-11T06:20:00, respectively.\n\nThis is the summary of your work so far:\n\n* Flight offer 1: Price = 294.45, Layover(s) = Joao Paulo II Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00\n* Flight offer 2: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T14:00:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T17:10:00\n* Flight offer 3: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 4: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T15:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T18:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 5: Price = 388.07, Layover(s) = Joao Paulo II Airport, Lisbon Portela Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:25:00, Arrival = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T11:40:00, Departure = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T16:50:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T20:15:00"
+}
+[32;1m[1;3m[chain/start][0m [1m[1:chain:LLMChain] Entering Chain run with input:
+[0m{
+  "summary": "",
+  "new_lines": "Human: Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n\nAI: Based on the given context, the cheapest flight for the user is Flight offer 1 with a price of 294.45. The itinerary has the fastest travel time, with the shortest layover at Joao Paulo II Airport. The departure and arrival dates align with the user's travel date of 2024-04-10T21:15:00 and 2024-04-11T06:20:00, respectively.\n\nThis is the summary of your work so far:\n\n* Flight offer 1: Price = 294.45, Layover(s) = Joao Paulo II Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00\n* Flight offer 2: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T14:00:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T17:10:00\n* Flight offer 3: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 4: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T15:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T18:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 5: Price = 388.07, Layover(s) = Joao Paulo II Airport, Lisbon Portela Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:25:00, Arrival = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T11:40:00, Departure = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T16:50:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T20:15:00"
+}
+[32;1m[1;3m[llm/start][0m [1m[1:chain:LLMChain > 2:llm:ChatFireworks] Entering LLM run with input:
+[0m{
+  "prompts": [
+    "Human: Progressively summarize the lines of conversation provided, adding onto the previous summary returning a new summary.\n\nEXAMPLE\nCurrent summary:\nThe human asks what the AI thinks of artificial intelligence. The AI thinks artificial intelligence is a force for good.\n\nNew lines of conversation:\nHuman: Why do you think artificial intelligence is a force for good?\nAI: Because artificial intelligence will help humans reach their full potential.\n\nNew summary:\nThe human asks what the AI thinks of artificial intelligence. The AI thinks artificial intelligence is a force for good because it will help humans reach their full potential.\nEND OF EXAMPLE\n\nCurrent summary:\n\n\nNew lines of conversation:\nHuman: Using the insights from the researcher's report, provide a comprehensive summary of what is the cheapest flight for the user. Suggest the best itinerary that has the fastest travel time, less layovers and date align with user travel date.\n\n\nThis is the context you are working with:\n\nFlight offer 1\nPrice: 294.45\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T07:30:00\n\nArrival: Charles de Gaulle International Airport\nTerminal: 1\nDate: 2024-04-11T13:10:00\n\n------\nFlight offer 2\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T14:00:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T17:10:00\n\n------\nFlight offer 3\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T11:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 4\nPrice: 383.44\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Francisco de Sa Carneiro Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T15:20:00\n\nArrival: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T18:40:00\n\n\nDeparture: Francisco de Sa Carneiro Airport\nTerminal: \nDate: 2024-04-11T19:45:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T22:55:00\n\n------\nFlight offer 5\nPrice: 388.07\n\nItinerary 1:\nLayover(s): Joao Paulo II Airport, Lisbon Portela Airport\n\nDeparture: General Edward Lawrence Logan International Airport\nTerminal: E\nDate: 2024-04-10T21:15:00\n\nArrival: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T06:20:00\n\n\nDeparture: Joao Paulo II Airport\nTerminal: \nDate: 2024-04-11T08:25:00\n\nArrival: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T11:40:00\n\n\nDeparture: Lisbon Portela Airport\nTerminal: 1\nDate: 2024-04-11T16:50:00\n\nArrival: Paris-Orly Airport\nTerminal: 1\nDate: 2024-04-11T20:15:00\n\n\nAI: Based on the given context, the cheapest flight for the user is Flight offer 1 with a price of 294.45. The itinerary has the fastest travel time, with the shortest layover at Joao Paulo II Airport. The departure and arrival dates align with the user's travel date of 2024-04-10T21:15:00 and 2024-04-11T06:20:00, respectively.\n\nThis is the summary of your work so far:\n\n* Flight offer 1: Price = 294.45, Layover(s) = Joao Paulo II Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00\n* Flight offer 2: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T14:00:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T17:10:00\n* Flight offer 3: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 4: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T15:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T18:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00\n* Flight offer 5: Price = 388.07, Layover(s) = Joao Paulo II Airport, Lisbon Portela Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:25:00, Arrival = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T11:40:00, Departure = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T16:50:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T20:15:00\n\nNew summary:"
+  ]
+}
+[36;1m[1;3m[llm/end][0m [1m[1:chain:LLMChain > 2:llm:ChatFireworks] [1.95s] Exiting LLM run with output:
+[0m{
+  "generations": [
+    [
+      {
+        "text": "The AI has evaluated the flight options and determined that Flight offer 1 is the cheapest option for the user. The itinerary for Flight offer 1 has the fastest travel time, with the shortest layover at Joao Paulo II Airport. The departure and arrival dates align with the user's travel date of 2024-04-10T21:15:00 and 2024-04-11T06:20:00, respectively. The AI also provides a comprehensive summary of all the flight options and their respective itineraries.",
+        "generation_info": {
+          "finish_reason": "stop"
+        },
+        "type": "ChatGeneration",
+        "message": {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain",
+            "schema",
+            "messages",
+            "AIMessage"
+          ],
+          "kwargs": {
+            "content": "The AI has evaluated the flight options and determined that Flight offer 1 is the cheapest option for the user. The itinerary for Flight offer 1 has the fastest travel time, with the shortest layover at Joao Paulo II Airport. The departure and arrival dates align with the user's travel date of 2024-04-10T21:15:00 and 2024-04-11T06:20:00, respectively. The AI also provides a comprehensive summary of all the flight options and their respective itineraries.",
+            "additional_kwargs": {}
+          }
+        }
+      }
+    ]
+  ],
+  "llm_output": {
+    "model": "accounts/fireworks/models/mistral-7b-instruct-4k"
+  },
+  "run": null
+}
+[36;1m[1;3m[chain/end][0m [1m[1:chain:LLMChain] [1.95s] Exiting Chain run with output:
+[0m{
+  "text": "The AI has evaluated the flight options and determined that Flight offer 1 is the cheapest option for the user. The itinerary for Flight offer 1 has the fastest travel time, with the shortest layover at Joao Paulo II Airport. The departure and arrival dates align with the user's travel date of 2024-04-10T21:15:00 and 2024-04-11T06:20:00, respectively. The AI also provides a comprehensive summary of all the flight options and their respective itineraries."
+}
+
+
+[Travel agent] Task output: Based on the given context, the cheapest flight for the user is Flight offer 1 with a price of 294.45. The itinerary has the fastest travel time, with the shortest layover at Joao Paulo II Airport. The departure and arrival dates align with the user's travel date of 2024-04-10T21:15:00 and 2024-04-11T06:20:00, respectively.
+
+This is the summary of your work so far:
+
+* Flight offer 1: Price = 294.45, Layover(s) = Joao Paulo II Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00
+* Flight offer 2: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T14:00:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T17:10:00
+* Flight offer 3: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T11:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00
+* Flight offer 4: Price = 383.44, Layover(s) = Joao Paulo II Airport, Francisco de Sa Carneiro Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T15:20:00, Arrival = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T18:40:00, Departure = Francisco de Sa Carneiro Airport, Terminal = , Date = 2024-04-11T19:45:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T22:55:00
+* Flight offer 5: Price = 388.07, Layover(s) = Joao Paulo II Airport, Lisbon Portela Airport, Departure = General Edward Lawrence Logan International Airport, Terminal = E, Date = 2024-04-10T21:15:00, Arrival = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T06:20:00, Departure = Joao Paulo II Airport, Terminal = , Date = 2024-04-11T08:25:00, Arrival = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T11:40:00, Departure = Lisbon Portela Airport, Terminal = 1, Date = 2024-04-11T16:50:00, Arrival = Paris-Orly Airport, Terminal = 1, Date = 2024-04-11T20:15:00
+
+
