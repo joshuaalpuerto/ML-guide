@@ -1,16 +1,16 @@
 import os
 from crewai import Agent, Task, Crew, Process
-from langchain.tools import DuckDuckGoSearchRun
+from langchain_community.tools.ddg_search.tool import DuckDuckGoSearchResults
 from langchain_community.chat_models.fireworks import ChatFireworks
 from langchain.globals import set_llm_cache, set_debug
 from langchain.cache import InMemoryCache
-import crew_ai.config as config
+from crew_ai.config import config
 
 set_llm_cache(InMemoryCache())
 # Turn this on only if you want to debug other wise it's hard to see the conversations.
 set_debug(True)
 
-search_tool = DuckDuckGoSearchRun()
+search_tool = DuckDuckGoSearchResults()
 
 llm = ChatFireworks(
     model="accounts/fireworks/models/mistral-7b-instruct-4k",
@@ -61,13 +61,14 @@ task2 = Task(
 
 
 if __name__ == "__main__":
-    # Instantiate your crew with a sequential process
-    crew = Crew(
-        agents=[researcher, writer],
-        tasks=[task1, task2],
-        verbose=2,  # Crew verbose more will let you know what tasks are being worked on, you can set it to 1 or 2 to different logging levels
-        process=Process.sequential,  # Sequential process will have tasks executed one after the other and the outcome of the previous one is passed as extra content into this next.
-    )
+    # # Instantiate your crew with a sequential process
+    # crew = Crew(
+    #     agents=[researcher, writer],
+    #     tasks=[task1, task2],
+    #     verbose=2,  # Crew verbose more will let you know what tasks are being worked on, you can set it to 1 or 2 to different logging levels
+    #     process=Process.sequential,  # Sequential process will have tasks executed one after the other and the outcome of the previous one is passed as extra content into this next.
+    # )
 
-    # Get your crew to work!
-    crew.kickoff()
+    # # Get your crew to work!
+    # crew.kickoff()
+    search_tool.run("10 day itinerary trip for Madrid")
