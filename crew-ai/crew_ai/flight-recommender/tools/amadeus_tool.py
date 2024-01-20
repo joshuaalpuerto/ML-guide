@@ -23,9 +23,8 @@ class GetFlightOffers(BaseTool):
     {{
         "originLocationCode": <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,
         "destinationLocationCode": <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,
-        "departureDate": <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>
-        )
-        "adults": <The number of adult travelers (age 12 or older on the date of departure) (Required>,
+        "departureDate": <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>,
+        "adults": <The number of adult travelers (age 12 or older on the date of departure) (Required)>,
     }}
     """
     )
@@ -148,10 +147,12 @@ class GetFlightOffers(BaseTool):
 
 
 if __name__ == "__main__":
-    search_flight_offers_with_amadeus_client_tool = GetFlightOffers()
-    result = search_flight_offers_with_amadeus_client_tool.run(
-        {
-            "input_string": '{\n    "originLocationCode": "BOS",\n    "destinationLocationCode": "PAR",\n    "departureDate": "2024-04-10"\n}\n'
-        }
-    )
-    print(result)
+    # search_flight_offers_with_amadeus_client_tool = GetFlightOffers()
+    # result = search_flight_offers_with_amadeus_client_tool.run(
+    #     {
+    #         "input_string": '{\n    "originLocationCode": "BOS",\n    "destinationLocationCode": "PAR",\n    "departureDate": "2024-04-10"\n}\n'
+    #     }
+    # )
+    # print(result)
+    airports = airportsdata.load("IATA")
+    print(airports["EEM"])
