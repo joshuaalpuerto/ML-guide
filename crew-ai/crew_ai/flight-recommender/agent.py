@@ -24,17 +24,17 @@ class Agents:
             allow_delegation=allow_delegation,
         )
 
-    def local_expert(self, allow_delegation=False):
-        scraper = Scraper(llm=self.llm)
+    def travel_agent(self, allow_delegation=False):
+        website_scrapper = Scraper(llm=self.llm)
         return Agent(
-            role="Local Expert at this city",
-            goal="Provide the BEST insights about the selected city.",
-            backstory="""A knowledgeable local guide with extensive information
-            about the city, it's attractions and customs""",
+            role="Travel agent",
+            goal="Provide the latest and  BEST insights about the destination city.",
+            backstory="""A resourceful travel agent with extensive information
+        about the city, it's attractions and customs.""",
             llm=self.llm,
             tools=[
                 search_tool,
-                scraper,
+                website_scrapper,
             ],
             verbose=self.verbose,
             allow_delegation=allow_delegation,

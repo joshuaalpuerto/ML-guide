@@ -12,8 +12,14 @@ set_llm_cache(InMemoryCache())
 # Turn this on only if you want to debug other wise it's hard to see the conversations.
 set_debug(True)
 
-llm = ChatFireworks(
+cheaper_llm = ChatFireworks(
     model="accounts/fireworks/models/mistral-7b-instruct-4k",
+    fireworks_api_key=config.FIREWORKS_API_KEY,
+    model_kwargs={"temperature": 0.1, "max_tokens": 4096},
+)
+
+capable_llm = ChatFireworks(
+    model="accounts/fireworks/models/mixtral-8x7b-instruct",
     fireworks_api_key=config.FIREWORKS_API_KEY,
     model_kwargs={"temperature": 0.1, "max_tokens": 4096},
 )
@@ -54,12 +60,17 @@ if __name__ == "__main__":
     date_range = "2024-04-01 - 2024-04-10"
     interests = "history, food, local experience"
 
-    agents = Agents(llm=llm, verbose=True)
+    cheaper_agents = Agents(llm=cheaper_llm, verbose=True)
+    capable_agents = Agents(llm=capable_llm, verbose=True)
+
     tasks = Tasks()
 
-    flight_researcher = agents.flight_researcher()
-    local_expert = agents.local_expert()
-    travel_planner = agents.travel_concierge()
+    # this has a simple task so we can use a smaller model
+    flight_researcher = cheaper_agents.flight_researcher()
+    travel_planner = cheaper_agents.travel_concierge()
+
+    # this requires a more capable model as it will use complicated tools
+    travel_agent = capable_agents.travel_agent()
 
     flight_research_task = tasks.get_cheapest_flight(
         agent=flight_researcher,
@@ -69,14 +80,14 @@ if __name__ == "__main__":
         interests=interests,
     )
     gather_destination_information_task = tasks.gather_destination_information(
-        agent=local_expert,
+        agent=travel_agent,
         origin=origin,
         destination=destination,
         date_range=date_range,
         interests=interests,
     )
     create_itinerary_task = tasks.create_itenirary(
-        agent=local_expert,
+        agent=travel_planner,
         destination=destination,
         date_range=date_range,
         interests=interests,
@@ -84,7 +95,7 @@ if __name__ == "__main__":
 
     # Instantiate your crew with a sequential process
     crew = Crew(
-        agents=[flight_researcher, local_expert, travel_planner],
+        agents=[flight_researcher, travel_agent, travel_planner],
         tasks=[
             flight_research_task,
             gather_destination_information_task,

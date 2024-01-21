@@ -14,13 +14,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 class Scraper(BaseTool):
     name = "website_scrapper"
     description = dedent(
-        """
-    "Scrape websites for information. Remember for ActionInput you have to provide comma separted urls.
-    
-    ```
-    https://visitestonia.ee, https://exploreestonia.ee
-    ```
-    """
+        """Scrape websites for to get additional information. Only use this tools if there are links available to script. Remember for ActionInput you must extract all the links mentioned in the provided context and format them into a valid comma-separated string."""
     )
     return_direct = True
 
