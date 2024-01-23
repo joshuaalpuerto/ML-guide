@@ -27,9 +27,9 @@ class Agents:
     def travel_agent(self, allow_delegation=False):
         website_scrapper = Scraper(llm=self.llm)
         return Agent(
-            role="Travel agent",
-            goal="Provide the latest and  BEST insights about the destination city.",
-            backstory="""A resourceful travel agent with extensive information
+            role="Destination researcher",
+            goal="Provide the latest and BEST insights about the destination city.",
+            backstory="""A resourceful travel researcher with extensive information
         about the city, it's attractions and customs.""",
             llm=self.llm,
             tools=[
@@ -42,10 +42,10 @@ class Agents:
 
     def travel_concierge(self, allow_delegation=False):
         return Agent(
-            role="Amazing Travel Concierge",
+            role="Travel Planner",
             goal="""Create the most amazing travel itineraries base on flight details and information about the destination city.""",
             backstory="""Specialist in travel planning and logistics with 
-            decades of experience. You don't have access to any tools so you have to rely ONLY on context you have.""",
+            decades of experience. """,
             llm=self.llm,
             verbose=self.verbose,
             allow_delegation=allow_delegation,

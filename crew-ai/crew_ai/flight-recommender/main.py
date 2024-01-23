@@ -3,10 +3,14 @@ from crewai import Crew, Process
 from langchain_community.chat_models.fireworks import ChatFireworks
 from langchain.globals import set_llm_cache, set_debug
 from langchain.cache import InMemoryCache
-from textwrap import dedent
+import logging
 
 from agent import Agents
 from tasks import Tasks
+
+logging.basicConfig(
+    level=logging.DEBUG, format="%(name)s - %(levelname)s - %(message)s"
+)
 
 set_llm_cache(InMemoryCache())
 # Turn this on only if you want to debug other wise it's hard to see the conversations.
@@ -67,7 +71,7 @@ if __name__ == "__main__":
 
     # this has a simple task so we can use a smaller model
     flight_researcher = cheaper_agents.flight_researcher()
-    travel_planner = cheaper_agents.travel_concierge()
+    travel_planner = cheaper_agents.travel_concierge(allow_delegation=True)
 
     # this requires a more capable model as it will use complicated tools
     travel_agent = capable_agents.travel_agent()

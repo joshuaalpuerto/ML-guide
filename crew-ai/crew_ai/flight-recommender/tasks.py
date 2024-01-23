@@ -61,7 +61,7 @@ class Tasks:
         return Task(
             description=dedent(
                 f"""
-                Using insights from the travel agent, expand this guide base on the trip-range 
+                Using insights from the travel researcher, expand this guide base on the trip-range 
             itinerary with detailed per-day plans, including 
             weather forecasts, places to eat, packing suggestions, 
             and a budget breakdown.
