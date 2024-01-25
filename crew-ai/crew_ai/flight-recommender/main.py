@@ -70,11 +70,12 @@ if __name__ == "__main__":
     tasks = Tasks()
 
     # this has a simple task so we can use a smaller model
-    flight_researcher = cheaper_agents.flight_researcher()
-    travel_planner = cheaper_agents.travel_concierge(allow_delegation=True)
-
-    # this requires a more capable model as it will use complicated tools
+    flight_researcher = capable_agents.flight_researcher()
+    # this has a simple task so we can use a smaller model
     travel_agent = capable_agents.travel_agent()
+
+    # this requires a more capable model as it will delegate tasks to other agents
+    travel_planner = capable_agents.travel_concierge(allow_delegation=True)
 
     flight_research_task = tasks.get_cheapest_flight(
         agent=flight_researcher,

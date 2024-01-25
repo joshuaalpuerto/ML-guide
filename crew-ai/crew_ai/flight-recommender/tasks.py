@@ -61,7 +61,7 @@ class Tasks:
         return Task(
             description=dedent(
                 f"""
-                Using insights from the travel researcher, expand this guide base on the trip-range 
+                Using the current information provided, expand this guide base on the trip-range 
             itinerary with detailed per-day plans, including 
             weather forecasts, places to eat, packing suggestions, 
             and a budget breakdown.
@@ -69,16 +69,16 @@ class Tasks:
             You MUST suggest actual places to visit, actual hotels 
             to stay and actual restaurants to go to.
             
-            This itinerary should cover all aspects of the trip, 
-            from cheap flight information, integrating the city guide
-            information with practical travel logistics.
+            This itinerary should cover all aspects of the trip ensuring THE BEST
+            TRIP EVER:
+            1. Cheap flight information ({date_range})
+            2. Must-visit landmarks, be specific and give it a reason why you picked
+            # up each place, what make them special!
+            3. Must-visit places to eat, be specific and give it a reason why you picked
+            # up each place, what make them special!
             
             Your final answer MUST be a complete expanded travel plan,
-            formatted as markdown, encompassing a daily schedule,
-            anticipated weather conditions, recommended clothing and
-            items to pack, and a detailed budget, ensuring THE BEST
-            TRIP EVER, Be specific and give it a reason why you picked
-            # up each place, what make them special!
+            formatted as markdown, encompassing a daily schedule. 
 
             Trip Date: {date_range}
             Traveling to: {destination}

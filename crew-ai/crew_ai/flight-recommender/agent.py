@@ -1,11 +1,8 @@
 from crewai import Agent
 from tools.amadeus_tool import GetFlightOffers
-from tools.scraper_tool import Scraper
-from langchain_community.tools.ddg_search.tool import DuckDuckGoSearchResults
+from tools.search_internet import SearchInternet
 
 get_flight_offers = GetFlightOffers()
-# Get the snippets + url of base on search
-search_tool = DuckDuckGoSearchResults()
 
 
 class Agents:
@@ -13,28 +10,28 @@ class Agents:
         self.llm = llm
         self.verbose = verbose
 
-    def flight_researcher(self, allow_delegation=False):
+    def flight_researcher(self, allow_delegation=False, max_iter=5):
         return Agent(
             role="Flight researcher",
-            goal="Get the a cheap flights data that the Travel agent can use.",
-            backstory="""You are a Flight researcher. Your expertise lies on gathering information about cheap flights. You also strictly translate the user query into the correct arguments for the function `get_flight_offers`""",
+            goal="Get the BEST flight date and affordable price informations.",
+            backstory="""Your expertise lies on gathering informations about best flight date and  affordable price. You also strictly translate the user query into the correct arguments for the function `get_flight_offers`""",
             tools=[get_flight_offers],
             llm=self.llm,
             verbose=self.verbose,
             allow_delegation=allow_delegation,
+            max_iter=max_iter,
         )
 
     def travel_agent(self, allow_delegation=False):
-        website_scrapper = Scraper(llm=self.llm)
+        get_destination_information = SearchInternet(llm=self.llm)
         return Agent(
             role="Destination researcher",
-            goal="Provide the latest and BEST insights about the destination city.",
+            goal="Provide the latest and BEST travel insights about the destination city.",
             backstory="""A resourceful travel researcher with extensive information
         about the city, it's attractions and customs.""",
             llm=self.llm,
             tools=[
-                search_tool,
-                website_scrapper,
+                get_destination_information,
             ],
             verbose=self.verbose,
             allow_delegation=allow_delegation,
