@@ -1,6 +1,5 @@
 from crewai import Task
 from textwrap import dedent
-from datetime import date
 
 
 class Tasks:
@@ -66,9 +65,6 @@ class Tasks:
             weather forecasts, places to eat, packing suggestions, 
             and a budget breakdown.
             
-            You MUST suggest actual places to visit, actual hotels 
-            to stay and actual restaurants to go to.
-            
             This itinerary should cover all aspects of the trip ensuring THE BEST
             TRIP EVER:
             1. Cheap flight information ({date_range})
@@ -79,10 +75,6 @@ class Tasks:
             
             Your final answer MUST be a complete expanded travel plan,
             formatted as markdown, encompassing a daily schedule. 
-
-            Trip Date: {date_range}
-            Traveling to: {destination}
-            Traveler Interests: {interests}
         """
             ),
             agent=agent,
