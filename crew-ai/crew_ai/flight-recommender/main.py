@@ -29,40 +29,17 @@ capable_llm = ChatFireworks(
 )
 
 if __name__ == "__main__":
-    print("## Welcome to Trip Planner Crew")
-    print("-------------------------------")
-    # origin = input(
-    #     dedent(
-    #         """
-    #     What is your current location?(City, Country)
-    #     """
-    #     )
-    # )
-    # destination = input(
-    #     dedent(
-    #         """
-    #     Where do you want to go?(City, Country) (optional)
-    #     """
-    #     )
-    # )
-    # date_range = input(
-    #     dedent(
-    #         """
-    #     What is the date range you are interested in traveling? (YYYY-MM-DD - YYYY-MM-DD)
-    #     """
-    #     )
-    # )
-    # interests = input(
-    #     dedent(
-    #         """
-    #     What are some of your high level interests and hobbies? (History, Food, etc.)
-    #     """
-    #     )
-    # )
     origin = "Tallinn, Estonia"
     destination = "Madrid, Spain"
-    date_range = "2024-04-01 - 2024-04-10"
+    date_range = "2024-04-01 - 2024-04-05"
     interests = "history, food, local experience"
+
+    print("## Welcome to Trip Planner Crew")
+    print("-------------------------------")
+    print(f"origin: {origin}")
+    print(f"destination: {destination}")
+    print(f"date_range: {date_range}")
+    print(f"interests: {interests}")
 
     cheaper_agents = Agents(llm=cheaper_llm, verbose=True)
     capable_agents = Agents(llm=capable_llm, verbose=True)
