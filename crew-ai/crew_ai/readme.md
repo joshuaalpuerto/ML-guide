@@ -10,32 +10,6 @@ Before running the script, make sure you have the following:
 
 - [Fireworks.ai](https://fireworks.ai/)
   - I'm using their [Mixtral MoE 8x7B](https://fireworks.ai/models) alternative to OpenAI as it much-much [cheaper](https://fireworks.ai/pricing) with good results.
-- [Conda](https://docs.conda.io/en/latest/)
-- [Python](https://www.python.org/downloads/)
-- [Poetry](https://python-poetry.org/docs/)
-
-## Installation
-
-1. Navigate to the project directory:
-```bash
-cd project-name
-Create a virtual environment using Conda:
-```bash
-
-2. Create a virtual environment using Conda:
-```bash
-conda create --name project-env python=3.8
-```
-
-3. Activate the virtual environment:
-```bash
-conda activate project-env
-```
-
-4. Install project dependencies using Poetry:
-```bash
-poetry install
-```
 
 ## How to run
 1. Open `flight-recommender/main.py` and change these details
