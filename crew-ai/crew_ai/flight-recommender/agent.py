@@ -13,8 +13,8 @@ class Agents:
     def flight_researcher(self, allow_delegation=False, max_iter=5):
         return Agent(
             role="Flight researcher",
-            goal="Get the BEST flight date and affordable price informations.",
-            backstory="""Your expertise lies on gathering informations about best flight date and  affordable price. You also strictly translate the user query into the correct arguments for the function `get_flight_offers`""",
+            goal="""Get the BEST flight date and affordable price informations.""",
+            backstory="""Your expertise lies on gathering informations about best flight date and  affordable price. """,
             tools=[get_flight_offers],
             llm=self.llm,
             verbose=self.verbose,
@@ -22,28 +22,28 @@ class Agents:
             max_iter=max_iter,
         )
 
-    def travel_agent(self, allow_delegation=False):
+    def travel_agent(self, allow_delegation=False, max_iter=5):
         get_destination_information = SearchInternet(llm=self.llm)
         return Agent(
             role="Destination researcher",
-            goal="Provide the latest and BEST travel insights about the destination city.",
-            backstory="""A resourceful travel researcher with extensive information
-        about the city, it's attractions and customs.""",
+            goal="""Provide the latest and BEST travel insights about the destination city.""",
+            backstory="""A resourceful travel researcher with extensive information about the city, it's attractions and customs.""",
             llm=self.llm,
             tools=[
                 get_destination_information,
             ],
             verbose=self.verbose,
             allow_delegation=allow_delegation,
+            max_iter=max_iter,
         )
 
-    def travel_concierge(self, allow_delegation=False):
+    def travel_concierge(self, allow_delegation=False, max_iter=5):
         return Agent(
             role="Travel Planner",
             goal="""Create the most amazing travel itineraries base on flight details and information about the destination city.""",
-            backstory="""Specialist in travel planning and logistics with 
-            decades of experience. """,
+            backstory="""Specialist in travel planning and logistics with decades of experience. """,
             llm=self.llm,
             verbose=self.verbose,
             allow_delegation=allow_delegation,
+            max_iter=max_iter,
         )

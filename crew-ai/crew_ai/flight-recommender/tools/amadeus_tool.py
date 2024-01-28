@@ -16,7 +16,7 @@ logger = logging.getLogger("amadeus")
 
 
 class GetFlightOffers(BaseTool):
-    name = "get_flight_offers"
+    name = "Get flights offers"
     description = dedent(
         """
     Search for flight information. Remember for ActionInput you have to return a json dump format below.

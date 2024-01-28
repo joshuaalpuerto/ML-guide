@@ -1,9 +1,4 @@
-import json
-import os
-
-import requests
 from typing import Any
-from crewai import Agent, Task
 from langchain.tools import BaseTool
 from textwrap import dedent
 from langchain_community.document_loaders import AsyncChromiumLoader
@@ -18,7 +13,7 @@ import re
 
 
 class SearchInternet(BaseTool):
-    name = "get_destination_information"
+    name = "Get destination informations"
     description = dedent(
         """Tool that search internet for latest information about the destination. Input should be a search query"""
     )
