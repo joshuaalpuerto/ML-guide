@@ -56,9 +56,8 @@ class Tasks:
                 f"""
                 Using the current information provided, expand this guide base on the trip-range itinerary with detailed per-day plans, including weather forecasts,places to eat, packing suggestions, and a budget breakdown.
             
-            This itinerary should cover all aspects of the trip ensuring THE BEST
-            TRIP EVER:
-            1. Cheap flight information ({date_range})
+            You MUST cover all aspects of the trip:
+            1. Provide cheap flight information base on trip details ({date_range}).
             2. Must-visit landmarks, be specific and give it a reason why you picked
             # up each place, what make them special!
             3. Must-visit places to eat, be specific and give it a reason why you picked

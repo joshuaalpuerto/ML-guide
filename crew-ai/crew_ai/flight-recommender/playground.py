@@ -28,4 +28,4 @@ if __name__ == "__main__":
 
     observation = scraper.run("Top attractions in Madrid, Spain 2024")
 
-    print(observation)
+    print("observations", observation)

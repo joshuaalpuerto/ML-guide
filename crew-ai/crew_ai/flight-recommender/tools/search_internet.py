@@ -3,13 +3,13 @@ from langchain.tools import BaseTool
 from textwrap import dedent
 from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain_community.document_transformers import Html2TextTransformer
-from langchain_community.tools.ddg_search.tool import DuckDuckGoSearchResults
-from langchain_community.utilities.duckduckgo_search import DuckDuckGoSearchAPIWrapper
+from langchain_community.utilities import SerpAPIWrapper
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.summarize import load_summarize_chain
 from langchain.prompts import PromptTemplate
 import logging
 import re
+from crew_ai.config import config
 
 
 class SearchInternet(BaseTool):
@@ -29,7 +29,7 @@ class SearchInternet(BaseTool):
     def _run(self, query):
         search_result = self.search_information(query)
         extracted_links = self.extract_valid_links_from_search_result(search_result)
-        splits = self.process_search_result_to_documents(links=extracted_links)
+        splits = self.extract_valid_links_from_google_result(links=extracted_links)
         result = self.summarize_documents(splits)
 
         return dedent(
@@ -38,18 +38,29 @@ class SearchInternet(BaseTool):
         )
 
     def search_information(self, query):
-        """
-        The `search_information` method in the `SearchInternet` class is using the
-        DuckDuckGoSearchResults tool to search the internet for information based on a given query.
-        It returns the search results.
-        """
-
-        search_tool = DuckDuckGoSearchResults(num_results=2)
-        return search_tool.run(
+        search_tool = SerpAPIWrapper(
+            serpapi_api_key=config.SERPAPI_API_KEY,
+            params={
+                "engine": "google",
+                "google_domain": "google.com",
+                "gl": "ee",  # should come from arguments for now we will statically add here Estonia
+                "hl": "en",
+            },
+        )
+        return search_tool.results(
             query,
         )
 
-    def extract_valid_links_from_search_result(self, search_result):
+    def extract_valid_links_from_google_result(self, results):
+        # get organic results and return only top 2
+        organic_results = results["organic_results"][:2]
+
+        return [result["link"] for result in organic_results]
+
+    def extract_valid_links_from_ddg_result(self, search_result):
+        """
+        If Duck duck search is used we can use this to extract the links attached to the result
+        """
         # Regular expression to extract links
         links = re.findall(r"link:\s(https?://\S+)", search_result)
 
