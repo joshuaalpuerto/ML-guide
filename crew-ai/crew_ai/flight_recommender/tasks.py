@@ -3,7 +3,12 @@ from textwrap import dedent
 
 
 class Tasks:
-    def get_cheapest_flight(self, agent, *, origin, destination, date_range, interests):
+    def get_cheapest_flight(self, agent, **inputs):
+        origin = inputs.get("origin", "")
+        destination = inputs.get("destination", "")
+        date_range = inputs.get("date_range", "")
+        interests = inputs.get("interests", "")
+
         return Task(
             description=dedent(
                 f"""As a researcher your task is to analyze the user trip details and conduct a comprehensive research to get cheap flights.
@@ -18,9 +23,12 @@ class Tasks:
             agent=agent,
         )
 
-    def gather_destination_information(
-        self, agent, *, origin, destination, date_range, interests
-    ):
+    def gather_destination_information(self, agent, **inputs):
+        origin = inputs.get("origin", "")
+        destination = inputs.get("destination", "")
+        date_range = inputs.get("date_range", "")
+        interests = inputs.get("interests", "")
+
         return Task(
             description=dedent(
                 f"""
@@ -43,14 +51,9 @@ class Tasks:
             agent=agent,
         )
 
-    def create_itenirary(
-        self,
-        agent,
-        *,
-        destination,
-        date_range,
-        interests,
-    ):
+    def create_itenirary(self, agent, **inputs):
+        date_range = inputs.get("date_range", "")
+
         return Task(
             description=dedent(
                 f"""
