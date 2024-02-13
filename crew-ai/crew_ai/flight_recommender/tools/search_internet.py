@@ -28,8 +28,8 @@ class SearchInternet(BaseTool):
 
     def _run(self, query):
         search_result = self.search_information(query)
-        extracted_links = self.extract_valid_links_from_search_result(search_result)
-        splits = self.extract_valid_links_from_google_result(links=extracted_links)
+        extracted_links = self.extract_valid_links_from_google_result(search_result)
+        splits = self.process_search_result_to_documents(links=extracted_links)
         result = self.summarize_documents(splits)
 
         return dedent(

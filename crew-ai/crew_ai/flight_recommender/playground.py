@@ -26,6 +26,8 @@ llm = ChatFireworks(
 if __name__ == "__main__":
     scraper = SearchInternet(llm=llm, human_interests="history, food, local experience")
 
-    observation = scraper.run("Top attractions in Madrid, Spain 2024")
+    observation = scraper.run(
+        "Weather in Manila, Philippines from April 1 to April 5, 2024"
+    )
 
     print("observations", observation)
