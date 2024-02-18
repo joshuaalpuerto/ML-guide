@@ -15,26 +15,32 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("amadeus")
 
 
+class GetFlightOffersInput(BaseModel):
+    originLocationCode: str = Field(
+        description="City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)"
+    )
+    destinationLocationCode: str = Field(
+        description="City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)"
+    )
+    departureDate: str = Field(
+        description="The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)"
+    )
+    returnDate: str = Field(
+        description="The date on which the traveler will depart from the destination to return to the origin, in YYYY-MM-DD format"
+    )
+    adults: int = Field(
+        description="The number of adult travelers (age 12 or older on the date of departure) (Required)"
+    )
+
+
 class GetFlightOffers(BaseTool):
     name = "Get flights offers"
-    description = dedent(
-        """
-    Search for flight information. Remember for ActionInput you have to return a json dump format below.
-    {{
-        "originLocationCode": <City/airport IATA code from which the traveler will depart, e.g., BOS for Boston (Required)>,
-        "destinationLocationCode": <City/airport IATA code to which the traveler is going, e.g., PAR for Paris (Required)>,
-        "departureDate": <The date on which the traveler will depart from the origin to go to the destination, in YYYY-MM-DD format (Required)>,
-        "adults": <The number of adult travelers (age 12 or older on the date of departure) (Required)>,
-    }}
-    """
-    )
+    description = "Search for flight information"
+    args_schema: Type[BaseModel] = GetFlightOffersInput
 
     return_direct = True
 
-    def _run(
-        self,
-        input_string,
-    ):
+    def _run(self, **payload):
         """
         Pulls the flight data from the amadeus server.
         """
@@ -44,18 +50,15 @@ class GetFlightOffers(BaseTool):
             client_id=config.AMADEUS_API_KEY, client_secret=config.AMADEUS_SECRET
         )
 
-        logger.debug("input_string: %s with type %s", input_string, type(input_string))
+        logger.debug("llm paylaod:", payload)
 
-        try:
-            parsed_params = json.loads(input_string)
-        except json.JSONDecodeError:
-            raise Exception("Invalid input format. Expected JSON string.")
-
-        adults = parsed_params.get("adults", 1)
+        adults = payload.get("adults", 1)
+        return_date = payload.get("returnDate", None)
         # Set up the parameters for the request
         params = {
-            **parsed_params,
+            **payload,
             "adults": adults,
+            "returnDate": return_date,
             "currencyCode": "EUR",
             "max": 5,
         }
@@ -74,6 +77,7 @@ class GetFlightOffers(BaseTool):
             result = [self.format_item_result(item) for item in response.data]
 
             return "------".join(result)
+
         except ResponseError as error:
             logger.error(f"An error occurred: {error}")
             logger.error(f"Error code: {error.code}")
@@ -90,16 +94,16 @@ class GetFlightOffers(BaseTool):
 
         itineraries_summary = dedent(
             f"""
-            Flight offer {data['id']}
-            Price: {price}
+            Flight offer {data['id']} with price of `{price}`
             """
         )
+
         for idx, iterenary in enumerate(itineraries):
             layovers = self.get_layovers_info_from_iterenary(iterenary)
-
-            options = dedent(
+            title = "To Destination" if idx == 0 else "Going back"
+            itineraries_summary += dedent(
                 f"""
-                Itinerary {idx + 1}:
+                {title}
                 Layover(s): {", ".join(layovers)}
                 """
             )
@@ -127,9 +131,9 @@ class GetFlightOffers(BaseTool):
                 """
                 )
 
-                options += flight_details + "\n"
+                itineraries_summary += flight_details
 
-        return itineraries_summary + options
+        return itineraries_summary
 
     def get_layovers_info_from_iterenary(self, iterenary):
         segments = iterenary["segments"]

@@ -6,6 +6,7 @@ import logging
 from textwrap import dedent
 from langchain_community.tools.ddg_search.tool import DuckDuckGoSearchResults
 from tools.search_internet import SearchInternet
+from tools.amadeus_tool import GetFlightOffers
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(name)s - %(levelname)s - %(message)s"
@@ -24,10 +25,20 @@ llm = ChatFireworks(
 )
 
 if __name__ == "__main__":
-    scraper = SearchInternet(llm=llm, human_interests="history, food, local experience")
+    # scraper = SearchInternet(llm=llm, human_interests="history, food, local experience")
 
-    observation = scraper.run(
-        "Weather in Manila, Philippines from April 1 to April 5, 2024"
+    # observation = scraper.run(
+    #     "Weather in Manila, Philippines from April 1 to April 5, 2024"
+    # )
+
+    get_flight_offer = GetFlightOffers()
+    observation = get_flight_offer.run(
+        {
+            "originLocationCode": "TLL",
+            "destinationLocationCode": "MAD",
+            "departureDate": "2024-04-01",
+            "returnDate": "2024-04-05",
+            "adults": 1,
+        },
     )
-
     print("observations", observation)

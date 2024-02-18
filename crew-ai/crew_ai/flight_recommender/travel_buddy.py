@@ -1,6 +1,7 @@
 from crew_ai.config import config
 from crewai import Crew, Process
 from langchain_community.chat_models.fireworks import ChatFireworks
+from langchain_openai import ChatOpenAI
 from langchain.globals import set_llm_cache, set_debug
 from langchain.cache import InMemoryCache
 from langchain.callbacks import StdOutCallbackHandler
@@ -15,7 +16,7 @@ logging.basicConfig(
 
 set_llm_cache(InMemoryCache())
 # Turn this on only if you want to debug other wise it's hard to see the conversations.
-set_debug(False)
+set_debug(True)
 
 cheaper_llm = ChatFireworks(
     model="accounts/fireworks/models/mistral-7b-instruct-4k",
@@ -30,6 +31,16 @@ capable_llm = ChatFireworks(
     model_kwargs={"temperature": 0.1, "max_tokens": 4096},
     callbacks=[StdOutCallbackHandler()],
 )
+
+function_calling_llm = ChatOpenAI(
+    model="accounts/fireworks/models/fw-function-call-34b-v0",
+    openai_api_key=config.FIREWORKS_API_KEY,
+    openai_api_base="https://api.fireworks.ai/inference/v1",
+    temperature=0,
+    max_tokens=1024,
+    callbacks=[StdOutCallbackHandler()],
+)
+
 
 cheaper_agents = Agents(llm=cheaper_llm, verbose=True)
 capable_agents = Agents(llm=capable_llm, verbose=True)
@@ -82,12 +93,16 @@ if __name__ == "__main__":
     )
 
     # add flight researcher
-    flight_researcher = capable_agents.flight_researcher()
+    flight_researcher = cheaper_agents.flight_researcher(
+        function_calling_llm=function_calling_llm
+    )
     travel_buddy.add_agent(agent=flight_researcher, task=tasks.get_cheapest_flight)
 
     # add add information gatherer
     # this has a simple task so we can use a smaller model
-    travel_agent = capable_agents.travel_agent()
+    travel_agent = cheaper_agents.travel_agent(
+        function_calling_llm=function_calling_llm, max_iter=10
+    )
     travel_buddy.add_agent(
         agent=travel_agent, task=tasks.gather_destination_information
     )
