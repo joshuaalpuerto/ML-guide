@@ -11,7 +11,7 @@ class Tasks:
 
         return Task(
             description=dedent(
-                f"""As a researcher your task is to analyze the user trip details and conduct a comprehensive research to get cheap flights.
+                f"""As a researcher your task is to analyze the user trip details and conduct a comprehensive research to get the best flight information with shortest flight and affortable flight.
                 
                 Travel information:
                 origin: {origin}
@@ -60,11 +60,9 @@ class Tasks:
                 Using the current information provided, expand this guide base on the trip-range itinerary with detailed per-day plans, including weather forecasts,places to eat, packing suggestions, and a budget breakdown.
             
             You MUST cover all aspects of the trip:
-            1. Provide cheap flight information base on trip details ({date_range}).
-            2. Must-visit landmarks, be specific and give it a reason why you picked
-            # up each place, what make them special!
-            3. Must-visit places to eat, be specific and give it a reason why you picked
-            # up each place, what make them special!
+            1. Provide the best traveli information (shortest travel time and affordable price) base on trip details ({date_range}). 
+            2. Must-visit landmarks, be specific and give it a reason why you picked up each place, what make them special!
+            3. Must-visit places to eat, be specific and give it a reason why you picked up each place, what make them special!
 
             Your final answer MUST be a complete expanded travel plan, formatted as markdown, encompassing a daily schedule. 
 

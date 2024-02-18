@@ -30,8 +30,8 @@ class Agents:
 
         return Agent(
             role="Flight researcher",
-            goal="""Get the BEST flight date and affordable price informations.""",
-            backstory="""Your expertise lies on gathering informations about best flight date and  affordable price. """,
+            goal="""Provide the BEST flight informations according to shortest travel time and price.""",
+            backstory="""Your expertise lies on gathering informations flight information. """,
             tools=tools,
             llm=self.llm,
             function_calling_llm=function_calling_llm,
