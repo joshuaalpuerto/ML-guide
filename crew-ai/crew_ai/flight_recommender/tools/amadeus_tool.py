@@ -1,10 +1,8 @@
 import logging
-import json
-from typing import Optional, Type
+from typing import Type
 from crew_ai.config import config
 from amadeus import Client, ResponseError
 from pydantic import BaseModel, Field
-from langchain.agents import tool
 from langchain.tools import BaseTool
 import airportsdata
 from textwrap import dedent

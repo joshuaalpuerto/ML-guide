@@ -8,6 +8,8 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.summarize import load_summarize_chain
 from langchain.prompts import PromptTemplate
 from langchain_exa import ExaSearchRetriever, TextContentsOptions
+from pydantic import BaseModel, Field
+from typing import Type
 import logging
 import re
 from crew_ai.config import config
@@ -96,11 +98,17 @@ class Exa:
         return (links, results)
 
 
+class SearchInternetInput(BaseModel):
+    query: str = Field(description="search query to look up (Required)")
+
+
 class SearchInternet(BaseTool):
     name = "Get destination informations"
     description = dedent(
-        """Tool that search internet for latest information about the destination. Input should be a search query"""
+        """Tool that search internet for latest information about the destination."""
     )
+    args_schema: Type[BaseModel] = SearchInternetInput
+
     return_direct = True
 
     # improve the typing for this
