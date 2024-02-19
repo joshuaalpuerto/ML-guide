@@ -19,25 +19,6 @@ set_llm_cache(InMemoryCache())
 # Turn this on only if you want to debug other wise it's hard to see the conversations.
 set_debug(True)
 
-cheaper_llm = get_llm(
-    model="accounts/fireworks/models/mistral-7b-instruct-4k",
-    callbacks=[StdOutCallbackHandler()],
-)
-
-capable_llm = get_llm(
-    callbacks=[StdOutCallbackHandler()],
-)
-
-# this is expensive so better to use just mixtral8x
-function_calling_llm = get_function_calling_llm(
-    callbacks=[StdOutCallbackHandler()],
-)
-
-
-cheaper_agents = Agents(llm=cheaper_llm, verbose=True)
-capable_agents = Agents(llm=capable_llm, verbose=True)
-tasks = Tasks()
-
 
 class TravelBuddy:
 
@@ -65,6 +46,24 @@ class TravelBuddy:
 
 
 if __name__ == "__main__":
+    cheaper_llm = get_llm(
+        model="accounts/fireworks/models/mistral-7b-instruct-4k",
+        callbacks=[StdOutCallbackHandler()],
+    )
+
+    capable_llm = get_llm(
+        callbacks=[StdOutCallbackHandler()],
+    )
+
+    # this is expensive so better to use just mixtral8x
+    function_calling_llm = get_function_calling_llm(
+        callbacks=[StdOutCallbackHandler()],
+    )
+
+    cheaper_agents = Agents(llm=cheaper_llm, verbose=True)
+    capable_agents = Agents(llm=capable_llm, verbose=True)
+    tasks = Tasks()
+
     origin = "Tallinn, Estonia"
     destination = "Madrid, Spain"
     date_range = "2024-04-01 - 2024-04-05"

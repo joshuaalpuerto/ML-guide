@@ -3,17 +3,20 @@ from langchain_community.callbacks import StreamlitCallbackHandler
 from travel_buddy import TravelBuddy
 from agent import Agents
 from tasks import Tasks
-from utils import get_llm
+from utils import get_llm, get_function_calling_llm
 
 USER_AVATAR = "👤"
 BOT_AVATAR = "🤖"
 
 st.title("Your travel buddy")
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
 
-with st.form("my_form"):
+def clear_page():
+    st.empty()
+
+
+with st.form(key="my_form"):
+    fireworks_api_key = st.text_input("FIREWORKS_API", value="")
     origin = st.text_input("Origin?", value="Tallinn, Estonia")
     destination = st.text_input("Destination?", value="Madrid, Spain")
     date_range = st.text_input(
@@ -25,12 +28,23 @@ with st.form("my_form"):
     )
 
     # Every form must have a submit button.
-    submitted = st.form_submit_button("Submit")
-    if submitted:
+    submitted = st.form_submit_button(
+        "Submit", type="primary", use_container_width=True
+    )
+    st.form_submit_button("Clear", on_click=clear_page, use_container_width=True)
+
+    if submitted and fireworks_api_key != "":
+        # clean any errors
+        clear_page()
+
         st_callback = StreamlitCallbackHandler(st.container())
-        llm = get_llm(callbacks=[st_callback])
+        llm = get_llm(fireworks_api_key=fireworks_api_key, callbacks=[st_callback])
+        function_calling_llm = get_function_calling_llm(
+            fireworks_api_key=fireworks_api_key, callbacks=[st_callback]
+        )
         tasks = Tasks()
         capable_agents = Agents(llm=llm, verbose=True)
+        cheap_agents = Agents(llm=llm, verbose=True)
 
         travel_buddy = TravelBuddy(
             origin=origin,
@@ -40,12 +54,16 @@ with st.form("my_form"):
         )
 
         # add flight researcher
-        flight_researcher = capable_agents.flight_researcher()
+        flight_researcher = cheap_agents.flight_researcher(
+            function_calling_llm=function_calling_llm
+        )
         travel_buddy.add_agent(agent=flight_researcher, task=tasks.get_cheapest_flight)
 
         # add add information gatherer
         # this has a simple task so we can use a smaller model
-        travel_agent = capable_agents.travel_agent()
+        travel_agent = capable_agents.travel_agent(
+            function_calling_llm=function_calling_llm, max_iter=10
+        )
         travel_buddy.add_agent(
             agent=travel_agent, task=tasks.gather_destination_information
         )
