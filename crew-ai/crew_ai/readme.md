@@ -12,7 +12,7 @@ Before running the script, make sure you have the following:
   - I'm using their [Mixtral MoE 8x7B](https://fireworks.ai/models) alternative to OpenAI as it much-much [cheaper](https://fireworks.ai/pricing) with good results.
 
 ## How to run
-1. Open `flight-recommender/main.py` and change these details
+1. Open `flight-recommender/cli.py` and change these details
 ```js
 origin = "Tallinn, Estonia"
 destination = "Madrid, Spain"
@@ -20,9 +20,9 @@ date_range = "2024-04-01 - 2024-04-05"
 interests = "history, food, local experience"
 ```
 
-2. Run the `main.py`
+2. Run the `cli.py`
 ```bash
-python main.py
+python cli.py
 ```
 
 3. You can check the logged output in [myoutput.txt](https://github.com/joshuaalpuerto/ML-guide/blob/main/crew-ai/crew_ai/flight-recommender/myoutput.txt)
