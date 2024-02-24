@@ -2,7 +2,7 @@
 
 ## Description
 
-A simple project that helps me navigate how to use Multi Agent process. This projects suggest a modified version of this example project from [CrewAI](https://github.com/joaomdmoura/crewAI-examples/tree/main/trip_planner). 
+A simple project that helps me navigate how to use Multi Agent process. This is a modified version of this example project from [CrewAI](https://github.com/joaomdmoura/crewAI-examples/tree/main/trip_planner). 
 
 ## Prerequisites
 
