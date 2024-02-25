@@ -1,9 +1,15 @@
 import streamlit as st
 from langchain_community.callbacks import StreamlitCallbackHandler
 from travel_buddy import TravelBuddy
+from langchain.globals import set_llm_cache, set_debug
+from langchain.cache import InMemoryCache
 from agent import Agents
 from tasks import Tasks
 from utils import get_llm, get_function_calling_llm
+
+set_llm_cache(InMemoryCache())
+# Turn this on only if you want to debug other wise it's hard to see the conversations.
+set_debug(True)
 
 USER_AVATAR = "👤"
 BOT_AVATAR = "🤖"
