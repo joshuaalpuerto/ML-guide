@@ -29,7 +29,7 @@ class Chatbot:
         self.llm = Fireworks(
             fireworks_api_key=constants.FIREWORKS_API_KEY,
             model=model,
-            model_kwargs={"temperature": 0.1, "max_tokens": 1024, "top_p": 0.9},
+            model_kwargs={"temperature": 0, "max_tokens": 4000},
         )
         self.language = language
         self.verbose = verbose
@@ -66,6 +66,10 @@ class Chatbot:
             verbose=self.verbose,
         )
 
+        language_example = self.prompts.LANGUAGE_EXAMPLES_DICT.get(self.language)
         return llm_chain.predict(
-            input=input, chat_history=chat_history, language=self.language
+            input=input,
+            chat_history=chat_history,
+            language=self.language,
+            language_example=language_example,
         )

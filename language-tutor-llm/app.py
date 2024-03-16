@@ -7,7 +7,7 @@ AVATAR_MAP = {"user": "👤", "assistant": "🤖"}
 @st.cache_resource()
 def get_chatbot(language):
     return Chatbot(
-        model="accounts/fireworks/models/mistral-7b-instruct-4k",
+        model="accounts/fireworks/models/mixtral-8x7b-instruct",
         language=language,
         verbose=False,
     )
