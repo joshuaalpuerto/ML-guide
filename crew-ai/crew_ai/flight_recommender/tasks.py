@@ -3,13 +3,15 @@ from textwrap import dedent
 
 
 class Tasks:
+    cheapest_flights_result = None
+
     def get_cheapest_flight(self, agent, **inputs):
         origin = inputs.get("origin", "")
         destination = inputs.get("destination", "")
         date_range = inputs.get("date_range", "")
         interests = inputs.get("interests", "")
 
-        return Task(
+        self.cheapest_flights_result = Task(
             description=dedent(
                 f"""As a researcher your task is to analyze the user trip details and conduct a comprehensive research to get the best flight information with shortest flight and affortable flight.
                 
@@ -22,6 +24,8 @@ class Tasks:
             ),
             agent=agent,
         )
+
+        return self.cheapest_flights_result
 
     def gather_destination_information(self, agent, **inputs):
         origin = inputs.get("origin", "")
@@ -53,11 +57,12 @@ class Tasks:
 
     def create_itenirary(self, agent, **inputs):
         date_range = inputs.get("date_range", "")
+        context = [self.cheapest_flights_result]
 
         return Task(
             description=dedent(
                 f"""
-                Using the current information provided, expand this guide base on the trip-range itinerary with detailed per-day plans, including weather forecasts,places to eat, packing suggestions, and a budget breakdown.
+                Using the current information provided, expand this guide base on the trip-range itinerary with detailed per-day plans, including weath er forecasts,places to eat, packing suggestions, and a budget breakdown.
             
             You MUST cover all aspects of the trip:
             1. Provide the best traveli information (shortest travel time and affordable price) base on trip details ({date_range}). 
@@ -70,4 +75,5 @@ class Tasks:
         """
             ),
             agent=agent,
+            context=context,
         )
