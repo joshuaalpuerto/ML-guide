@@ -1,6 +1,7 @@
 import asyncio
 import logging
 from typing import List, Sequence
+from textwrap import dedent
 
 from langgraph.graph import END, MessageGraph
 from langgraph.graph import MessageGraph, END
@@ -11,7 +12,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.globals import set_llm_cache, set_debug
 from langchain.cache import InMemoryCache
 
-from utils import get_llm
+from utils import get_llm, generate
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(name)s - %(levelname)s - %(message)s"
@@ -22,57 +23,47 @@ set_llm_cache(InMemoryCache())
 set_debug(True)
 
 
-prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            "You are an AI assistant researcher tasked with researching on a variety of topics in a short summary of 5 paragraphs."
-            " Generate the best research possible as per user request."
-            " If the user provides critique, respond with a revised version of your previous attempts.",
-        ),
-        MessagesPlaceholder(variable_name="messages"),
-    ]
-)
-
-llm = get_llm()
-
-
-generate = prompt | llm
-
-reflection_prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            "You are a senior researcher"
-            " Provide detailed recommendations, including requests for length, depth, style, etc."
-            " to an asistant researcher to help improve this researches",
-        ),
-        MessagesPlaceholder(variable_name="messages"),
-    ]
-)
-
-reflect = reflection_prompt | llm
-
-
 # Langraph alwayss store the output ot internal state.
 # basically state should be a sequence of messages
-async def generation_node(state: Sequence[BaseMessage]):
-    print("--state--", state)
-    res = await generate.ainvoke({"messages": state})
+async def generation_node(messages: Sequence[BaseMessage]):
+    role = "Assisstant researcher"
+    # We cannot use Chat prompt as we cannot change their prefix(human and ai is only supported).
+    formatted_messages = [f"{msg.name}: {msg.content}\n" for msg in messages]
+    conversation_history = "".join(formatted_messages)
+    result = generate(
+        backstory=f"You are an {role} tasked with researching on a variety of topics in a short summary of 5 paragraphs.",
+        goal=(
+            "Generate the best research possible as per user request. "
+            "If you are given feedback, revise your previous attempts accordingly."
+        ),
+        messages=conversation_history,
+    )
 
     # this will be treated as a feedback for the generator
-    return AIMessage(name="Assisstant researcher", content=res.content)
+    return AIMessage(name=role, content=result)
 
 
 async def reflection_node(messages: Sequence[BaseMessage]) -> List[BaseMessage]:
+    role = "Senior researcher"
     # First message is the original user request. We hold it the same for all nodes
-    translated = [messages[0]] + [
-        AIMessage(name=msg.name, content=msg.content) for msg in messages[1:]
+    human_message = messages[0]
+    formatted_messages = [f"{human_message.name}: {human_message.content}\n"] + [
+        f"{msg.name}: {msg.content}\n" for msg in messages[1:]
     ]
-    res = await reflect.ainvoke({"messages": translated})
+    conversation_history = "".join(formatted_messages)
+    result = generate(
+        backstory=f"You are a {role}",
+        goal=(
+            "Analyze and provide detailed recommendations, "
+            "including requests for length, depth, style, etc. "
+            "to assistant researcher to help improve the answer. "
+            "If you are satisfied just answer: `ALL_GOOD`"
+        ),
+        messages=conversation_history,
+    )
 
     # this will be treated as a feedback for the generator
-    return AIMessage(name="Senior researcher", content=res.content)
+    return AIMessage(name=role, content=result)
 
 
 builder = MessageGraph()
@@ -95,7 +86,7 @@ graph = builder.compile()
 
 async def stream_responses():
     async for event in graph.astream(
-        [HumanMessage(content="Research on climate change")],
+        [HumanMessage(content="Research on climate change", name="Human")],
     ):
         print(event)
         print("---")
