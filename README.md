@@ -8,3 +8,5 @@
 - Transformers `Trainer`
 - Retriaval augmented generation
 - Prompt engineering experimentation
+- Agents
+- Data extraction
