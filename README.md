@@ -10,3 +10,5 @@
 - Prompt engineering experimentation
 - Agents
 - Data extraction
+- Fine-tuning classifications
+- Fine-tuning Chatbot
