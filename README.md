@@ -7,7 +7,7 @@
      - Sentence bert
 - Transformers `Trainer`
 - Retriaval augmented generation
-- Prompt engineering experimentation
+- Prompt engineering
 - Agents
 - Data extraction
 - Fine-tuning classifications
