@@ -7,6 +7,7 @@
      - Sentence bert
 - Transformers `Trainer`
 - Retriaval augmented generation
+- Knowledge graph
 - Prompt engineering
 - Agents
 - Data extraction
