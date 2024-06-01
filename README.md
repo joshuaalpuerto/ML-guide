@@ -9,6 +9,7 @@
 - Retriaval augmented generation
 - Knowledge graph
 - Prompt engineering
+    - ReAct
 - Agents
 - Data extraction
 - Fine-tuning
