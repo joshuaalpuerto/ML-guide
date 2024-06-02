@@ -10,6 +10,7 @@
 - Knowledge graph
 - Prompt engineering
     - ReAct
+    - Meta-prompt
 - Agents
 - Data extraction
 - Fine-tuning
