@@ -11,6 +11,7 @@
 - Prompt engineering
     - ReAct
     - Meta-prompt
+    - CoSTAR
 - Agents
 - Data extraction
 - Fine-tuning
