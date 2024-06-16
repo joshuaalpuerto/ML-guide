@@ -12,6 +12,7 @@
     - ReAct
     - Meta-prompt
     - CoSTAR
+    - Task decomposition
 - Agents
 - Data extraction
 - Fine-tuning
