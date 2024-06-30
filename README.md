@@ -13,6 +13,7 @@
     - Meta-prompt
     - CoSTAR
     - Task decomposition
+    - Tree of thought
 - Agents
 - Data extraction
 - Fine-tuning
