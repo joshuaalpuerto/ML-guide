@@ -14,6 +14,7 @@
     - CoSTAR
     - Task decomposition
     - Tree of thought
+- Prompt optimization
 - Agents
 - Data extraction
 - Fine-tuning
