@@ -15,6 +15,7 @@
     - Task decomposition
     - Tree of thought
 - Prompt optimization
+    - TextGrad
 - Agents
 - Data extraction
 - Fine-tuning
