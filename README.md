@@ -17,6 +17,7 @@
 - Prompt optimization
     - TextGrad
 - Agents
+- Compound AI system (using langgraph)
 - Data extraction
 - Fine-tuning
     - Classifications
