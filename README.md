@@ -6,7 +6,6 @@
   - Dense embedding
      - Sentence bert
      - Cross encoder
-- Transformers `Trainer`
 - Retriaval augmented generation
 - Knowledge graph
 - Prompt engineering
