@@ -39,3 +39,10 @@ Thumbs.db
 *.bak
 *.old
 *.swp
+
+# image-to-video
+**/assets/*
+# Lets include the sample image and video
+!**/assets/sample
+# But don't include the interpolated images (image geerated in-between)
+**/assets/sample/interpolated*
