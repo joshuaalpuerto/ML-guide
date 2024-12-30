@@ -12,6 +12,7 @@ fireworks-ai = "^0.15.10"
 python-dotenv = "^1.0.1"
 moviepy = "v1.0.3"
 opencv-python = "^4.10.0.84"
+python-json-logger = "^3.2.1"
 
 
 [build-system]
