@@ -1,5 +1,3 @@
-import requests
-import json
 import fireworks.client
 from fireworks.client import Fireworks
 from fireworks.client.image import ImageInference, Answer

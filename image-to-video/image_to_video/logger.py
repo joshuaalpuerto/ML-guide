@@ -11,6 +11,8 @@ def setup_logger():
                 "format": "%(asctime)s %(levelname)s %(message)s",
                 "datefmt": "%Y-%m-%dT%H:%M:%SZ",
                 "class": "pythonjsonlogger.jsonlogger.JsonFormatter",
+                # Map levelname to severity for Google logs
+                "rename_fields": {"levelname": "severity"},
             }
         },
         "handlers": {
@@ -20,17 +22,34 @@ def setup_logger():
                 "formatter": "json",
             }
         },
-        "loggers": {"": {"handlers": ["stdout"], "level": "DEBUG"}},
+        "loggers": {
+            "": {
+                "handlers": ["stdout"],
+                "level": "DEBUG",
+            },
+        },
     }
 
-    logging.config.dictConfig(LOGGING)
+    # List of third-party loggers to suppress DEBUG logs
+    third_party_loggers = [
+        # api request trigger by fireworks or openai
+        "httpx",
+        "httpcore",
+        "fireworks",
+        "langchain",
+        "openai",
+    ]
 
-    logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-    )
+    # Dynamically add loggers with ERROR level to suppress DEBUG logs
+    for third_party_logger in third_party_loggers:
+        LOGGING["loggers"][third_party_logger] = {
+            "level": logging.ERROR,
+            "handlers": ["stdout"],
+            "propagate": False,
+        }
+
+    logging.config.dictConfig(LOGGING)
     logger = logging.getLogger(__name__)
-    # This prevents log messages from being duplicated or handled by unexpected loggers
-    logger.propagate = False
 
     return logger
 

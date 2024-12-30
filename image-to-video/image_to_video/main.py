@@ -46,7 +46,6 @@ class Agent:
         )
 
         graph_builder.add_edge(START, "generate_plot")
-        graph_builder.add_edge("generate_plot", END)
         graph_builder.add_edge("generate_plot", "generate_next_image_sequence")
         graph_builder.add_conditional_edges(
             "generate_next_image_sequence",
@@ -199,6 +198,7 @@ if __name__ == "__main__":
     thread_id = f"{random_number:04}"
 
     config = {"configurable": {"thread_id": thread_id}}
+
     agent = Agent()
     agent.execute(
         {
