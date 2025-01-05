@@ -7,6 +7,7 @@ from agent_orchestration_framework.types import (
     ParticipantRole,
     OrchestratorConfig,
 )
+from agent_orchestration_framework.utils import Logger
 
 
 @dataclass
@@ -37,6 +38,7 @@ class MultiAgentOrchestrator:
         self.config = replace(DEFAULT_CONFIG, **asdict(options))
         self.storage = storage
 
+        self.logger = Logger(self.config, logger)
         self.agents: Dict[str] = {}
         self.storage = storage
 
