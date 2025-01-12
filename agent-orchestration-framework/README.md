@@ -1,6 +1,6 @@
 # Agent Orchestration Framework
 
-This repository provides a comprehensive guide and framework for building autonomous agents from scratch. The goal is to help me understand the core components and processes involved in creating an agent.
+The goal is to help me understand the core components and processes involved in creating an agent.
 
 ## Pre-requisites
 To run this project, ensure you have the following installed:
