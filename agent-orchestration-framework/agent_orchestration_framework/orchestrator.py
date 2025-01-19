@@ -16,9 +16,10 @@ class MultiAgentOrchestrator:
         self,
         options: Optional[OrchestratorConfig] = None,
         storage=None,
-        classifier=None,
         logger=None,
-        default_agent=None,
+        # Orchastrator where other agents will be added automatically to it's tools
+        # By default none and we will create it.
+        manager=None,
     ):
 
         DEFAULT_CONFIG = OrchestratorConfig()
@@ -43,22 +44,26 @@ class MultiAgentOrchestrator:
         self.storage = storage
 
         self.execution_times: Dict[str, float] = {}
-        self.default_agent = default_agent
+        self.default_agent = default_agent or
 
+    def create_manager_agent(self):
+        from agent_orchestration_framework.agents.agent import Agent, AgentOptions
+
+        manager_agent = Agent(
+            AgentOptions(
+                name="Manager",
+                description="Manager agent to manage other agents",
+                model=None,
+                streaming=False,
+                tools=[],
+            )
+        )
+        self.add_agent(manager_agent)
     def add_agent(self, agent):
         if agent.id in self.agents:
             raise ValueError(f"An agent with ID '{agent.id}' already exists.")
         self.agents[agent.id] = agent
         self.classifier.set_agents(self.agents)
-
-    def get_default_agent(self):
-        return self.default_agent
-
-    def set_default_agent(self, agent):
-        self.default_agent = agent
-
-    def set_classifier(self, intent_classifier):
-        self.classifier = intent_classifier
 
     def get_all_agents(self) -> Dict[str, Dict[str, str]]:
         return {
