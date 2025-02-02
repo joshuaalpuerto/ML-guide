@@ -44,7 +44,7 @@ class MultiAgentOrchestrator:
         self.storage = storage
 
         self.execution_times: Dict[str, float] = {}
-        self.default_agent = default_agent or
+        self.default_agent = default_agent or self.get_default_agent()
 
     def create_manager_agent(self):
         from agent_orchestration_framework.agents.agent import Agent, AgentOptions
@@ -59,6 +59,7 @@ class MultiAgentOrchestrator:
             )
         )
         self.add_agent(manager_agent)
+
     def add_agent(self, agent):
         if agent.id in self.agents:
             raise ValueError(f"An agent with ID '{agent.id}' already exists.")
