@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { expect } from "@playwright/test";
 import { test } from "./fixture";
 
