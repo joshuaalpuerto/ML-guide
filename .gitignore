@@ -46,3 +46,5 @@ Thumbs.db
 !**/assets/sample
 # But don't include the interpolated images (image geerated in-between)
 **/assets/sample/interpolated*
+
+.auth

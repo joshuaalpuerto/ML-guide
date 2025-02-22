@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import dotenv from "dotenv";
-import OpenAI, { AzureOpenAI } from "openai";
+import OpenAI from "openai";
 import { join } from "node:path";
 import { base64Encoded } from "@midscene/shared/img";
 import { callToGetJSONObject } from "@midscene/core/ai-model";
@@ -90,7 +90,7 @@ describe("Use Midscene wrapped OpenAI SDK", () => {
       ],
       2 /* AIActionType.EXTRACT_DATA */
     );
-    console.log(result)
+    console.log(JSON.stringify(result))
     expect(result.content.content.length).toBeGreaterThan(5);
   });
 });
