@@ -12,3 +12,10 @@ playwright/.cache/
 # Midscene.js dump files
 midscene_run/report
 midscene_run/tmp
+midscene_run/cache
+
+# Langsmith
+.smith/
+
+# dynamic tests
+tests/*-dynamic.spec.ts
