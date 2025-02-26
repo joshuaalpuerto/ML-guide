@@ -104,7 +104,7 @@ export async function parseContextFromWebPage(
 export async function getExtraReturnLogic(tree = false) {
   const pathDir = findNearestPackageJson(__dirname);
   assert(pathDir, `can't find pathDir, with ${__dirname}`);
-  const scriptPath = path.join(pathDir, '/midscenejs/src/shared/dist/extractor.umd.js');
+  const scriptPath = path.join(pathDir, '/dist/extractor.umd.js');
   const elementInfosScriptContent = readFileSync(scriptPath, 'utf-8');
   if (tree) {
     return `${elementInfosScriptContent}Extractor.webExtractNodeTree()`;

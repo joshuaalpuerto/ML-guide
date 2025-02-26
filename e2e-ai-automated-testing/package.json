@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Vision-Powered Form Automation E2E Testing Framework",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "playwright test",
     "test:ui": "playwright test --ui",
