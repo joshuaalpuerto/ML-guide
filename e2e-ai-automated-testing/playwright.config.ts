@@ -5,7 +5,6 @@ export default defineConfig({
   testDir: './tests',
   // 5 mins timout
   timeout: 60 * 1000 * 5,
-  reporter: [["list"], ["@midscene/web/playwright-report"]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */

@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "sourceMap": false,
+    // we don't need declaration for umd (types)
+    "declaration": false,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    // include build in type definition for DOM and ESNext
+    "lib": ["DOM", "ESNext"],
+    // resolve deps the same way as node does
+    "moduleResolution": "node",
+    // allow to import json files
+    "resolveJsonModule": true,
+    "rootDir": ".",
+    // we don't need to check lib declaration files
+    "skipLibCheck": true,
+    "strict": true,
+    // use ESNext module syntax
+    "module": "ESNext",
+    // use ES2018 target
+    "target": "es2018"
+  }
+}
