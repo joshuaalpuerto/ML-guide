@@ -6,19 +6,12 @@ import type {
   PlaywrightParserOpt,
   UIContext,
 } from '../core';
-import {
-  MIDSCENE_REPORT_TAG_NAME,
-  MIDSCENE_USE_VLM_UI_TARS,
-  getAIConfig,
-} from '../core/env';
-import { sleep, uploadTestInfoToServer } from '../core/utils';
 import { NodeType } from '../shared/extractor/constants';
 import type { ElementInfo } from '../shared/extractor/index';
 import { traverseTree, treeToList } from '../shared/extractor';
 import { findNearestPackageJson } from '../shared/fs';
 import { compositeElementInfoImg, resizeImgBase64 } from '../shared/img';
 import { uuid } from '../shared/utils';
-import dayjs from 'dayjs';
 import { WebElementInfo } from './web-element';
 import type { WebPage } from './page';
 export type WebUIContext = UIContext<WebElementInfo> & {

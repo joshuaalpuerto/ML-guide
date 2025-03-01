@@ -1,11 +1,18 @@
 export function isFormElement(node: globalThis.Node) {
-  return (
-    node instanceof HTMLElement &&
-    (node.tagName.toLowerCase() === 'input' ||
-      node.tagName.toLowerCase() === 'textarea' ||
-      node.tagName.toLowerCase() === 'select' ||
-      node.tagName.toLowerCase() === 'option')
-  );
+  if (!(node instanceof HTMLElement)) return false;
+
+  // Check for standard form elements
+  const isStandardForm = node.tagName.toLowerCase() === 'input' ||
+    node.tagName.toLowerCase() === 'textarea' ||
+    node.tagName.toLowerCase() === 'select' ||
+    node.tagName.toLowerCase() === 'option';
+
+  // Check for custom editor elements
+  const isCustomEditor =
+    node.tagName.toLowerCase() === 'trix-editor' || // Trix editor
+    (node.getAttribute('contenteditable') === 'true' && node.getAttribute('role') === 'textbox'); // Generic contenteditable elements with textbox role
+
+  return isStandardForm || isCustomEditor;
 }
 
 export function isButtonElement(

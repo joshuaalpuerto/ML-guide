@@ -144,11 +144,17 @@
     })(NodeType || (NodeType = {}));
 
     function isFormElement(node) {
-        return (node instanceof HTMLElement &&
-            (node.tagName.toLowerCase() === 'input' ||
-                node.tagName.toLowerCase() === 'textarea' ||
-                node.tagName.toLowerCase() === 'select' ||
-                node.tagName.toLowerCase() === 'option'));
+        if (!(node instanceof HTMLElement))
+            return false;
+        // Check for standard form elements
+        const isStandardForm = node.tagName.toLowerCase() === 'input' ||
+            node.tagName.toLowerCase() === 'textarea' ||
+            node.tagName.toLowerCase() === 'select' ||
+            node.tagName.toLowerCase() === 'option';
+        // Check for custom editor elements
+        const isCustomEditor = node.tagName.toLowerCase() === 'trix-editor' || // Trix editor
+            (node.getAttribute('contenteditable') === 'true' && node.getAttribute('role') === 'textbox'); // Generic contenteditable elements with textbox role
+        return isStandardForm || isCustomEditor;
     }
     function isButtonElement(node) {
         return node instanceof HTMLElement && node.tagName.toLowerCase() === 'button';
@@ -862,25 +868,6 @@
         }
         return selector;
     }
-    function isElementPartiallyInViewport(rect, currentWindow, currentDocument) {
-        const elementHeight = rect.height;
-        const elementWidth = rect.width;
-        const viewportRect = {
-            left: 0,
-            top: 0,
-            width: currentWindow.innerWidth || currentDocument.documentElement.clientWidth,
-            height: currentWindow.innerHeight || currentDocument.documentElement.clientHeight,
-            right: currentWindow.innerWidth || currentDocument.documentElement.clientWidth,
-            bottom: currentWindow.innerHeight || currentDocument.documentElement.clientHeight};
-        const overlapRect = overlappedRect(rect, viewportRect);
-        if (!overlapRect) {
-            return false;
-        }
-        const visibleArea = overlapRect.width * overlapRect.height;
-        const totalArea = elementHeight * elementWidth;
-        // return visibleArea > 30 * 30 || visibleArea / totalArea >= 2 / 3;
-        return visibleArea / totalArea >= 2 / 3;
-    }
     function getPseudoElementContent(element, currentWindow) {
         if (!(element instanceof currentWindow.HTMLElement)) {
             return { before: '', after: '' };
@@ -1018,21 +1005,7 @@
         // check if the element is covered by another element
         // if the element is zoomed, the coverage check should be done with the original zoom
         if (baseZoom === 1 && isElementCovered(el, rect, currentWindow)) {
-            return false;
-        }
-        const scrollLeft = currentWindow.pageXOffset || currentDocument.documentElement.scrollLeft;
-        const scrollTop = currentWindow.pageYOffset || currentDocument.documentElement.scrollTop;
-        const viewportWidth = currentWindow.innerWidth || currentDocument.documentElement.clientWidth;
-        const viewportHeight = currentWindow.innerHeight || currentDocument.documentElement.clientHeight;
-        const isPartiallyInViewport = isElementPartiallyInViewport(rect, currentWindow, currentDocument);
-        if (!isPartiallyInViewport) {
-            logger(el, 'Element is completely outside the viewport', {
-                rect,
-                viewportHeight,
-                viewportWidth,
-                scrollTop,
-                scrollLeft,
-            });
+            logger('isElementCovered', el, rect);
             return false;
         }
         // check if the element is hidden by an ancestor
@@ -1171,25 +1144,29 @@
         }
         // Skip elements that cover the entire viewport, as they are likely background containers
         // rather than meaningful interactive elements
-        if (rect.height >= window.innerHeight && rect.width >= window.innerWidth) {
-            return null;
-        }
+        // if (rect.height >= window.innerHeight && rect.width >= window.innerWidth) {
+        //   return null;
+        // }
         if (isFormElement(node)) {
             const attributes = getNodeAttributes$1(node, currentWindow);
             let valueContent = attributes.value || attributes.placeholder || node.textContent || '';
             const nodeHashId = midsceneGenerateHash(node, valueContent, rect);
             const selector = setDataForNode(node, nodeHashId, false, currentWindow);
             const tagName = node.tagName.toLowerCase();
-            if (node.tagName.toLowerCase() === 'select') {
+            // Handle different types of form elements
+            if (tagName === 'select') {
                 // Get the selected option using the selectedIndex property
                 const selectedOption = node.options[node.selectedIndex];
                 // Retrieve the text content of the selected option
                 valueContent = selectedOption.textContent || '';
             }
-            if ((node.tagName.toLowerCase() === 'input' ||
-                node.tagName.toLowerCase() === 'textarea') &&
+            else if ((tagName === 'input' || tagName === 'textarea') &&
                 node.value) {
                 valueContent = node.value;
+            }
+            else if (tagName === 'trix-editor' || node.getAttribute('contenteditable') === 'true') {
+                // Handle Trix editor and contenteditable elements
+                valueContent = node.innerHTML || node.textContent || '';
             }
             const elementInfo = {
                 id: nodeHashId,
@@ -1387,6 +1364,7 @@
                 node: elementInfo,
                 children: [],
             };
+            // console.log(elementInfo?.nodeType, elementInfo?.attributes.htmlTagName)
             // stop collecting if the node is a Button or Image
             if ((elementInfo === null || elementInfo === void 0 ? void 0 : elementInfo.nodeType) === NodeType.BUTTON ||
                 (elementInfo === null || elementInfo === void 0 ? void 0 : elementInfo.nodeType) === NodeType.IMG ||
@@ -1397,7 +1375,6 @@
             }
             const rect = getRect$1(node, baseZoom, currentWindow);
             for (let i = 0; i < node.childNodes.length; i++) {
-                logger('will dfs', node.childNodes[i]);
                 const childNodeInfo = dfs(node.childNodes[i], currentWindow, currentDocument, rect.zoom, basePoint);
                 if (childNodeInfo) {
                     nodeInfo.children.push(childNodeInfo);

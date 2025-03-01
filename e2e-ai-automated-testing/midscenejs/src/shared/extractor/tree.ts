@@ -69,19 +69,17 @@ export function descriptionOfTree<
 
   function buildContentTree(
     node: ElementTreeNode<ElementType>,
-    indent = 0,
   ): string {
     let before = '';
-    let contentWithIndent = '';
+    let htmlContent = '';
     let after = '';
     let emptyNode = true;
-    const indentStr = '  '.repeat(indent);
 
     let children = '';
     for (let i = 0; i < (node.children || []).length; i++) {
-      const childContent = buildContentTree(node.children[i], indent + 1);
+      const childContent = buildContentTree(node.children[i]);
       if (childContent) {
-        children += `\n${childContent}`;
+        children += `${childContent}`;
       }
     }
 
@@ -104,20 +102,20 @@ export function descriptionOfTree<
       const markerIdString = markerId ? `markerId="${markerId}"` : '';
       const rectAttribute = node.node.rect
         ? {
-            left: node.node.rect.left,
-            top: node.node.rect.top,
-            width: node.node.rect.width,
-            height: node.node.rect.height,
-          }
+          left: node.node.rect.left,
+          top: node.node.rect.top,
+          width: node.node.rect.width,
+          height: node.node.rect.height,
+        }
         : {};
       before = `<${nodeTypeString} id="${node.node.id}" ${markerIdString} ${attributesString(trimAttributes(node.node.attributes || {}, truncateTextLength))} ${attributesString(rectAttribute)}>`;
       const content = truncateText(node.node.content, truncateTextLength);
-      contentWithIndent = content ? `\n${indentStr}  ${content}` : '';
+      htmlContent = content ? `${content}` : '';
       after = `</${nodeTypeString}>`;
     } else if (!filterNonTextContent) {
       if (!children.trim().startsWith('<>')) {
         before = '<>';
-        contentWithIndent = '';
+        htmlContent = '';
         after = '</>';
       }
     }
@@ -126,7 +124,7 @@ export function descriptionOfTree<
       return '';
     }
 
-    const result = `${indentStr}${before}${contentWithIndent}${children}\n${indentStr}${after}`;
+    const result = `${before}${htmlContent}${children}${after}`;
     if (result.trim()) {
       return result;
     }

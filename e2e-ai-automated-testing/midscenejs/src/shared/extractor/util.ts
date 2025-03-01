@@ -299,32 +299,7 @@ export function visibleRect(
   // check if the element is covered by another element
   // if the element is zoomed, the coverage check should be done with the original zoom
   if (baseZoom === 1 && isElementCovered(el, rect, currentWindow)) {
-    return false;
-  }
-
-  const scrollLeft =
-    currentWindow.pageXOffset || currentDocument.documentElement.scrollLeft;
-  const scrollTop =
-    currentWindow.pageYOffset || currentDocument.documentElement.scrollTop;
-  const viewportWidth =
-    currentWindow.innerWidth || currentDocument.documentElement.clientWidth;
-  const viewportHeight =
-    currentWindow.innerHeight || currentDocument.documentElement.clientHeight;
-
-  const isPartiallyInViewport = isElementPartiallyInViewport(
-    rect,
-    currentWindow,
-    currentDocument,
-  );
-
-  if (!isPartiallyInViewport) {
-    logger(el, 'Element is completely outside the viewport', {
-      rect,
-      viewportHeight,
-      viewportWidth,
-      scrollTop,
-      scrollLeft,
-    });
+    logger('isElementCovered', el, rect)
     return false;
   }
 

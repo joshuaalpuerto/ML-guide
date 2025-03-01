@@ -56,6 +56,7 @@ function collectElementInfo(
   basePoint: Point = { left: 0, top: 0 },
 ): WebElementInfo | null {
   const rect = visibleRect(node, currentWindow, currentDocument, baseZoom);
+
   if (
     !rect ||
     rect.width < CONTAINER_MINI_WIDTH ||
@@ -80,22 +81,23 @@ function collectElementInfo(
     const nodeHashId = midsceneGenerateHash(node, valueContent, rect);
     const selector = setDataForNode(node, nodeHashId, false, currentWindow);
     const tagName = (node as HTMLElement).tagName.toLowerCase();
-    if ((node as HTMLElement).tagName.toLowerCase() === 'select') {
+
+    // Handle different types of form elements
+    if (tagName === 'select') {
       // Get the selected option using the selectedIndex property
       const selectedOption = (node as HTMLSelectElement).options[
         (node as HTMLSelectElement).selectedIndex
       ];
-
       // Retrieve the text content of the selected option
       valueContent = selectedOption.textContent || '';
-    }
-
-    if (
-      ((node as HTMLElement).tagName.toLowerCase() === 'input' ||
-        (node as HTMLElement).tagName.toLowerCase() === 'textarea') &&
+    } else if (
+      (tagName === 'input' || tagName === 'textarea') &&
       (node as HTMLInputElement).value
     ) {
       valueContent = (node as HTMLInputElement).value;
+    } else if (tagName === 'trix-editor' || (node as HTMLElement).getAttribute('contenteditable') === 'true') {
+      // Handle Trix editor and contenteditable elements
+      valueContent = (node as HTMLElement).innerHTML || node.textContent || '';
     }
 
     const elementInfo: WebElementInfo = {
@@ -165,8 +167,8 @@ function collectElementInfo(
         ...attributes,
         ...(node.nodeName.toLowerCase() === 'svg'
           ? {
-              svgContent: 'true',
-            }
+            svgContent: 'true',
+          }
           : {}),
         nodeType: NodeType.IMG,
         htmlTagName: tagNameOfNode(node),
@@ -336,6 +338,8 @@ export function extractTreeNode(
       node: elementInfo,
       children: [],
     };
+
+    // console.log(elementInfo?.nodeType, elementInfo?.attributes.htmlTagName)
     // stop collecting if the node is a Button or Image
     if (
       elementInfo?.nodeType === NodeType.BUTTON ||
@@ -349,7 +353,6 @@ export function extractTreeNode(
 
     const rect = getRect(node, baseZoom, currentWindow);
     for (let i = 0; i < node.childNodes.length; i++) {
-      logger('will dfs', node.childNodes[i]);
       const childNodeInfo = dfs(
         node.childNodes[i],
         currentWindow,
