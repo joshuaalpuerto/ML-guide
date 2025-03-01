@@ -2,8 +2,8 @@ import { describe, it, expect, vi } from "vitest";
 import dotenv from "dotenv";
 import OpenAI from "openai";
 import { join } from "node:path";
-import { base64Encoded } from "@midscene/shared/img";
-import { callToGetJSONObject } from "@midscene/core/ai-model";
+import { base64Encoded } from "../midscenejs/src/shared/img";
+import { callToGetJSONObject } from "../midscenejs/src/core/ai-model";
 
 // read and parse .env file
 const result = dotenv.config({
@@ -90,8 +90,35 @@ describe("Use Midscene wrapped OpenAI SDK", () => {
       ],
       2 /* AIActionType.EXTRACT_DATA */
     );
-    console.log(JSON.stringify(result))
     expect(result.content.content.length).toBeGreaterThan(5);
   });
 });
+
+describe("Use Midscene wrapped OpenAI SDK", () => {
+  it("call to get json object", async () => {
+    const result = await callToGetJSONObject(
+      [
+        {
+          role: "user",
+          content:
+            "What is the content of this image? return in json format {content: string}",
+        },
+        {
+          role: "user",
+          content: [
+            {
+              type: "image_url",
+              image_url: {
+                url: imageBase64,
+              },
+            },
+          ],
+        },
+      ],
+      2 /* AIActionType.EXTRACT_DATA */
+    );
+    expect(result.content.content.length).toBeGreaterThan(5);
+  });
+});
+
 
