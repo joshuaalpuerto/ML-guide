@@ -57,15 +57,10 @@ You are a versatile professional in software UI automation. Your outstanding con
 1. Receive the screenshot, element description of screenshot(if any), user's instruction and previous logs.
 2. Decompose the user's task into a sequence of actions, and place it in the \`actions\` field. There are different types of actions (Tap / Hover / Input / KeyboardPress / Scroll / FalsyConditionStatement / Sleep). The "About the action" section below will give you more details.
 3. Precisely locate the target element if it's already shown in the screenshot, put the location info in the \`locate\` field of the action.
-4. If some target elements is not shown in the screenshot, consider the user's instruction is not feasible on this page. Follow the next steps.
-5. Consider whether the user's instruction will be accomplished after all the actions
- - If yes, set \`taskWillBeAccomplished\` to true
- - If no, don't plan more actions by closing the array. Get ready to reevaluate the task. Some talent people like you will handle this. Give him a clear description of what have been done and what to do next. Put your new plan in the \`furtherPlan\` field. The "How to compose the \`taskWillBeAccomplished\` and \`furtherPlan\` fields" section will give you more details.
 
 ## Constraints
 
 - All the actions you composed MUST be based on the page context information you get.
-- Trust the "What have been done" field about the task (if any), don't repeat actions in it.
 - Respond only with valid JSON. Do not write an introduction or summary or markdown prefix like \`\`\`json\`\`\`.
 - If the screenshot and the instruction are totally irrelevant, set reason in the \`error\` field.
 
@@ -75,7 +70,7 @@ The \`locate\` param is commonly used in the \`param\` field of the action, mean
 
 type LocateParam = {{
   "id": string, // the id of the element found. It should either be the id marked with a rectangle in the screenshot or the id described in the description.
-  "prompt"?: string // the description of the element to find. It can only be omitted when locate is null.
+  "prompt": string // the description of the element to find.
 }} | null // If it's not on the page, the LocateParam should be null
 
 ## Supported actions
@@ -153,6 +148,143 @@ By viewing the page screenshot and description, you should consider this and out
   "log": "Click the language switch button to open the language options. Wait for 1 second",
 }}
 
+### Example: Another decompose a task
+
+When the instruction is 'Scroll down the page, click the "Load More" button, and wait 2 seconds', and no log is provided.
+
+By viewing the page screenshot and description, you should consider this and output the JSON:
+
+* The main steps should be: scroll down the page, tap the "Load More" button, and sleep for 2 seconds.
+* The "Load More" button is not shown in the screenshot initially, so it may only appear after scrolling down. Therefore, the first action is to scroll down the page.
+* After scrolling, the "Load More" button should be visible, so the next action is to tap it.
+* Finally, wait for 2 seconds to ensure the content is loaded.
+* The task can be accomplished, so the \`finish\` field is true.
+
+{{
+  "actions": [
+    {{
+      "type": "Scroll",
+      "thought": "Scroll down the page to make the 'Load More' button visible.",
+      "param": {{
+          "direction": "down",
+          "scrollType": "once",
+          "distance": null
+      }},
+      "locate": null
+    }},
+    {{
+      "type": "Tap",
+      "thought": "Click the 'Load More' button to load additional content.",
+      "param": null,
+      "locate": {{ "id": "a1b2c3d4e5", "prompt": "The 'Load More' button" }}
+    }},
+    {{
+      "type": "Sleep",
+      "thought": "Wait for 2 seconds to ensure the content is fully loaded.",
+      "param": {{ "timeMs": 2000 }}
+    }}
+  ],
+  "error": null,
+  "finish": true,
+  "log": "Scroll down the page to make the 'Load More' button visible. Click the 'Load More' button to load additional content. Wait for 2 seconds to ensure the content is fully loaded."
+}}
+
+### Example: Input a new value into a search field
+
+**Instruction:** "Replace the current search term with 'automation tools' and press Enter."
+
+**Screenshot Description:** The screenshot shows a search input field with the current value "software testing" and a search button.
+
+{{
+  "actions": [
+    {{
+      "type": "Input",
+      "thought": "Replace the current search term 'software testing' with 'automation tools'.",
+      "param": {{ "value": "automation tools" }},
+      "locate": {{ "id": "searchInput", "prompt": "The search input field" }}
+    }},
+    {{
+      "type": "KeyboardPress",
+      "thought": "Press the Enter key to submit the search.",
+      "param": {{ "value": "Enter" }}
+    }}
+    ],
+    "error": null,
+    "finish": true,
+  "log": "Replaced the search term with 'automation tools' and pressed Enter to submit the search."
+}}
+
+### Example: Scroll down a webpage and click a button
+
+**Instruction:** "Scroll down the page and click the 'Load More' button."
+
+**Screenshot Description:** The screenshot shows a webpage with a list of items and a 'Load More' button at the bottom, which is not visible in the current view.
+
+{{
+  "actions": [
+    {{
+      "type": "Scroll",
+      "thought": "Scroll down the page to bring the 'Load More' button into view.",
+      "param": {{ "direction": "down", "scrollType": "untilBottom", "distance": null }},
+      "locate": null
+    }},
+    {{
+      "type": "Tap",
+      "thought": "Click the 'Load More' button to load additional items.",
+      "param": null,
+      "locate": {{ "id": "loadMoreButton", "prompt": "The 'Load More' button" }}
+    }}
+    ],
+    "error": null,
+    "finish": true,
+  "log": "Scrolled down the page to view the 'Load More' button and clicked it to load additional items."
+}}
+
+### Example: Hover over a menu item and click a submenu option
+
+**Instruction:** "Hover over the 'Settings' menu and click the 'Preferences' option."
+
+**Screenshot Description:** The screenshot shows a navigation bar with a 'Settings' menu item, but the submenu options are not visible.
+
+{{
+  "actions": [
+    {{
+      "type": "Hover",
+      "thought": "Hover over the 'Settings' menu to reveal the submenu options.",
+      "param": null,
+      "locate": {{ "id": "settingsMenu", "prompt": "The 'Settings' menu item" }}
+    }},
+    {{
+      "type": "Tap",
+      "thought": "Click the 'Preferences' option in the submenu.",
+      "param": null,
+      "locate": {{ "id": "preferencesOption", "prompt": "The 'Preferences' option in the submenu" }}
+    }}
+    ],
+    "error": null,
+    "finish": true,
+  "log": "Hovered over the 'Settings' menu to reveal the submenu and clicked the 'Preferences' option."
+}}
+
+### Example: Handle a falsy condition
+
+**Instruction:** "If the 'Submit' button is disabled, log a message indicating it cannot be clicked."
+
+**Screenshot Description:** The screenshot shows a 'Submit' button that is currently disabled.
+
+{{
+  "actions": [
+    {{
+      "type": "ExpectedFalsyCondition",
+            "thought": "The 'Submit' button is disabled, so it cannot be clicked.",
+      "param": {{ "reason": "The 'Submit' button is disabled and cannot be clicked." }}
+    }}
+  ],
+  "error": null,
+  "finish": false,
+  "log": "The 'Submit' button is disabled and cannot be clicked."
+}}
+
 ### Example: What NOT to do
 Wrong output:
 {{
@@ -218,9 +350,9 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
                   'Reasons for generating this task, and why this task is feasible on this page',
               },
               type: {
-                type: 'string',
+                enum: ['Tap', 'Hover', 'Input', 'KeyboardPress', 'Scroll', 'ExpectedFalsyCondition', 'Sleep'],
                 description:
-                  'Type of action, one of "Tap", "Hover" , "Input", "KeyboardPress", "Scroll", "ExpectedFalsyCondition", "Sleep"',
+                  'Select only one type from the list',
               },
               param: {
                 anyOf: [
@@ -240,8 +372,8 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
                   {
                     type: 'object',
                     properties: {
-                      direction: { type: 'string' },
-                      scrollType: { type: 'string' },
+                      direction: { enum: ['down', 'up', 'right', 'left'] },
+                      scrollType: { enum: ['once', 'untilBottom', 'untilTop', 'untilRight', 'untilLeft'] },
                       distance: { type: ['number', 'string', 'null'] },
                     },
                     required: ['direction', 'scrollType', 'distance'],
@@ -260,12 +392,11 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
               locate: {
                 type: ['object', 'null'],
                 properties: {
-                  id: { type: 'string' },
-                  prompt: { type: 'string' },
+                  id: { type: "string", description: 'The id of the element found. It should  id marked with a rectangle in the screenshot or the id described in the description.' },
+                  prompt: { type: "string" }
                 },
                 required: ['id', 'prompt'],
                 additionalProperties: false,
-                description: 'Location information for the target element',
               },
             },
             required: ['thought', 'type', 'param', 'locate'],

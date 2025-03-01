@@ -20,7 +20,7 @@ import type {
 } from '../types';
 import { paddingToMatchBlock } from '../../shared/img';
 import OpenAI from 'openai';
-import { AIActionType, callAiFn } from './common';
+import { AIActionType, callAiFn, appendFireworksInlineTransform } from './common';
 import { systemPromptToAssert } from './prompt/assertion';
 import { extractDataPrompt, systemPromptToExtract } from './prompt/extraction';
 import {
@@ -265,7 +265,7 @@ export async function AiInspectElement<
         {
           type: 'image_url',
           image_url: {
-            url: imagePayload,
+            url: appendFireworksInlineTransform(imagePayload),
             detail: 'high',
           },
         },
@@ -336,7 +336,7 @@ export async function AiExtractElementInfo<
         {
           type: 'image_url',
           image_url: {
-            url: screenshotBase64,
+            url: appendFireworksInlineTransform(screenshotBase64),
             detail: 'high',
           },
         },
@@ -380,7 +380,7 @@ export async function AiAssert<
         {
           type: 'image_url',
           image_url: {
-            url: screenshotBase64,
+            url: appendFireworksInlineTransform(screenshotBase64),
             detail: 'high',
           },
         },

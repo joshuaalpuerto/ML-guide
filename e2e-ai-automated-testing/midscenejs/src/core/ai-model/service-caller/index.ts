@@ -48,9 +48,8 @@ async function createChatClient({
   AIActionTypeValue: AIActionType;
 }): Promise<{
   completion: OpenAI.Chat.Completions;
-  style: 'openai' | 'anthropic';
 }> {
-  let openai: OpenAI | AzureOpenAI | undefined;
+  let openai: OpenAI | undefined;
   const extraConfig = getAIConfigInJson(MIDSCENE_OPENAI_INIT_CONFIG_JSON);
 
   const baseURL = getAIConfig(OPENAI_BASE_URL);
@@ -96,7 +95,8 @@ export async function call(
   AIActionTypeValue: AIActionType,
   responseFormat?:
     | OpenAI.ChatCompletionCreateParams['response_format']
-    | OpenAI.ResponseFormatJSONObject,
+    | OpenAI.ResponseFormatJSONObject
+    | FireworksResponseFormat,
 ): Promise<{ content: string; usage?: AIUsageInfo }> {
   const { completion } = await createChatClient({
     AIActionTypeValue,
@@ -130,7 +130,9 @@ export async function call(
     response_format: responseFormat,
     ...commonConfig,
   } as any);
-  shouldPrintTiming &&
+
+
+  if (shouldPrintTiming) {
     console.log(
       'Midscene - AI call',
       getAIConfig(MIDSCENE_USE_QWEN_VL) ? 'MIDSCENE_USE_QWEN_VL' : '',
@@ -139,17 +141,23 @@ export async function call(
       `${Date.now() - startTime}ms`,
       result._request_id || '',
     );
+  }
+
   assert(
     result.choices,
     `invalid response from LLM service: ${JSON.stringify(result)}`,
   );
+
   content = result.choices[0].message.content!;
   assert(content, 'empty content');
   usage = result.usage;
 
-
-
   return { content: content || '', usage };
+}
+
+type FireworksResponseFormat = {
+  type: AIResponseFormat.JSON,
+  schema: Record<string, any>
 }
 
 export async function callToGetJSONObject<T>(
@@ -159,6 +167,7 @@ export async function callToGetJSONObject<T>(
   let responseFormat:
     | OpenAI.ChatCompletionCreateParams['response_format']
     | OpenAI.ResponseFormatJSONObject
+    | FireworksResponseFormat
     | undefined;
 
   const model = getModelName();
@@ -182,6 +191,37 @@ export async function callToGetJSONObject<T>(
     }
   }
 
+  // fireworks handle response format differently with openAI
+  // type -> json_object ===  json_schema 
+  // key -> schema === json_schema
+  if (model.includes('deepseek') && model.includes('accounts/fireworks/models')) {
+    switch (AIActionTypeValue) {
+      case AIActionType.ASSERT:
+        responseFormat = {
+          type: AIResponseFormat.JSON,
+          schema: assertSchema.json_schema.schema
+        } as FireworksResponseFormat;
+        break;
+      case AIActionType.INSPECT_ELEMENT:
+        responseFormat = {
+          type: AIResponseFormat.JSON,
+          schema: locatorSchema.json_schema.schema
+        } as FireworksResponseFormat;
+        break;
+      case AIActionType.EXTRACT_DATA:
+        //TODO: Currently the restriction type can only be a json subset of the constraint, and the way the extract api is used needs to be adjusted to limit the user's data to this as well
+        // targetResponseFormat = extractDataSchema;
+        responseFormat = { type: AIResponseFormat.JSON };
+        break;
+      case AIActionType.PLAN:
+        responseFormat = {
+          type: AIResponseFormat.JSON,
+          schema: planSchema.json_schema.schema
+        } as FireworksResponseFormat;
+        break;
+    }
+  }
+
   // gpt-4o-2024-05-13 only supports json_object response format
   if (model === 'gpt-4o-2024-05-13') {
     responseFormat = { type: AIResponseFormat.JSON };
@@ -189,7 +229,9 @@ export async function callToGetJSONObject<T>(
 
   const response = await call(messages, AIActionTypeValue, responseFormat);
   assert(response, 'empty response');
+  // we use `safeParseJson` to handle `text` and `json` response format
   const jsonContent = safeParseJson(response.content);
+
   return { content: jsonContent, usage: response.usage };
 }
 
@@ -221,20 +263,34 @@ export function extractJSONFromCodeBlock(response: string) {
 
 export function safeParseJson(input: string) {
   const cleanJsonString = extractJSONFromCodeBlock(input);
-  // match the point
+
+  // match the point coordinates pattern
   if (cleanJsonString.match(/\((\d+),(\d+)\)/)) {
     return cleanJsonString
       .match(/\((\d+),(\d+)\)/)
       ?.slice(1)
       .map(Number);
   }
+
+  // Check if the string looks like JSON (starts with { or [)
+  const trimmedInput = cleanJsonString.trim();
+  const looksLikeJson = /^[{\[]/.test(trimmedInput);
+
+  if (!looksLikeJson) {
+    return cleanJsonString; // Return the original string if it doesn't look like JSON
+  }
+
   try {
     return JSON.parse(cleanJsonString);
-  } catch { }
-  try {
-    return dJSON.parse(cleanJsonString);
   } catch (e) {
-    console.log('e:', e);
+    // Only try dJSON if we're confident it's meant to be JSON but has some formatting issues
+    try {
+      return dJSON.parse(cleanJsonString);
+    } catch (e) {
+      console.log('JSON parsing error:', e);
+    }
   }
-  throw Error(`failed to parse json response: ${input}`);
+
+  // If all parsing attempts fail but it looked like JSON, throw error
+  throw Error(`Failed to parse JSON response: ${input}`);
 }

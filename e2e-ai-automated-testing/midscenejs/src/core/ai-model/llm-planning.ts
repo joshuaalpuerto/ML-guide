@@ -6,8 +6,8 @@ import {
   AIActionType,
   type AIArgs,
   callAiFn,
-  fillLocateParam,
   warnGPT4oSizeLimit,
+  appendFireworksInlineTransform,
 } from './common';
 import {
   automationUserPrompt,
@@ -39,9 +39,6 @@ export async function plan(
   });
 
   let imagePayload = screenshotBase64WithElementMarker || screenshotBase64;
-  if (getAIConfigInBoolean(MIDSCENE_USE_QWEN_VL)) {
-    imagePayload = await paddingToMatchBlock(imagePayload);
-  }
 
   warnGPT4oSizeLimit(size);
 
@@ -53,7 +50,7 @@ export async function plan(
         {
           type: 'image_url',
           image_url: {
-            url: imagePayload,
+            url: appendFireworksInlineTransform(imagePayload),
             detail: 'high',
           },
         },
@@ -77,14 +74,6 @@ export async function plan(
     rawResponse,
     usage,
   };
-
-  if (getAIConfigInBoolean(MIDSCENE_USE_QWEN_VL)) {
-    actions.forEach((action) => {
-      if (action.locate) {
-        action.locate = fillLocateParam(action.locate);
-      }
-    });
-  }
 
   assert(planFromAI, "can't get plans from AI");
   assert(

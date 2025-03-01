@@ -90,11 +90,10 @@ export class Page<
         x: number,
         y: number,
         options?: { button?: MouseButton; count?: number },
-      ) =>
-        this.underlyingPage.mouse.click(x, y, {
-          button: options?.button || 'left',
-          count: options?.count || 1,
-        }),
+      ) => this.underlyingPage.mouse.click(x, y, {
+        button: options?.button || 'left',
+        clickCount: options?.count || 1,
+      }),
       wheel: async (deltaX: number, deltaY: number) => {
 
         await (this.underlyingPage as PlaywrightPage).mouse.wheel(
@@ -171,7 +170,7 @@ export class Page<
     await this.keyboard.press([{ key: 'Backspace' }]);
   }
 
-  private async moveToPoint(point?: Point): Promise<void> {
+  async moveToPoint(point?: Point): Promise<void> {
     if (point) {
       await this.mouse.move(point.left, point.top);
     }

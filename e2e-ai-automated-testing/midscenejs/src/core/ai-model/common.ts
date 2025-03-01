@@ -78,3 +78,14 @@ export function warnGPT4oSizeLimit(size: Size) {
     }
   }
 }
+
+export function appendFireworksInlineTransform(imagePayload: string) {
+  const model = getModelName();
+  console.log('model', model);
+  if (model.includes('deepseek') && model.includes('accounts/fireworks/models')) {
+    // document inline feature of fireworks
+    return imagePayload + "#transform=inline";
+  }
+
+  return imagePayload + '\n\nAdditional info: ' + getModelName();
+}
