@@ -244,62 +244,9 @@ export function getVersion() {
   return __VERSION__;
 }
 
-function debugLog(...message: any[]) {
+export function debugLog(...message: any[]) {
   const debugMode = getAIConfig(MIDSCENE_DEBUG_MODE);
   if (debugMode) {
     console.log('[Midscene]', ...message);
-  }
-}
-
-let lastReportedRepoUrl = '';
-export function uploadTestInfoToServer({ testUrl }: { testUrl: string }) {
-  let repoUrl = '';
-  let userEmail = '';
-
-  const extraConfig = getAIConfigInJson(MIDSCENE_OPENAI_INIT_CONFIG_JSON);
-  const serverUrl = extraConfig?.REPORT_SERVER_URL;
-
-  try {
-    repoUrl = execSync('git config --get remote.origin.url').toString().trim();
-    userEmail = execSync('git config --get user.email').toString().trim();
-  } catch (error) {
-    debugLog('Failed to get git info:', error);
-  }
-
-  // Only upload test info if:
-  // 1. Server URL is configured AND
-  // 2. Either:
-  //    - We have a repo URL that's different from last reported one (to avoid duplicate reports)
-  //    - OR we don't have a repo URL but have a test URL (for non-git environments)
-  if (
-    serverUrl &&
-    ((repoUrl && repoUrl !== lastReportedRepoUrl) || (!repoUrl && testUrl))
-  ) {
-    debugLog('Uploading test info to server', {
-      serverUrl,
-      repoUrl,
-      testUrl,
-      userEmail,
-    });
-
-    fetch(serverUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        repo_url: repoUrl,
-        test_url: testUrl,
-        user_email: userEmail,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        debugLog('Successfully uploaded test info to server:', data);
-      })
-      .catch((error) =>
-        debugLog('Failed to upload test info to server:', error),
-      );
-    lastReportedRepoUrl = repoUrl;
   }
 }
