@@ -14,9 +14,6 @@ Manual testing of web forms is a time-consuming and often error-prone process. E
 *   **Vision-Based Understanding:**  Utilizes VLMs to visually interpret form elements, labels, and layout, mimicking human-like perception.
 *   **Intelligent Data Validation:**  Goes beyond simple UI interactions by validating the *meaning* of the data submitted against the form's context.
 *   **End-to-End Coverage:**  Automates the entire form testing lifecycle, from navigation and filling to submission and validation.
-*   **Reduced Manual Effort:**  Significantly minimizes the need for manual form testing, freeing up QA engineers for more complex tasks.
-*   **Enhanced Test Reliability:**  AI-driven validation reduces human error and ensures consistent, repeatable test execution.
-*   **Detailed Visual Reports:**  Generates comprehensive HTML reports with screenshots and element highlighting, making it easy to understand test execution and identify issues.
 
 ## Key Features
 
@@ -49,7 +46,7 @@ Manual testing of web forms is a time-consuming and often error-prone process. E
 
 ## Technology Stack
 
-*   **Vision Language Model (VLM):**  *(Specify the VLM you are using or recommend, e.g., GPT-4o Vision, Gemini Vision, or a general multimodal model)*
+*   **Vision Language Model (VLM):**  GPT-4o Vision, Gemini 1.5 pro, Fireworks Deepseek v3 or r1 with inline document.
 *   **E2E Testing Framework:** Playwright
 *   **Automation Library:** Midscene.js *(Core automation and reporting engine)*
 *   **Programming Language:** JavaScript/TypeScript
@@ -59,56 +56,96 @@ Manual testing of web forms is a time-consuming and often error-prone process. E
 ### Prerequisites
 
 *   **Node.js:** (>= v18) - [https://nodejs.org/](https://nodejs.org/)
-*   **npm** or **pnpm** - Package managers for Node.js
+*   **pnpm** - Package managers for Node.js
 *   **API Key (Optional):**  If using a cloud-based VLM service, you may need an API key.
 
-### Basic Usage Example
+### Important Note on E2E Testing Principles
 
+While this framework leverages AI to simplify test automation through natural language commands, it's crucial to understand that it still follows fundamental E2E testing principles:
+
+* **Clear Test Objectives:** Each test should have a specific, well-defined goal and expected outcomes, just like traditional E2E tests.
+* **Page Understanding:** You must have a clear understanding of the pages and workflows you're testing, including:
+  - The expected state of each page
+  - The user journey you're validating
+  - The critical business flows being tested
+* **Test Design:** Tests should still be designed with proper structure:
+  - Setup/Preconditions
+  - Actions/Steps
+  - Assertions/Validations
+* **Natural Language Advantage:** The main benefit is the ability to express these traditional E2E testing concepts using natural language, making tests more maintainable and readable while reducing the technical complexity of test implementation.
+
+#### Example: Writing Specific Test Instructions
+
+Let's compare vague vs. specific test instructions for an e-commerce checkout flow:
+
+❌ **Bad Example (Too Vague):**
 ```typescript
-import { test } from '@playwright/test'; // or import { test } from 'puppeteer' if using Puppeteer
-import { PlaywrightAiFixtureType, PlaywrightAiFixture } from 'your-framework-package-name'; // Replace with your actual package name
-
-const aiTest = test.extend<PlaywrightAiFixtureType>(PlaywrightAiFixture());
-
-aiTest('Automate form filling and validation', async ({ page, ai, aiAssert }) => {
-  await page.goto('https://example-form-url.com'); // Replace with your form URL
-
-  // 1. Fill the form using AI actions
-  await ai('Fill in the "Name" field with "John Doe"');
-  await ai('Select "Option 2" from the "Dropdown" menu');
-  await ai('Check the "Agree to terms" checkbox');
-
-  // 2. Click the submit button (you might need to locate it with AI)
-  await ai('Click the "Submit" button');
-
-  // 3. Validate the form submission using AI assertions
-  await aiAssert('The confirmation message "Form submitted successfully!" is displayed');
-  await aiAssert('The submitted name is displayed as "John Doe" on the confirmation page');
-
-  // Optional: Extract data and validate more complex scenarios with aiQuery
-  const confirmationDetails = await aiQuery({
-    confirmationMessage: 'text of the confirmation message',
-    submittedName: 'name displayed on confirmation page'
-  });
-
-  expect(confirmationDetails.confirmationMessage).toContain('Form submitted successfully!');
-  expect(confirmationDetails.submittedName).toBe('John Doe');
+aiTest('Test checkout flow', async ({ page, ai, aiAssert }) => {
+  await page.goto('https://example-shop.com');
+  
+  // Vague instructions that lack context and specificity
+  await ai('Add item to cart');
+  await ai('Go to checkout');
+  await ai('Fill in the form');
+  await ai('Complete payment');
+  
+  await aiAssert('Order is successful');
 });
 ```
+
+✅ **Good Example (Specific & Context-Aware):**
+```typescript
+aiTest('Complete purchase of a specific product with credit card payment', async ({ page, ai, aiAssert }) => {
+  // Clear test objective and preconditions
+  await page.goto('https://example-shop.com/products/wireless-headphones');
+  
+  // Specific actions with clear context
+  await ai('Verify we are on the wireless headphones product page by checking for the product title "Sony WH-1000XM4"');
+  await ai('Select "Black" from the color options dropdown below the product image');
+  await ai('Click the "Add to Cart" button located next to the price');
+  await ai('Click the cart icon in the top-right corner of the navigation bar');
+  
+  // Validate intermediate states
+  await aiAssert('The cart modal shows "Sony WH-1000XM4 (Black)" with quantity 1');
+  
+  // Continue with specific checkout steps
+  await ai('Click the "Proceed to Checkout" button at the bottom of the cart modal');
+  await ai(`Fill in the shipping form with:
+    - Email: "test@example.com" in the email field at the top
+    - Full Name: "John Doe" in the name field
+    - Address: "123 Test St" in the street address field
+    - City: "San Francisco" in the city field
+    - Select "California" from the state dropdown
+    - ZIP: "94105" in the postal code field`);
+  
+  // Payment section with clear location context
+  await ai(`In the payment section below shipping:
+    - Enter "4111 1111 1111 1111" in the card number field
+    - Enter "12/25" in the expiration date field
+    - Enter "123" in the CVV field`);
+  
+  await ai('Click the "Place Order" button at the bottom of the checkout page');
+  
+  // Specific assertions
+  await aiAssert('The order confirmation page shows "Order Successfully Placed!"');
+  await aiAssert('The order summary shows "Sony WH-1000XM4 (Black)" with the correct price');
+  await aiAssert('A valid order number is displayed in the format "ORD-XXXXX"');
+});
+```
+
+The good example demonstrates:
+- Clear understanding of the page layout and elements
+- Specific element locations and context
+- Step-by-step workflow with validations
+- Detailed form field locations and data
+- Precise expected outcomes
+- Breaking down complex actions into single, focused steps
 
 ### Running the Test
 
 ```bash
-npx playwright test  # For Playwright
+npx test:ui  # Run test with playwright UI mode
 ```
-
-or
-
-```bash
-node your-test-file.js # If using Puppeteer directly with Node.js
-```
-
-After running the test, an HTML report will be generated in the `midscene_run/report` directory, detailing the test execution with screenshots and element highlights.
 
 ## Detailed Usage
 
@@ -135,8 +172,6 @@ You can provide data for form filling directly within the AI action prompts:
     await ai(`Enter "${userName}" in the name field`);
     ```
 
-*   **Data Structures (for more complex forms):**  *(Illustrate with a more complex example if applicable)*
-
 ### Validation Logic
 
 The framework provides powerful AI-driven validation capabilities:
@@ -159,13 +194,6 @@ The framework provides powerful AI-driven validation capabilities:
     expect(orderDetails.orderId).toBeDefined();
     expect(orderDetails.totalAmount).toContain('$');
     ```
-
-### Advanced Features (Optional - Expand as needed)
-
-*   **Handling Dynamic Forms:** *(Explain how the framework can adapt to forms that change dynamically, e.g., using retry mechanisms or more robust element location strategies)*
-*   **Dealing with CAPTCHAs:** *(Acknowledge limitations and potential workarounds, e.g., manual CAPTCHA solving, integration with CAPTCHA solving services - if feasible)*
-*   **Customizable Reporting:** *(Mention if users can customize report generation or integrate with other reporting tools)*
-*   **Data-Driven Testing:** *(Briefly describe how to parameterize tests with data from external sources, if supported)*
 
 ## Example Test Case (Comprehensive)
 
@@ -203,55 +231,112 @@ aiTest('User registration flow', async ({ page, ai, aiAssert, aiQuery }) => {
 });
 ```
 
-**Sample Report Output (Illustrative - You can include a screenshot or a text representation):**
-
-```html
-<!-- (Simplified HTML report snippet - in a real report, this would be a full HTML document) -->
-<h1>Test Report: User registration flow</h1>
-<div class="test-step">
-  <h2>Step 1: Navigate to registration form</h2>
-  <img src="screenshot-step-1.png" alt="Screenshot of registration form" />
-  <p>Action: Navigate to https://example-registration-form.com</p>
-  <p>Status: Passed</p>
-</div>
-<div class="test-step">
-  <h2>Step 2: Fill in user details</h2>
-  <img src="screenshot-step-2.png" alt="Screenshot of form filling" />
-  <p>Action: aiAction - Enter "testuser" in the "Username" field</p>
-  <p>Status: Passed</p>
-  <!-- ... more form filling steps ... -->
-</div>
-<div class="test-step">
-  <h2>Step 3: Validate registration success</h2>
-  <img src="screenshot-step-3.png" alt="Screenshot of confirmation page" />
-  <p>Action: aiAssert - The registration success message "Welcome, testuser!" is displayed</p>
-  <p>Status: Passed</p>
-  <div class="highlighted-element">
-    <!-- (Visual highlight of the "Welcome, testuser!" message in the screenshot) -->
-  </div>
-  <!-- ... more assertions ... -->
-</div>
-<!-- ... rest of the report ... -->
-```
-
-## Reporting Details
-
-The framework generates user-friendly HTML reports that provide a visual and detailed overview of test executions. Reports include:
-
-*   **Step-by-Step Execution Log:**  Clear listing of each test step, including AI actions, queries, and assertions.
-*   **Screenshots:** Screenshots captured at each step, providing visual context for test execution.
-*   **Element Highlighting:**  Screenshots are enhanced with visual highlights, clearly marking the form elements interacted with during each step.
-*   **AI Reasoning:**  Reports often include the "thought process" of the AI, explaining its decisions and actions in natural language.
-*   **Assertion Results:**  Clearly indicates whether assertions passed or failed, with detailed error messages for failures.
-*   **Timing Information:**  Tracks the execution time for each step and the overall test.
-
-These reports are invaluable for understanding test execution, debugging failures, and providing clear documentation of test results.
-
 ## Limitations and Future Work
 
+* 
 *   **VLM Accuracy:**  The accuracy of form understanding and data validation depends on the capabilities of the underlying VLM. Complex or visually ambiguous forms may pose challenges.
 *   **Handling Complex Forms:**  Very intricate or dynamically generated forms might require more sophisticated prompting or custom logic.
 *   **CAPTCHA Challenges:**  Automated CAPTCHA solving is a known challenge. The framework may require manual intervention or integration with CAPTCHA solving services for forms protected by CAPTCHAs.
 *   **Performance:**  AI-powered analysis can add overhead to test execution time compared to traditional UI automation.
 *   **Model Fine-tuning:**  Future improvements could involve fine-tuning VLMs specifically for form understanding and validation to enhance accuracy and robustness.
 *   **Enhanced Reporting:**  Further enhancements to reporting could include more detailed performance metrics, customizable report templates, and integration with test management systems.
+
+## Prompting tips
+
+The natural language parameter passed to Midscene will be part of the prompt sent to the AI model. There are certain techniques in prompt engineering that can help improve the understanding of user interfaces.
+
+### The purpose of optimization is to get a stable response from AI
+
+Since AI has the nature of heuristic, the purpose of prompt tuning should be to obtain stable responses from the AI model across runs. In most cases, to expect a consistent response from LLM by using a good prompt is entirely feasible.
+
+### Use detailed descriptions and samples
+
+Detailed descriptions and examples are always welcome.
+
+For example: 
+
+Bad ❌: "Search 'headphone'"
+
+Good ✅: "Click the search box (it should be along with a region switch, such as 'domestic' or 'international'), type 'headphone', and hit Enter."
+
+Bad ❌: "Assert: food delivery service is in normal state"
+
+Good ✅: "Assert: There is a 'food delivery service' on page, and is in normal state"
+
+### One prompt should only do one thing
+
+Use `.ai` each time to do one task. It's still preferable to keep the prompt concise. Otherwise the LLM output will likely be messy. The token cost between a long prompt and a short prompt is almost the same.
+
+Bad ❌: "Click Login button, then click Sign up button, fill the form with 'test@test.com' in the email field, 'test' in the password field, and click Sign up button"
+
+Good ✅: Split the task into three steps:
+
+"Click Login Button"
+"Click Sign up button"
+"Fill the form with 'test@test.com' in the email field, 'test' in the password field, and click Sign up button"
+
+#### Understand the reason why AI is wrong, and optimize the prompt
+
+This prompt may cause the click to fail:
+
+⚠️ Click the "include" in the "range" dropdown menu
+
+After checking the report, you will find that the AI may tend to open the floating layer first, and then find the "include" option. If the floating layer is already open, you can try:
+
+✅ The floating layer is open, please click the "include" option
+
+Another example:
+
+This may fail when there are many "Add" buttons on the page, or the button is an icon button:
+
+⚠️ Click the "Add" button
+
+You can try:
+
+✅ Click the "Add" button on the top-right corner, it's a button with a "+" icon, on the right side of the "range" dropdown menu
+
+If the button is too large, the AI may misjudge the clickable range:
+
+⚠️ Click the "User Register" menu
+
+You can try:
+
+✅ Click the "User Register" text in the left menu
+
+#### LLMs can NOT tell the exact number like coords or hex-style color, give it some choices
+
+For example:
+
+Good ✅: "string, color of text, one of blue / red / yellow / green / white / black / others"
+
+Bad ❌: "string, hex value of text color"
+
+Bad ❌: "[number, number], the [x, y] coords of the main button"
+
+
+### Infer or assert from the interface, not the DOM properties or browser status
+
+All the data sent to the LLM is in the form of screenshots and element coordinates. The DOM and the browser instance are almost invisible to the LLM. Therefore, ensure everything you expect is visible on the screen.
+
+Good ✅: The title is blue
+
+Bad ❌: The title has a `test-id-size` property
+
+Bad ❌: The browser has two active tabs
+
+Bad ❌: The request has finished.
+
+### Cross-check the result using assertion
+
+LLM could behave incorrectly. A better practice is to check its result after running.
+
+For example, you can check the list content of the to-do app after inserting a record.
+
+```typescript
+await ai('Enter "Learning AI the day after tomorrow" in the task box, then press Enter to create');
+
+// check the result
+const taskList = await aiQuery<string[]>('string[], tasks in the list');
+expect(taskList.length).toBe(1);
+expect(taskList[0]).toBe('Learning AI the day after tomorrow');
+```
