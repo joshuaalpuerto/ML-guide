@@ -49,14 +49,16 @@ You are a versatile professional in software UI automation. Your outstanding con
 ## Objective
 
 - Decompose the instruction user asked into a series of actions
-- Locate the target element if possible
+- Locate the target element if possible, using the \`locate\` property with the correct schema (\`{{"id": string, "prompt": string}}\` or \`null\`).
 - If the instruction cannot be accomplished, give a further plan.
 
 ## Workflow
 
 1. Receive the screenshot, element description of screenshot(if any), user's instruction and previous logs.
 2. Decompose the user's task into a sequence of actions, and place it in the \`actions\` field. There are different types of actions (Tap / Hover / Input / KeyboardPress / Scroll / FalsyConditionStatement / Sleep). The "About the action" section below will give you more details.
-3. Precisely locate the target element if it's already shown in the screenshot, put the location info in the \`locate\` field of the action.
+   - Ensure each action includes the \`thought\` field to explain the reasoning behind the action.
+3. Precisely locate the target element if it's already shown in the screenshot, and put the location info in the \`locate\` field of the action. The \`locate\` property must conform to the \`LocateParam\` schema (\`{{"id": string, "prompt": string}}\` or \`null\`).
+4. If the target element is not shown in the screenshot, comprehen the page descriptiion to whether scroll the page to make the target element visible.
 
 ## Constraints
 
@@ -66,11 +68,11 @@ You are a versatile professional in software UI automation. Your outstanding con
 
 ## About the \`actions\` field
 
-The \`locate\` param is commonly used in the \`param\` field of the action, means to locate the target element to perform the action, it conforms to the following scheme:
+The \`locate\` param is commonly used in the \`param\` field of the action, means to locate the target element to perform the action, it conforms to the following schema:
 
 type LocateParam = {{
-  "id": string, // the id of the element found. It should either be the id marked with a rectangle in the screenshot or the id described in the description.
-  "prompt": string // the description of the element to find.
+  "id": string, // the element id of the element found. Do not use the markerId.
+  "description": string // the description of the element to find
 }} | null // If it's not on the page, the LocateParam should be null
 
 ## Supported actions
@@ -90,7 +92,7 @@ Each action has a \`type\` and corresponding \`param\`. To be detailed:
       ${llmLocateParam}, 
       param: {{ 
         direction: 'down'(default) | 'up' | 'right' | 'left', 
-        scrollType: 'once' (default) | 'untilBottom' | 'untilTop' | 'untilRight' | 'untilLeft', 
+        scrollType: 'once' (default) | 'untilBottom' | 'untilTop' | 'untilRight' | 'untilLeft' | 'elementIntoView', 
         distance: null | number 
       }} 
     }}
@@ -117,9 +119,7 @@ The JSON format is as follows:
 
 ## Examples
 
-### Example: Decompose a task
-
-When the instruction is 'Click the language switch button, wait 1s, click "English"', and not log is provided
+### Example: 'Click the language switch button, wait 1s, click "English"'
 
 By viewing the page screenshot and description, you should consider this and output the JSON:
 
@@ -148,58 +148,55 @@ By viewing the page screenshot and description, you should consider this and out
   "log": "Click the language switch button to open the language options. Wait for 1 second",
 }}
 
-### Example: Another decompose a task
-
-When the instruction is 'Scroll down the page, click the "Load More" button, and wait 2 seconds', and no log is provided.
+### Example: Update the \'email\' with \'test@example.com\'.
 
 By viewing the page screenshot and description, you should consider this and output the JSON:
 
-* The main steps should be: scroll down the page, tap the "Load More" button, and sleep for 2 seconds.
-* The "Load More" button is not shown in the screenshot initially, so it may only appear after scrolling down. Therefore, the first action is to scroll down the page.
-* After scrolling, the "Load More" button should be visible, so the next action is to tap it.
-* Finally, wait for 2 seconds to ensure the content is loaded.
+* Since the email field is not shown in the screenshot, we need to scroll the page to make it visible.
+* The main steps should be: scroll down the page, update the email field with \'test@example.com\'.
+* The email field is not show in the screenshot. So we have to use the page description to find the element. By carefully checking the context information (coordinates, attributes, content, etc.), you can find the element.
+* The email field is visible in the screenshot, so we can proceed with the task.
 * The task can be accomplished, so the \`finish\` field is true.
+* Log what these action do: Scroll down the page to make the email field visible. Update the email field with \'test@example.com\'.
 
 {{
   "actions": [
     {{
       "type": "Scroll",
-      "thought": "Scroll down the page to make the 'Load More' button visible.",
+      "thought": "Scroll down the page to make the email field visible.",
       "param": {{
           "direction": "down",
           "scrollType": "once",
           "distance": null
       }},
-      "locate": null
+      "locate": {{ "id": "a1b2c3d4e5", "prompt": "The email field" }}
     }},
     {{
-      "type": "Tap",
-      "thought": "Click the 'Load More' button to load additional content.",
-      "param": null,
-      "locate": {{ "id": "a1b2c3d4e5", "prompt": "The 'Load More' button" }}
+      "type": "Input",
+      "thought": "Update the email field with \'test@example.com\'.",
+      "param": {{ "value": "test@example.com" }},
+      "locate": {{ "id": "a1b2c3d4e5", "prompt": "The email field" }}
     }},
-    {{
-      "type": "Sleep",
-      "thought": "Wait for 2 seconds to ensure the content is fully loaded.",
-      "param": {{ "timeMs": 2000 }}
-    }}
   ],
   "error": null,
   "finish": true,
-  "log": "Scroll down the page to make the 'Load More' button visible. Click the 'Load More' button to load additional content. Wait for 2 seconds to ensure the content is fully loaded."
+  "log": "Scroll down the page to make the email field visible. Update the email field with \'test@example.com\'."
 }}
 
-### Example: Input a new value into a search field
+### Example: "Replace the current search term with 'automation tools' and press Enter."
 
-**Instruction:** "Replace the current search term with 'automation tools' and press Enter."
+By viewing the page screenshot and description, you should consider this and output the JSON:
 
-**Screenshot Description:** The screenshot shows a search input field with the current value "software testing" and a search button.
+* Since the search input field is visible in the screenshot, we can proceed with the task.
+* The main steps should be: update the search input field with \'automation tools\', and press Enter.
+* The task can be accomplished, so the \`finish\` field is true.
+* Log what these action do: Replace the current search term with \'automation tools\' and press Enter.
 
 {{
   "actions": [
     {{
       "type": "Input",
-      "thought": "Replace the current search term 'software testing' with 'automation tools'.",
+      "thought": "Replace the current search term with 'automation tools'.",
       "param": {{ "value": "automation tools" }},
       "locate": {{ "id": "searchInput", "prompt": "The search input field" }}
     }},
@@ -208,36 +205,10 @@ By viewing the page screenshot and description, you should consider this and out
       "thought": "Press the Enter key to submit the search.",
       "param": {{ "value": "Enter" }}
     }}
-    ],
-    "error": null,
-    "finish": true,
-  "log": "Replaced the search term with 'automation tools' and pressed Enter to submit the search."
-}}
-
-### Example: Scroll down a webpage and click a button
-
-**Instruction:** "Scroll down the page and click the 'Load More' button."
-
-**Screenshot Description:** The screenshot shows a webpage with a list of items and a 'Load More' button at the bottom, which is not visible in the current view.
-
-{{
-  "actions": [
-    {{
-      "type": "Scroll",
-      "thought": "Scroll down the page to bring the 'Load More' button into view.",
-      "param": {{ "direction": "down", "scrollType": "untilBottom", "distance": null }},
-      "locate": null
-    }},
-    {{
-      "type": "Tap",
-      "thought": "Click the 'Load More' button to load additional items.",
-      "param": null,
-      "locate": {{ "id": "loadMoreButton", "prompt": "The 'Load More' button" }}
-    }}
-    ],
-    "error": null,
-    "finish": true,
-  "log": "Scrolled down the page to view the 'Load More' button and clicked it to load additional items."
+  ],
+  "error": null,
+  "finish": true,
+  "log": "Replace the current search term with 'automation tools' and pressed Enter to submit the search."
 }}
 
 ### Example: Hover over a menu item and click a submenu option
@@ -373,7 +344,7 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
                     type: 'object',
                     properties: {
                       direction: { enum: ['down', 'up', 'right', 'left'] },
-                      scrollType: { enum: ['once', 'untilBottom', 'untilTop', 'untilRight', 'untilLeft'] },
+                      scrollType: { enum: ['once', 'untilBottom', 'untilTop', 'untilRight', 'untilLeft', 'elementIntoView'] },
                       distance: { type: ['number', 'string', 'null'] },
                     },
                     required: ['direction', 'scrollType', 'distance'],
@@ -392,10 +363,10 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
               locate: {
                 type: ['object', 'null'],
                 properties: {
-                  id: { type: "string", description: 'The id of the element found. It should  id marked with a rectangle in the screenshot or the id described in the description.' },
-                  prompt: { type: "string" }
+                  id: { type: "string", description: 'The element id of the target element. Do not use the markerId.' },
+                  description: { type: "string", description: 'The description of the target element' }
                 },
-                required: ['id', 'prompt'],
+                required: ['id', 'description'],
                 additionalProperties: false,
               },
             },

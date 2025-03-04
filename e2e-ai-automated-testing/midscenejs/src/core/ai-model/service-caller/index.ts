@@ -15,7 +15,6 @@ import {
   OPENAI_API_KEY,
   OPENAI_BASE_URL,
   OPENAI_MAX_TOKENS,
-  OPENAI_USE_AZURE,
   getAIConfig,
   getAIConfigInBoolean,
   getAIConfigInJson,
@@ -24,6 +23,7 @@ import { AIActionType } from '../common';
 import { assertSchema } from '../prompt/assertion';
 import { locatorSchema } from '../prompt/llm-locator';
 import { planSchema } from '../prompt/llm-planning';
+import { debugLog } from '../../../core/utils';
 
 export function checkAIConfig() {
   if (getAIConfig(OPENAI_API_KEY)) return true;
@@ -111,7 +111,7 @@ export async function call(
   let content: string | undefined;
   let usage: OpenAI.CompletionUsage | undefined;
   const commonConfig = {
-    temperature: getAIConfigInBoolean(MIDSCENE_USE_VLM_UI_TARS) ? 0.0 : 0.1,
+    temperature: getAIConfigInBoolean(MIDSCENE_USE_VLM_UI_TARS) ? 0.0 : 0.0,
     stream: false,
     max_tokens:
       typeof maxTokens === 'number'
@@ -151,6 +151,8 @@ export async function call(
   content = result.choices[0].message.content!;
   assert(content, 'empty content');
   usage = result.usage;
+
+  debugLog(content)
 
   return { content: content || '', usage };
 }

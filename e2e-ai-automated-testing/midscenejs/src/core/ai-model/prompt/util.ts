@@ -154,6 +154,11 @@ export async function describeUserPage<
       const item = idElementMap[`${id}`];
       return item;
     },
+    elementByMarkerId(markerId: string | number) {
+      assert(typeof markerId !== 'undefined', 'markerId is required for query');
+      const item = idElementMap[`${markerId}`];
+      return item;
+    },
     elementByPosition(
       position: { x: number; y: number },
       size: { width: number; height: number },

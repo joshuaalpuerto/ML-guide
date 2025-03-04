@@ -63,6 +63,11 @@ export type AISingleElementResponseById = {
   text?: string;
 };
 
+export type AISingleElementResponseByMarkerId = {
+  id?: string;
+  markerId: string;
+};
+
 export type AISingleElementResponseByPosition = {
   position?: {
     x: number;
@@ -73,7 +78,9 @@ export type AISingleElementResponseByPosition = {
   text: string;
 };
 
-export type AISingleElementResponse = AISingleElementResponseById;
+export type AISingleElementResponse = AISingleElementResponseById | AISingleElementResponseByMarkerId
+
+
 export interface AIElementIdResponse {
   elements: {
     id: string;
@@ -233,6 +240,7 @@ export interface AgentAssertOpt {
 
 export interface PlanningLocateParam {
   id?: string;
+  markerId?: string; // sometimes this is returned by fireworks model
   position?: {
     x: number;
     y: number;
@@ -240,6 +248,8 @@ export interface PlanningLocateParam {
   bbox?: [number, number, number, number];
   bbox_2d?: [number, number, number, number];
   prompt: string;
+  // sometimes this is returned by fireworks model deepseek-r1
+  element?: PlanningLocateParam;
 }
 
 export interface PlanningAction<ParamType = any> {
@@ -286,7 +296,7 @@ export interface PlanningActionParamInputOrKeyPress {
 }
 export interface PlanningActionParamScroll {
   direction: 'down' | 'up' | 'right' | 'left';
-  scrollType: 'once' | 'untilBottom' | 'untilTop' | 'untilRight' | 'untilLeft';
+  scrollType: 'once' | 'untilBottom' | 'untilTop' | 'untilRight' | 'untilLeft' | 'elementIntoView';
   distance: null | number;
 }
 

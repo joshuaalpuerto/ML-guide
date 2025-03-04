@@ -196,6 +196,14 @@ export class Page<
     return this.mouse.wheel(9999999, 0);
   }
 
+  async scrollIntoView(distance?: number): Promise<void> {
+    const innerHeight = await this.evaluate(() => window.innerHeight);
+    const scrollDistance = distance || innerHeight * 0.7;
+    return this.underlyingPage.evaluate((scrollDistance) => {
+      window.scrollTo(0, scrollDistance);
+    }, scrollDistance);
+  }
+
   async scrollUp(distance?: number, startingPoint?: Point): Promise<void> {
     const innerHeight = await this.evaluate(() => window.innerHeight);
     const scrollDistance = distance || innerHeight * 0.7;

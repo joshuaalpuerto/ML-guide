@@ -126,8 +126,8 @@ export class PageTaskExecutor {
           executor: async (param, taskContext) => {
             const { task } = taskContext;
             assert(
-              param?.prompt || param?.id || param?.position || param?.bbox,
-              'No prompt or id or position or bbox to locate',
+              param?.prompt || param?.id || param?.position || param?.bbox || param?.markerId,
+              'No prompt or id or markerId or position or bbox to locate',
             );
             let insightDump: InsightDump | undefined;
             let usage: AIUsageInfo | undefined;
@@ -155,6 +155,7 @@ export class PageTaskExecutor {
 
             const quickAnswer = {
               id: param?.id,
+              markerId: param?.markerId,
               position: param?.position,
               bbox: param?.bbox,
             };
@@ -297,7 +298,9 @@ export class PageTaskExecutor {
           thought: plan.thought,
           locate: plan.locate,
           executor: async (param, { element }) => {
+            console.log('element', element);
             assert(element, 'Element not found, cannot tap');
+            // await this.page.scrollUntilBottom({ left: element.center[0], top: element.center[1] });
             await this.page.mouse.click(element.center[0], element.center[1]);
           },
         };
@@ -358,6 +361,10 @@ export class PageTaskExecutor {
               await this.page.scrollUntilRight(startingPoint);
             } else if (scrollToEventName === 'untilLeft') {
               await this.page.scrollUntilLeft(startingPoint);
+            } else if (scrollToEventName === 'elementIntoView') {
+              console.log('taskParam', JSON.stringify(taskParam));
+              console.log('element', JSON.stringify(element));
+              await this.page.scrollIntoView(taskParam.distance || undefined);
             } else if (scrollToEventName === 'once' || !scrollToEventName) {
               if (
                 taskParam?.direction === 'down' ||
@@ -527,6 +534,15 @@ export class PageTaskExecutor {
             }
 
             if (planningAction.locate) {
+
+              // some times firewokrs deepseek-r1 will return element in the locate response and it contains the locate information
+              if (planningAction.locate.element) {
+                planningAction.locate = {
+                  ...planningAction.locate,
+                  ...planningAction.locate.element
+                }
+              }
+
               // we only collect bbox once, let qwen re-locate in the following steps
               if (bboxCollected && planningAction.locate.bbox) {
                 // biome-ignore lint/performance/noDelete: <explanation>
@@ -537,11 +553,21 @@ export class PageTaskExecutor {
                 bboxCollected = true;
               }
 
+              // by default if prompt is not provided we will try to resolve it using locate information
+              if (!planningAction.locate.prompt) {
+                const elementId = planningAction.locate.id;
+                const markerId = planningAction.locate.markerId;
+
+                if (elementId || markerId) {
+                  planningAction.locate.prompt = elementId ? `The element with element with id: ${elementId}.` : `The elmeent with  markerId: ${markerId}.`;
+                }
+              }
+
               acc.push({
                 type: 'Locate',
                 locate: planningAction.locate,
                 param: null,
-                thought: planningAction.locate.prompt,
+                thought: planningAction.locate.prompt
               });
             } else if (
               ['Tap', 'Hover', 'Input'].includes(planningAction.type)

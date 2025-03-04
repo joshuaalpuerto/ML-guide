@@ -9,6 +9,7 @@ import type {
   AIElementIdResponse,
   AIElementResponse,
   AISectionParseResponse,
+  AISingleElementResponseById,
   AISingleElementResponse,
   AISingleElementResponseByPosition,
   AIUsageInfo,
@@ -165,7 +166,7 @@ function matchQuickAnswer(
   if ('id' in quickAnswer && quickAnswer.id && elementById(quickAnswer.id)) {
     return {
       parseResult: {
-        elements: [quickAnswer as AISingleElementResponse],
+        elements: [quickAnswer as AISingleElementResponseById],
         errors: [],
       },
       rawResponse: quickAnswer,
@@ -227,8 +228,15 @@ export async function AiInspectElement<
 }> {
   const { context, targetElementDescription, callAI } = options;
   const { screenshotBase64, screenshotBase64WithElementMarker } = context;
-  const { description, elementById, insertElementByPosition, size } =
+  const { description, elementById, elementByMarkerId, insertElementByPosition, size } =
     await describeUserPage(context);
+
+  if (options.quickAnswer && 'markerId' in options.quickAnswer && options.quickAnswer.markerId) {
+    const element = elementByMarkerId(options.quickAnswer.markerId);
+    if (element) {
+      options.quickAnswer = { ...options.quickAnswer, id: element.id };
+    }
+  }
   // meet quick answer
   const quickAnswer = matchQuickAnswer(
     options.quickAnswer,
