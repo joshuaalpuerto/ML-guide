@@ -8,7 +8,7 @@
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
     "test:connectivity": "vitest ./connectivity-test/connectivity.test.ts",
-    "build:web_extractor": "cd midscenejs/src/shared && rollup -c"
+    "build:web_extractor": "cd midscenejs && pnpm build"
   },
   "keywords": [
     "e2e",

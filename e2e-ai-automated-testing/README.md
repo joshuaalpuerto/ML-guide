@@ -6,7 +6,7 @@
 
 Manual testing of web forms is a time-consuming and often error-prone process. Ensuring data integrity and proper form behavior across various scenarios requires significant effort. This framework aims to revolutionize form testing by leveraging the power of Vision Language Models (VLMs) to automate end-to-end (E2E) testing and data validation for web forms.
 
-**Imagine a testing tool that can "see" your forms, understand their structure, and intelligently verify if submitted data matches the form's expected input.** This framework makes that vision a reality.
+**Imagine a testing tool that can "see" your forms, understand their structure, and intelligently verify if submitted data matches the form's expected input.** 
 
 **Key Benefits:**
 
@@ -39,10 +39,9 @@ Manual testing of web forms is a time-consuming and often error-prone process. E
     *   Focuses on visual and semantic understanding, eliminating dependencies on specific framework implementations.
 
 *   **Comprehensive Visual Reporting:**
-    *   Generates detailed HTML reports with step-by-step execution logs.
     *   Includes screenshots at each step, visually highlighting interacted form elements.
     *   Provides insights into the AI's reasoning and decision-making process during testing.
-    *   Clearly indicates test success or failure with detailed error messages and visual context.
+    *   Clearly indicates test success or failure with detailed error messages
 
 ## Technology Stack
 
