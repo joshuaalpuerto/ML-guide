@@ -97,6 +97,7 @@ export async function call(
     | OpenAI.ChatCompletionCreateParams['response_format']
     | OpenAI.ResponseFormatJSONObject
     | FireworksResponseFormat,
+  stream: boolean = true,
 ): Promise<{ content: string; usage?: AIUsageInfo }> {
   const { completion } = await createChatClient({
     AIActionTypeValue,
@@ -108,11 +109,9 @@ export async function call(
 
   const startTime = Date.now();
   const model = getModelName();
-  let content: string | undefined;
-  let usage: OpenAI.CompletionUsage | undefined;
   const commonConfig = {
-    temperature: getAIConfigInBoolean(MIDSCENE_USE_VLM_UI_TARS) ? 0.0 : 0.0,
-    stream: false,
+    temperature: getAIConfigInBoolean(MIDSCENE_USE_VLM_UI_TARS) ? 0.0 : 0.1,
+    stream,
     max_tokens:
       typeof maxTokens === 'number'
         ? maxTokens
@@ -124,37 +123,52 @@ export async function call(
       : {}),
   };
 
-  const result = await completion.create({
+  const response: OpenAI.ChatCompletion | AsyncIterable<OpenAI.ChatCompletionChunk> = await completion.create({
     model,
     messages,
     response_format: responseFormat,
     ...commonConfig,
   } as any);
 
+  const { content, usage } = stream
+    ? await handleStreamingResponse(response as unknown as AsyncIterable<OpenAI.ChatCompletionChunk>)
+    : await handleNonStreamingResponse(response);
 
   if (shouldPrintTiming) {
     console.log(
       'Midscene - AI call',
       getAIConfig(MIDSCENE_USE_QWEN_VL) ? 'MIDSCENE_USE_QWEN_VL' : '',
       model,
-      result.usage,
+      usage,
       `${Date.now() - startTime}ms`,
-      result._request_id || '',
     );
   }
 
+  debugLog(content)
+
+  return { content: content || '', usage };
+}
+
+async function handleStreamingResponse(stream: AsyncIterable<OpenAI.ChatCompletionChunk>): Promise<{ content?: string, usage?: OpenAI.CompletionUsage }> {
+  let content = '';
+  let usage: OpenAI.CompletionUsage | undefined;
+  for await (const chunk of stream) {
+    content += (chunk.choices[0]?.delta?.content || '');
+    usage = chunk.usage || undefined
+  }
+  return { content, usage }
+}
+
+async function handleNonStreamingResponse(result: OpenAI.ChatCompletion): Promise<{ content?: string, usage?: OpenAI.CompletionUsage }> {
   assert(
     result.choices,
     `invalid response from LLM service: ${JSON.stringify(result)}`,
   );
 
-  content = result.choices[0].message.content!;
+  const content = result.choices[0].message.content!;
   assert(content, 'empty content');
-  usage = result.usage;
 
-  debugLog(content)
-
-  return { content: content || '', usage };
+  return { content, usage: result.usage };
 }
 
 type FireworksResponseFormat = {
