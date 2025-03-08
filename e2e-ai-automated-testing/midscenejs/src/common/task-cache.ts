@@ -13,7 +13,7 @@ import { type WebUIContext } from './utils';
 
 export type PlanTask = {
   type: 'plan';
-  prompt: string;
+  prompt?: string;
   pageContext: {
     url: string;
     size: {
@@ -27,7 +27,7 @@ export type PlanTask = {
 
 export type LocateTask = {
   type: 'locate';
-  prompt: string;
+  prompt?: string;
   pageContext: {
     url: string;
     size: {
@@ -51,7 +51,7 @@ export type CacheGroup = {
   readCache: <T extends 'plan' | 'locate'>(
     pageContext: WebUIContext,
     type: T,
-    actionPrompt: string,
+    actionPrompt?: string,
   ) => T extends 'plan'
     ? PlanTask['response']
     : T extends 'locate'
@@ -92,7 +92,7 @@ export class TaskCache {
       readCache: <T extends 'plan' | 'locate'>(
         pageContext: WebUIContext,
         type: T,
-        actionPrompt: string,
+        actionPrompt?: string,
       ) => {
         if (index === -1) {
           return false as any;
@@ -101,7 +101,7 @@ export class TaskCache {
           return this.readCache(
             pageContext,
             type,
-            actionPrompt,
+            actionPrompt || '',
             aiTasks[index].tasks,
           ) as PlanTask['response'];
         }
@@ -109,7 +109,7 @@ export class TaskCache {
         return this.readCache(
           pageContext,
           type,
-          actionPrompt,
+          actionPrompt || '',
           aiTasks[index].tasks,
         )
       },

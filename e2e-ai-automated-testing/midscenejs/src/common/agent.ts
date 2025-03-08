@@ -2,12 +2,8 @@ import type { WebPage } from '../common/page';
 import {
   type AgentAssertOpt,
   type AgentWaitForOpt,
-  type ExecutionDump,
-  type ExecutionTask,
-  type GroupedActionDump,
   Insight,
   type InsightAction,
-  type OnTaskStartTip,
 } from '../core';
 import { NodeType } from '../shared/extractor/constants';
 

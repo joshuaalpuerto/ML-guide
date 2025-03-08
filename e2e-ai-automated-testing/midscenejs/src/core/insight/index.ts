@@ -11,7 +11,6 @@ import type {
   InsightExtractParam,
   InsightOptions,
   InsightTaskInfo,
-  PartialInsightDumpFromSDK,
   UIContext,
 } from '../types';
 
@@ -62,7 +61,7 @@ export default class Insight<
   }
 
   async locate(
-    queryPrompt: string,
+    queryPrompt?: string,
     opt?: LocateOpts,
   ): Promise<ElementType | null>;
   async locate(queryPrompt: string, opt?: LocateOpts) {
@@ -96,22 +95,6 @@ export default class Insight<
     if (parseResult.errors?.length) {
       errorLog = `locate - AI response error: \n${parseResult.errors.join('\n')}`;
     }
-
-    const dumpData: PartialInsightDumpFromSDK = {
-      type: 'locate',
-      context,
-      userQuery: {
-        element: queryPrompt,
-      },
-      quickAnswer: opt?.quickAnswer,
-      matchedSection: [],
-      matchedElement: [],
-      data: null,
-      taskInfo,
-      error: errorLog,
-    };
-
-
 
     if (errorLog) {
       console.error(errorLog);
@@ -179,20 +162,6 @@ export default class Insight<
     if (parseResult.errors?.length) {
       errorLog = `AI response error: \n${parseResult.errors.join('\n')}`;
     }
-
-    const dumpData: PartialInsightDumpFromSDK = {
-      type: 'extract',
-      context,
-      userQuery: {
-        dataDemand,
-      },
-      matchedSection: [],
-      matchedElement: [],
-      data: null,
-      taskInfo,
-      error: errorLog,
-    };
-
 
     const { data } = parseResult;
     if (errorLog && !data) {

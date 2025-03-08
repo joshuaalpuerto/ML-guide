@@ -247,7 +247,7 @@ export interface PlanningLocateParam {
   };
   bbox?: [number, number, number, number];
   bbox_2d?: [number, number, number, number];
-  prompt: string;
+  prompt?: string;
   // sometimes this is returned by fireworks model deepseek-r1
   element?: PlanningLocateParam;
 }
