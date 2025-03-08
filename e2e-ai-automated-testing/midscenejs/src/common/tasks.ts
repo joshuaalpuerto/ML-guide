@@ -93,6 +93,7 @@ export class PageTaskExecutor {
           await sleep(200)
         }
         if (appendAfterExecution) {
+
           const shot2 = await this.recordScreenshot('after Action');
           recorder.push(shot2);
         }
@@ -148,7 +149,7 @@ export class PageTaskExecutor {
             const locateCache = cacheGroup?.readCache(
               pageContext,
               'locate',
-              param.prompt,
+              param?.prompt,
             );
             let locateResult: AIElementIdResponse | undefined;
             const callAI = this.insight.aiVendorFn;
@@ -180,7 +181,7 @@ export class PageTaskExecutor {
                   url: pageContext.url,
                   size: pageContext.size,
                 },
-                prompt: param.prompt,
+                prompt: param.prompt || '',
                 response: locateResult,
               });
             }
@@ -262,6 +263,8 @@ export class PageTaskExecutor {
           locate: plan.locate,
           executor: async (taskParam, { element }) => {
             if (element) {
+              // adjust element information depens on where it is located in the page
+              element = await this.page.scrollElementAndAdjustPositionInformation(element as ElementInfo);
               await this.page.clearInput(element as ElementInfo);
 
               if (!taskParam || !taskParam.value) {
@@ -298,8 +301,9 @@ export class PageTaskExecutor {
           thought: plan.thought,
           locate: plan.locate,
           executor: async (param, { element }) => {
-            console.log('element', element);
             assert(element, 'Element not found, cannot tap');
+            // adjust element information depens on where it is located in the page
+            element = await this.page.scrollElementAndAdjustPositionInformation(element as ElementInfo);
             // await this.page.scrollUntilBottom({ left: element.center[0], top: element.center[1] });
             await this.page.mouse.click(element.center[0], element.center[1]);
           },
@@ -333,6 +337,8 @@ export class PageTaskExecutor {
           locate: plan.locate,
           executor: async (param, { element }) => {
             assert(element, 'Element not found, cannot hover');
+            // adjust element information depens on where it is located in the page
+            element = await this.page.scrollElementAndAdjustPositionInformation(element as ElementInfo);
             await this.page.mouse.move(element.center[0], element?.center[1]);
           },
         };
@@ -346,6 +352,8 @@ export class PageTaskExecutor {
           thought: plan.thought,
           locate: plan.locate,
           executor: async (taskParam, { element }) => {
+            // adjust element information depens on where it is located in the page
+            element = await this.page.scrollElementAndAdjustPositionInformation(element as ElementInfo);
             const startingPoint = element
               ? {
                 left: element.center[0],
@@ -362,9 +370,7 @@ export class PageTaskExecutor {
             } else if (scrollToEventName === 'untilLeft') {
               await this.page.scrollUntilLeft(startingPoint);
             } else if (scrollToEventName === 'elementIntoView') {
-              console.log('taskParam', JSON.stringify(taskParam));
-              console.log('element', JSON.stringify(element));
-              await this.page.scrollIntoView(taskParam.distance || undefined);
+              await this.page.scrollIntoElementPosition(taskParam.distance || undefined);
             } else if (scrollToEventName === 'once' || !scrollToEventName) {
               if (
                 taskParam?.direction === 'down' ||
@@ -510,6 +516,7 @@ export class PageTaskExecutor {
           'plan',
           param.userInstruction,
         );
+
         let planResult: Awaited<ReturnType<typeof plan>>;
         if (planCache) {
           planResult = planCache;
@@ -777,7 +784,7 @@ export class PageTaskExecutor {
    * @param conversationHistory Message to append
    */
   private appendConversationHistory(
-    conversationHistory: ChatCompletionMessageParam,
+    conversationHistory: OpenAI.ChatCompletionMessageParam,
   ) {
     if (conversationHistory.role === 'user') {
       // Get all existing user messages with images

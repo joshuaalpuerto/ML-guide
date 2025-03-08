@@ -1,4 +1,4 @@
-import type { ElementTreeNode, Point, Size } from '../core';
+import type { ElementTreeNode, Point, Size, Rect } from '../core';
 import { getTmpFile, sleep } from '../core/utils';
 import type { ElementInfo } from '../shared/extractor/index';
 import { treeToList } from '../shared/extractor';
@@ -178,25 +178,33 @@ export class Page<
 
   async scrollUntilTop(startingPoint?: Point): Promise<void> {
     await this.moveToPoint(startingPoint);
-    return this.mouse.wheel(0, -9999999);
+    await this.mouse.wheel(0, -9999999);
+    // give time for the page to scroll
+    await this.underlyingPage.waitForTimeout(100);
   }
 
   async scrollUntilBottom(startingPoint?: Point): Promise<void> {
     await this.moveToPoint(startingPoint);
-    return this.mouse.wheel(0, 9999999);
+    await this.mouse.wheel(0, 9999999);
+    // give time for the page to scroll
+    await this.underlyingPage.waitForTimeout(100);
   }
 
   async scrollUntilLeft(startingPoint?: Point): Promise<void> {
     await this.moveToPoint(startingPoint);
-    return this.mouse.wheel(-9999999, 0);
+    await this.mouse.wheel(-9999999, 0);
+    // give time for the page to scroll
+    await this.underlyingPage.waitForTimeout(100);
   }
 
   async scrollUntilRight(startingPoint?: Point): Promise<void> {
     await this.moveToPoint(startingPoint);
-    return this.mouse.wheel(9999999, 0);
+    await this.mouse.wheel(9999999, 0);
+    // give time for the page to scroll
+    await this.underlyingPage.waitForTimeout(100);
   }
 
-  async scrollIntoView(distance?: number): Promise<void> {
+  async scrollIntoElementPosition(distance?: number): Promise<void> {
     const innerHeight = await this.evaluate(() => window.innerHeight);
     const scrollDistance = distance || innerHeight * 0.7;
     return this.underlyingPage.evaluate((scrollDistance) => {
@@ -208,28 +216,102 @@ export class Page<
     const innerHeight = await this.evaluate(() => window.innerHeight);
     const scrollDistance = distance || innerHeight * 0.7;
     await this.moveToPoint(startingPoint);
-    return this.mouse.wheel(0, -scrollDistance);
+    await this.mouse.wheel(0, -scrollDistance);
+    // give time for the page to scroll
+    await this.underlyingPage.waitForTimeout(100);
   }
 
   async scrollDown(distance?: number, startingPoint?: Point): Promise<void> {
     const innerHeight = await this.evaluate(() => window.innerHeight);
     const scrollDistance = distance || innerHeight * 0.7;
     await this.moveToPoint(startingPoint);
-    return this.mouse.wheel(0, scrollDistance);
+    await this.mouse.wheel(0, scrollDistance);
+    // give time for the page to scroll
+    await this.underlyingPage.waitForTimeout(100);
   }
 
   async scrollLeft(distance?: number, startingPoint?: Point): Promise<void> {
     const innerWidth = await this.evaluate(() => window.innerWidth);
     const scrollDistance = distance || innerWidth * 0.7;
     await this.moveToPoint(startingPoint);
-    return this.mouse.wheel(-scrollDistance, 0);
+    await this.mouse.wheel(-scrollDistance, 0);
+    // give time for the page to scroll
+    await this.underlyingPage.waitForTimeout(100);
   }
 
   async scrollRight(distance?: number, startingPoint?: Point): Promise<void> {
     const innerWidth = await this.evaluate(() => window.innerWidth);
     const scrollDistance = distance || innerWidth * 0.7;
     await this.moveToPoint(startingPoint);
-    return this.mouse.wheel(scrollDistance, 0);
+    await this.mouse.wheel(scrollDistance, 0);
+    // give time for the page to scroll
+    await this.underlyingPage.waitForTimeout(100);
+  }
+
+  // scroll the element to the center of the page
+  // at the same time, adjust the position information of the element
+  async scrollElementAndAdjustPositionInformation(element: ElementInfo) {
+    const { left, top } = await this.getElementCoordinatesToMakeItVisible(element);
+    const adjustedElement = await this.adjustElementPositionInformation(element);
+    await this.mouse.move(adjustedElement.center[0], adjustedElement.center[1]);
+    await this.mouse.wheel(left, top);
+    await this.underlyingPage.waitForTimeout(100);
+
+    return adjustedElement
+  }
+
+  async adjustElementPositionInformation(element: ElementInfo): Promise<ElementInfo> {
+    const { left, top } = await this.getElementCoordinatesToMakeItVisible(element);
+    let adjustedCenterX = element.center[0]; // Default to original center
+    let adjustedCenterY = element.center[1]; // Default to original center
+
+    if (left !== 0) {
+      // Adjust X only if there was horizontal scroll
+      adjustedCenterX = element.center[0] - left;
+    }
+
+    if (top !== 0) {
+      // Adjust Y only if there was vertical scroll
+      adjustedCenterY = element.center[1] - top;
+    }
+
+    return {
+      ...element,
+      rect: {
+        ...element.rect,
+        left: Math.max(0, adjustedCenterX - element.rect.width / 2),
+        top: Math.max(0, adjustedCenterY - element.rect.height / 2),
+      },
+      center: [
+        adjustedCenterX,
+        adjustedCenterY,
+      ],
+    };
+  }
+  async getElementCoordinatesToMakeItVisible(element: ElementInfo): Promise<Point> {
+    const pageSizeInfo = await this.size();
+    const elementCenterX = element.rect.left + (element.rect.width / 2);
+    const elementCenterY = element.rect.top + (element.rect.height / 2);
+
+    let scrollLeft = 0;
+    let scrollTop = 0;
+
+    // Check if element's center is outside the viewport horizontally
+    if (elementCenterX < 0 || elementCenterX > pageSizeInfo.width) {
+      scrollLeft = elementCenterX - (pageSizeInfo.width / 2);
+      // Ensure scroll values are non-negative.
+      scrollLeft = Math.max(0, scrollLeft);
+    }
+
+    // Check if element's center is outside the viewport vertically
+    if (elementCenterY < 0 || elementCenterY > pageSizeInfo.height) {
+      scrollTop = elementCenterY - (pageSizeInfo.height / 2);
+      // Ensure scroll values are non-negative.
+      scrollTop = Math.max(0, scrollTop);
+    }
+
+
+    return { left: scrollLeft, top: scrollTop };
   }
 
   async destroy(): Promise<void> { }

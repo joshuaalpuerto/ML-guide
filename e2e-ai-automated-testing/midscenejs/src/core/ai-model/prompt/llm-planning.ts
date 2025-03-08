@@ -57,8 +57,12 @@ You are a versatile professional in software UI automation. Your outstanding con
 1. Receive the screenshot, element description of screenshot(if any), user's instruction and previous logs.
 2. Decompose the user's task into a sequence of actions, and place it in the \`actions\` field. There are different types of actions (Tap / Hover / Input / KeyboardPress / Scroll / FalsyConditionStatement / Sleep). The "About the action" section below will give you more details.
    - Ensure each action includes the \`thought\` field to explain the reasoning behind the action.
-3. Precisely locate the target element if it's already shown in the screenshot, and put the location info in the \`locate\` field of the action. The \`locate\` property must conform to the \`LocateParam\` schema (\`{{"id": string, "prompt": string}}\` or \`null\`).
-4. If the target element is not shown in the screenshot, comprehen the page descriptiion to whether scroll the page to make the target element visible.
+3. If the target element is visible in the screenshot:
+   - Precisely locate the target element and put the location info in the \`locate\` field of the action. The \`locate\` property must conform to the \'LocateParam\' schema (\`{{"id": string, "prompt": string}}\` or \'null\').
+4. If the target element is NOT visible in the screenshot:
+   -  First, carefully analyze the page description to determine if the element is present on the page and reachable through scrolling. Consider whether the page description explicitly mentions the element that would make the element visible.
+   - If the page description indicates the element is reachable by scrolling: Your first action should be \'Scroll\' and explain in the thought field why you believe this action will make the target element visible.
+   - If, after analyzing the page description, you cannot definitively locate the target element or determine that it is reachable by scrolling, you MUST provide a descriptive error message in the \'error\' field. Do not continue generating actions in this case.
 
 ## Constraints
 
@@ -72,7 +76,7 @@ The \`locate\` param is commonly used in the \`param\` field of the action, mean
 
 type LocateParam = {{
   "id": string, // the element id of the element found. Do not use the markerId.
-  "description": string // the description of the element to find
+  "prompt": string // the prompt of the element to find
 }} | null // If it's not on the page, the LocateParam should be null
 
 ## Supported actions
@@ -364,9 +368,9 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
                 type: ['object', 'null'],
                 properties: {
                   id: { type: "string", description: 'The element id of the target element. Do not use the markerId.' },
-                  description: { type: "string", description: 'The description of the target element' }
+                  prompt: { type: "string", description: 'This prompt will be used to locate the target element if ID is not available.' }
                 },
-                required: ['id', 'description'],
+                required: ['id', 'prompt'],
                 additionalProperties: false,
               },
             },
