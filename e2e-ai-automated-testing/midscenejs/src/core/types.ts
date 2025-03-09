@@ -238,7 +238,7 @@ export interface AgentAssertOpt {
  *
  */
 
-export interface PlanningLocateParam {
+export interface PlanningElementParam {
   id?: string;
   markerId?: string; // sometimes this is returned by fireworks model
   position?: {
@@ -249,7 +249,7 @@ export interface PlanningLocateParam {
   bbox_2d?: [number, number, number, number];
   prompt?: string;
   // sometimes this is returned by fireworks model deepseek-r1
-  element?: PlanningLocateParam;
+  element?: PlanningElementParam;
 }
 
 export interface PlanningAction<ParamType = any> {
@@ -269,7 +269,7 @@ export interface PlanningAction<ParamType = any> {
   | 'Sleep'
   | 'Finished';
   param: ParamType;
-  locate: PlanningLocateParam | null;
+  element: PlanningElementParam | null;
 }
 
 export interface PlanningAIResponse {
@@ -364,7 +364,7 @@ export interface ExecutionTaskApply<
   subType?: string;
   param?: TaskParam;
   thought?: string;
-  locate: PlanningLocateParam | null;
+  element: PlanningElementParam | null;
   quickAnswer?: AISingleElementResponse | null;
   pageContext?: UIContext;
   executor: (
@@ -419,7 +419,7 @@ export interface ExecutionDump extends DumpMeta {
 /*
 task - insight-locate
 */
-export type ExecutionTaskInsightLocateParam = PlanningLocateParam;
+export type ExecutionTaskInsightLocateParam = PlanningElementParam;
 
 export interface ExecutionTaskInsightLocateOutput {
   element: BaseElement | null;

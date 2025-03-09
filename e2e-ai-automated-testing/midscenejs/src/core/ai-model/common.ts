@@ -8,7 +8,7 @@ import {
   getModelName,
 } from './service-caller';
 
-import type { PlanningLocateParam } from '../types';
+import type { PlanningElementParam } from '../types';
 
 export type AIArgs = [
   OpenAI.ChatCompletionSystemMessageParam,
@@ -39,7 +39,7 @@ export async function callAiFn<T>(
 }
 
 // transform the param of locate from qwen mode
-export function fillLocateParam(locate: PlanningLocateParam) {
+export function fillLocateParam(locate: PlanningElementParam) {
   if (locate?.bbox_2d && !locate?.bbox) {
     locate.bbox = locate.bbox_2d;
     // biome-ignore lint/performance/noDelete: <explanation>

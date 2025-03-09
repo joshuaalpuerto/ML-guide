@@ -11,36 +11,7 @@ const commonOutputFields = `"finish": boolean, // If all the actions described i
   "log": string, // Log what the action(s) do. Use the same language as the user's instruction.
   "error"?: string // Error messages about unexpected situations, if any. Use the same language as the user's instruction.`;
 
-const qwenLocateParam =
-  'locate: {bbox_2d: [number, number, number, number], prompt: string }';
-
-const systemTemplateOfQwen = `
-Target: User will give you a screenshot, an instruction and some previous logs indicating what have been done. Please tell what the NEXT action is to finish the instruction.
-Don't give extra actions beyond the instruction. Don't repeat actions in the previous logs.
-
-Supporting actions:
-- Tap: { type: "Tap", ${qwenLocateParam} }
-- Hover: { type: "Hover", ${qwenLocateParam} }
-- Input: { type: "Input", ${qwenLocateParam}, param: { value: string } } // \`value\` is the final that should be filled in the input box. No matter what modifications are required, just provide the final value to replace the existing input value. 
-- KeyboardPress: { type: "KeyboardPress", param: { value: string } }
-- Scroll: { type: "Scroll", ${qwenLocateParam} | null, param: { direction: 'down'(default) | 'up' | 'right' | 'left', scrollType: 'once' (default) | 'untilBottom' | 'untilTop' | 'untilRight' | 'untilLeft', distance: null | number }} // locate is the element to scroll. If it's a page scroll, put \`null\` in the \`locate\` field.
-- ExpectedFalsyCondition: { type: "ExpectedFalsyCondition", param: {reason: string} } // Use this action when the conditional statement talked about in the instruction is falsy.
-
-The \`prompt\` field inside the \`locate\` field is a short description that could be used to locate the element.
-
-Return in JSON format:
-{
-  "action": 
-    {
-      // one of the supporting actions
-    },
-  ,
-  "sleep"?: number, // The sleep time after the action, in milliseconds.
-  ${commonOutputFields}
-}
-`;
-
-const llmLocateParam = `locate: {{"id": string, "prompt": string}} | null`;
+const llmElementParam = `element: {{"id": string, "prompt": string}} | null`;
 const systemTemplateOfLLM = `
 ## Role
 
@@ -49,7 +20,7 @@ You are a versatile professional in software UI automation. Your outstanding con
 ## Objective
 
 - Decompose the instruction user asked into a series of actions
-- Locate the target element if possible, using the \`locate\` property with the correct schema (\`{{"id": string, "prompt": string}}\` or \`null\`).
+- Locate the target element if possible, using the \`element\` property with the correct schema (\`{{"id": string, "prompt": string}}\` or \`null\`).
 - If the instruction cannot be accomplished, give a further plan.
 
 ## Workflow
@@ -58,7 +29,7 @@ You are a versatile professional in software UI automation. Your outstanding con
 2. Decompose the user's task into a sequence of actions, and place it in the \`actions\` field. There are different types of actions (Tap / Hover / Input / KeyboardPress / Scroll / FalsyConditionStatement / Sleep). The "About the action" section below will give you more details.
    - Ensure each action includes the \`thought\` field to explain the reasoning behind the action.
 3. If the target element is visible in the screenshot:
-   - Precisely locate the target element and put the location info in the \`locate\` field of the action. The \`locate\` property must conform to the \'LocateParam\' schema (\`{{"id": string, "prompt": string}}\` or \'null\').
+   - Precisely locate the target element and put the location info in the \`element\` field of the action. The \`element\` property must conform to the \'ElementParam\' schema (\`{{"id": string, "prompt": string}}\` or \'null\').
 4. If the target element is NOT visible in the screenshot:
    -  First, carefully analyze the page description to determine if the element is present on the page and reachable through scrolling. Consider whether the page description explicitly mentions the element that would make the element visible.
    - If the page description indicates the element is reachable by scrolling: Your first action should be \'Scroll\' and explain in the thought field why you believe this action will make the target element visible.
@@ -72,35 +43,35 @@ You are a versatile professional in software UI automation. Your outstanding con
 
 ## About the \`actions\` field
 
-The \`locate\` param is commonly used in the \`param\` field of the action, means to locate the target element to perform the action, it conforms to the following schema:
+The \`element\` param is commonly used in the \`param\` field of the action, means to locate the target element to perform the action, it conforms to the following schema:
 
-type LocateParam = {{
+type ElementParam = {{
   "id": string, // the element id of the element found. Do not use the markerId.
   "prompt": string // the prompt of the element to find
-}} | null // If it's not on the page, the LocateParam should be null
+}} | null // If it's not on the page, the ElementParam should be null
 
 ## Supported actions
 
 Each action has a \`type\` and corresponding \`param\`. To be detailed:
 - type: 'Tap'
-  * {{ ${llmLocateParam} }}
+  * {{ ${llmElementParam} }}
 - type: 'Hover'
-  * {{ ${llmLocateParam} }}
+  * {{ ${llmElementParam} }}
 - type: 'Input', replace the value in the input field
-  * {{ ${llmLocateParam}, param: {{ value: string }} }}
+  * {{ ${llmElementParam}, param: {{ value: string }} }}
   * \`value\` is the final required input value based on the existing input. No matter what modifications are required, just provide the final value to replace the existing input value. 
 - type: 'KeyboardPress', press a key
   * {{ param: {{ value: string }} }}
 - type: 'Scroll', scroll up or down.
   * {{ 
-      ${llmLocateParam}, 
+      ${llmElementParam}, 
       param: {{ 
         direction: 'down'(default) | 'up' | 'right' | 'left', 
-        scrollType: 'once' (default) | 'untilBottom' | 'untilTop' | 'untilRight' | 'untilLeft' | 'elementIntoView', 
-        distance: null | number 
+        scrollType: 'once' (default) | 'untilBottom' | 'untilTop' | 'untilRight' | 'untilLeft', 
+        distance: null | number
       }} 
     }}
-    * To scroll some specific element, put the element at the center of the region in the \`locate\` field. If it's a page scroll, put \`null\` in the \`locate\` field. 
+    * To scroll some specific element, put the element at the center of the region in the \`element\` field. If it's a page scroll, put \`null\` in the \`element\` field. 
     * \`param\` is required in this action. If some fields are not specified, use direction \`down\`, \`once\` scroll type, and \`null\` distance.
 - type: 'ExpectedFalsyCondition'
   * {{ param: {{ reason: string }} }}
@@ -139,7 +110,7 @@ By viewing the page screenshot and description, you should consider this and out
       "type": "Tap", 
       "thought": "Click the language switch button to open the language options.",
       "param": null,
-      "locate": {{ id: "c81c4e9a33", prompt: "The language switch button" }},
+      "element": {{ id: "c81c4e9a33", prompt: "The language switch button" }},
     }},
     {{
       "type": "Sleep",
@@ -171,15 +142,15 @@ By viewing the page screenshot and description, you should consider this and out
       "param": {{
           "direction": "down",
           "scrollType": "once",
-          "distance": null
+          "distance": 500
       }},
-      "locate": {{ "id": "a1b2c3d4e5", "prompt": "The email field" }}
+      "element": {{ "id": "a1b2c3d4e5", "prompt": "The email field" }}
     }},
     {{
       "type": "Input",
       "thought": "Update the email field with \'test@example.com\'.",
       "param": {{ "value": "test@example.com" }},
-      "locate": {{ "id": "a1b2c3d4e5", "prompt": "The email field" }}
+      "element": {{ "id": "a1b2c3d4e5", "prompt": "The email field" }}
     }},
   ],
   "error": null,
@@ -202,7 +173,7 @@ By viewing the page screenshot and description, you should consider this and out
       "type": "Input",
       "thought": "Replace the current search term with 'automation tools'.",
       "param": {{ "value": "automation tools" }},
-      "locate": {{ "id": "searchInput", "prompt": "The search input field" }}
+      "element": {{ "id": "searchInput", "prompt": "The search input field" }}
     }},
     {{
       "type": "KeyboardPress",
@@ -227,13 +198,13 @@ By viewing the page screenshot and description, you should consider this and out
       "type": "Hover",
       "thought": "Hover over the 'Settings' menu to reveal the submenu options.",
       "param": null,
-      "locate": {{ "id": "settingsMenu", "prompt": "The 'Settings' menu item" }}
+      "element": {{ "id": "settingsMenu", "prompt": "The 'Settings' menu item" }}
     }},
     {{
       "type": "Tap",
       "thought": "Click the 'Preferences' option in the submenu.",
       "param": null,
-      "locate": {{ "id": "preferencesOption", "prompt": "The 'Preferences' option in the submenu" }}
+      "element": {{ "id": "preferencesOption", "prompt": "The 'Preferences' option in the submenu" }}
     }}
     ],
     "error": null,
@@ -268,7 +239,7 @@ Wrong output:
       "type": "Tap",
       "thought": "Click the language switch button to open the language options.",
       "param": null,
-      "locate": {{
+      "element": {{
         {{ "id": "c81c4e9a33" }}, // WRONG: prompt is missing
       }}
     }},
@@ -276,7 +247,7 @@ Wrong output:
       "type": "Tap", 
       "thought": "Click the English option",
       "param": null,
-      "locate": null, // This means the 'English' option is not shown in the screenshot, the task cannot be accomplished
+      "element": null, // This means the 'English' option is not shown in the screenshot, the task cannot be accomplished
     }}
   ],
   "finish": true, // WRONG: should be false
@@ -284,15 +255,11 @@ Wrong output:
 }}
 
 Reason:
-* The \`prompt\` is missing in the first 'Locate' action
+* The \`prompt\` is missing in the first 'element' action
 * Since the option button is not shown in the screenshot, there are still more actions to be done, so the \`finish\` field should be false
 `;
 
 export async function systemPromptToTaskPlanning() {
-  if (getAIConfigInBoolean(MIDSCENE_USE_QWEN_VL)) {
-    return systemTemplateOfQwen;
-  }
-
   const promptTemplate = new PromptTemplate({
     template: `${systemTemplateOfLLM}\n\n${outputTemplate}`,
     inputVariables: ['pageDescription'],
@@ -348,8 +315,8 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
                     type: 'object',
                     properties: {
                       direction: { enum: ['down', 'up', 'right', 'left'] },
-                      scrollType: { enum: ['once', 'untilBottom', 'untilTop', 'untilRight', 'untilLeft', 'elementIntoView'] },
-                      distance: { type: ['number', 'string', 'null'] },
+                      scrollType: { enum: ['once', 'untilBottom', 'untilTop', 'untilRight', 'untilLeft'] },
+                      distance: { type: ['number', 'null'], description: 'The distance to scroll, this will be the distance from the top of the page to the target element' },
                     },
                     required: ['direction', 'scrollType', 'distance'],
                     additionalProperties: false,
@@ -364,8 +331,9 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
                 description:
                   'Parameter of the action, can be null ONLY when the type field is Tap or Hover',
               },
-              locate: {
+              element: {
                 type: ['object', 'null'],
+                description: "Element information the action will be applied to",
                 properties: {
                   id: { type: "string", description: 'The element id of the target element. Do not use the markerId.' },
                   prompt: { type: "string", description: 'This prompt will be used to locate the target element if ID is not available.' }
@@ -374,7 +342,7 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
                 additionalProperties: false,
               },
             },
-            required: ['thought', 'type', 'param', 'locate'],
+            required: ['thought', 'type', 'param', 'element'],
             additionalProperties: false,
           },
           description: 'List of actions to be performed',

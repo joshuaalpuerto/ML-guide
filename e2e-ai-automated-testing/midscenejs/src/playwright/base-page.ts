@@ -204,14 +204,6 @@ export class Page<
     await this.underlyingPage.waitForTimeout(100);
   }
 
-  async scrollIntoElementPosition(distance?: number): Promise<void> {
-    const innerHeight = await this.evaluate(() => window.innerHeight);
-    const scrollDistance = distance || innerHeight * 0.7;
-    return this.underlyingPage.evaluate((scrollDistance) => {
-      window.scrollTo(0, scrollDistance);
-    }, scrollDistance);
-  }
-
   async scrollUp(distance?: number, startingPoint?: Point): Promise<void> {
     const innerHeight = await this.evaluate(() => window.innerHeight);
     const scrollDistance = distance || innerHeight * 0.7;

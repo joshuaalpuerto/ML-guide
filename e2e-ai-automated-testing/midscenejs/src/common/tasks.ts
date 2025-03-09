@@ -111,9 +111,9 @@ export class PageTaskExecutor {
     plans.forEach((plan) => {
       if (plan.type === 'Locate') {
         if (
-          plan.locate === null ||
-          plan.locate?.id === null ||
-          plan.locate?.id === 'null'
+          plan.element === null ||
+          plan.element?.id === null ||
+          plan.element?.id === 'null'
         ) {
           // console.warn('Locate action with id is null, will be ignored');
           return;
@@ -121,9 +121,9 @@ export class PageTaskExecutor {
         const taskFind: ExecutionTaskInsightLocateApply = {
           type: 'Insight',
           subType: 'Locate',
-          param: plan.locate || undefined,
+          param: plan.element || undefined,
           thought: plan.thought,
-          locate: plan.locate,
+          element: plan.element,
           executor: async (param, taskContext) => {
             const { task } = taskContext;
             assert(
@@ -217,7 +217,7 @@ export class PageTaskExecutor {
           subType: 'Assert',
           param: assertPlan.param,
           thought: assertPlan.thought,
-          locate: assertPlan.locate,
+          element: assertPlan.element,
           executor: async (param, taskContext) => {
             const { task } = taskContext;
             let insightDump: InsightDump | undefined;
@@ -260,7 +260,7 @@ export class PageTaskExecutor {
           subType: 'Input',
           param: plan.param,
           thought: plan.thought,
-          locate: plan.locate,
+          element: plan.element,
           executor: async (taskParam, { element }) => {
             if (element) {
               // adjust element information depens on where it is located in the page
@@ -285,7 +285,7 @@ export class PageTaskExecutor {
           subType: 'KeyboardPress',
           param: plan.param,
           thought: plan.thought,
-          locate: plan.locate,
+          element: plan.element,
           executor: async (taskParam) => {
             const keys = getKeyCommands(taskParam.value);
 
@@ -299,7 +299,7 @@ export class PageTaskExecutor {
           type: 'Action',
           subType: 'Tap',
           thought: plan.thought,
-          locate: plan.locate,
+          element: plan.element,
           executor: async (param, { element }) => {
             assert(element, 'Element not found, cannot tap');
             // adjust element information depens on where it is located in the page
@@ -318,7 +318,7 @@ export class PageTaskExecutor {
           subType: 'Drag',
           param: plan.param,
           thought: plan.thought,
-          locate: plan.locate,
+          element: plan.element,
           executor: async (taskParam) => {
             assert(
               taskParam?.start_box && taskParam?.end_box,
@@ -334,7 +334,7 @@ export class PageTaskExecutor {
           type: 'Action',
           subType: 'Hover',
           thought: plan.thought,
-          locate: plan.locate,
+          element: plan.element,
           executor: async (param, { element }) => {
             assert(element, 'Element not found, cannot hover');
             // adjust element information depens on where it is located in the page
@@ -350,7 +350,7 @@ export class PageTaskExecutor {
           subType: 'Scroll',
           param: plan.param,
           thought: plan.thought,
-          locate: plan.locate,
+          element: plan.element,
           executor: async (taskParam, { element }) => {
             // adjust element information depens on where it is located in the page
             element = await this.page.scrollElementAndAdjustPositionInformation(element as ElementInfo);
@@ -369,8 +369,6 @@ export class PageTaskExecutor {
               await this.page.scrollUntilRight(startingPoint);
             } else if (scrollToEventName === 'untilLeft') {
               await this.page.scrollUntilLeft(startingPoint);
-            } else if (scrollToEventName === 'elementIntoView') {
-              await this.page.scrollIntoElementPosition(taskParam.distance || undefined);
             } else if (scrollToEventName === 'once' || !scrollToEventName) {
               if (
                 taskParam?.direction === 'down' ||
@@ -420,7 +418,7 @@ export class PageTaskExecutor {
           subType: 'Sleep',
           param: plan.param,
           thought: plan.thought,
-          locate: plan.locate,
+          element: plan.element,
           executor: async (taskParam) => {
             await sleep(taskParam?.timeMs || 3000);
           },
@@ -433,7 +431,7 @@ export class PageTaskExecutor {
           subType: 'Error',
           param: plan.param,
           thought: plan.thought || plan.param?.thought,
-          locate: plan.locate,
+          element: plan.element,
           executor: async () => {
             throw new Error(
               plan?.thought || plan.param?.thought || 'error without thought',
@@ -448,7 +446,7 @@ export class PageTaskExecutor {
           subType: 'ExpectedFalsyCondition',
           param: null,
           thought: plan.param?.reason,
-          locate: plan.locate,
+          element: plan.element,
           executor: async () => {
             // console.warn(`[warn]falsy condition: ${plan.thought}`);
           },
@@ -460,7 +458,7 @@ export class PageTaskExecutor {
           subType: 'Finished',
           param: null,
           thought: plan.thought,
-          locate: plan.locate,
+          element: plan.element,
           executor: async (param) => { },
         };
         tasks.push(taskActionFinished);
@@ -493,7 +491,7 @@ export class PageTaskExecutor {
   ) {
     const task: ExecutionTaskPlanningApply = {
       type: 'Planning',
-      locate: null,
+      element: null,
       param: {
         userInstruction,
         log,
@@ -540,41 +538,41 @@ export class PageTaskExecutor {
               return acc;
             }
 
-            if (planningAction.locate) {
+            if (planningAction.element) {
 
               // some times firewokrs deepseek-r1 will return element in the locate response and it contains the locate information
-              if (planningAction.locate.element) {
-                planningAction.locate = {
-                  ...planningAction.locate,
-                  ...planningAction.locate.element
+              if (planningAction.element.element) {
+                planningAction.element = {
+                  ...planningAction.element,
+                  ...planningAction.element.element
                 }
               }
 
               // we only collect bbox once, let qwen re-locate in the following steps
-              if (bboxCollected && planningAction.locate.bbox) {
+              if (bboxCollected && planningAction.element.bbox) {
                 // biome-ignore lint/performance/noDelete: <explanation>
-                delete planningAction.locate.bbox;
+                delete planningAction.element.bbox;
               }
 
-              if (planningAction.locate.bbox) {
+              if (planningAction.element.bbox) {
                 bboxCollected = true;
               }
 
               // by default if prompt is not provided we will try to resolve it using locate information
-              if (!planningAction.locate.prompt) {
-                const elementId = planningAction.locate.id;
-                const markerId = planningAction.locate.markerId;
+              if (!planningAction.element.prompt) {
+                const elementId = planningAction.element.id;
+                const markerId = planningAction.element.markerId;
 
                 if (elementId || markerId) {
-                  planningAction.locate.prompt = elementId ? `The element with element with id: ${elementId}.` : `The elmeent with  markerId: ${markerId}.`;
+                  planningAction.element.prompt = elementId ? `The element with element with id: ${elementId}.` : `The elmeent with  markerId: ${markerId}.`;
                 }
               }
 
               acc.push({
                 type: 'Locate',
-                locate: planningAction.locate,
+                element: planningAction.element,
                 param: null,
-                thought: planningAction.locate.prompt
+                thought: planningAction.element.prompt
               });
             } else if (
               ['Tap', 'Hover', 'Input'].includes(planningAction.type)
@@ -592,7 +590,7 @@ export class PageTaskExecutor {
                 param: {
                   timeMs: planResult.sleep,
                 },
-                locate: null,
+                element: null,
               } as PlanningAction<PlanningActionParamSleep>);
             }
             return acc;
@@ -722,7 +720,7 @@ export class PageTaskExecutor {
     const queryTask: ExecutionTaskInsightQueryApply = {
       type: 'Insight',
       subType: 'Query',
-      locate: null,
+      element: null,
       param: {
         dataDemand: demand,
       },
@@ -761,7 +759,7 @@ export class PageTaskExecutor {
       param: {
         assertion,
       },
-      locate: null,
+      element: null,
     };
     const { tasks } = await this.convertPlanToExecutable([assertionPlan]);
 
@@ -813,7 +811,7 @@ export class PageTaskExecutor {
       param: {
         thought: errorMsg,
       },
-      locate: null,
+      element: null,
     };
     const { tasks } = await this.convertPlanToExecutable([errorPlan]);
     await taskExecutor.append(this.prependExecutorWithScreenshot(tasks[0]));
@@ -847,7 +845,7 @@ export class PageTaskExecutor {
         param: {
           assertion,
         },
-        locate: null,
+        element: null,
       };
       const { tasks: assertTasks } = await this.convertPlanToExecutable([
         assertPlan,
@@ -875,7 +873,7 @@ export class PageTaskExecutor {
           param: {
             timeMs: timeRemaining,
           },
-          locate: null,
+          element: null,
         };
         const { tasks: sleepTasks } = await this.convertPlanToExecutable([
           sleepPlan,
