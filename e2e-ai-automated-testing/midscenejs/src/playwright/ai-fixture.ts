@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import type { PageAgent } from '../common/agent';
-import type { AgentWaitForOpt } from '../core';
+import type { AgentWaitForOpt, AgentAssertOpt } from '../core';
 import { type TestInfo, type TestType, test } from '@playwright/test';
 import type { Page as OriginPlaywrightPage } from 'playwright';
 import type { PageTaskExecutor } from '../common/tasks';
@@ -133,13 +133,13 @@ export const PlaywrightAiFixture = (options?: {
       testInfo: TestInfo,
     ) => {
       const agent = agentForPage(page, testInfo);
-      await use(async (assertion: string, errorMsg?: string) => {
+      await use(async (assertion: string, errorMsg?: string, opt?: AgentAssertOpt) => {
         return new Promise((resolve, reject) => {
           test.step(`aiAssert - ${assertion}`, async () => {
             await waitForNetworkIdle(page);
             try {
-              await agent.aiAssert(assertion, errorMsg);
-              resolve(null);
+              const output = await agent.aiAssert(assertion, errorMsg, opt);
+              resolve(output);
             } catch (error) {
               reject(error);
             }
@@ -179,7 +179,7 @@ export type PlayWrightAiFixtureType = {
   ) => Promise<T>;
   aiAction: (taskPrompt: string) => ReturnType<PageTaskExecutor['action']>;
   aiQuery: <T = any>(demand: any) => Promise<T>;
-  aiAssert: (assertion: string, errorMsg?: string) => Promise<void>;
+  aiAssert: (assertion: string, errorMsg?: string, opt?: AgentAssertOpt) => Promise<void>;
   aiWaitFor: (assertion: string, opt?: AgentWaitForOpt) => Promise<void>;
 };
 
