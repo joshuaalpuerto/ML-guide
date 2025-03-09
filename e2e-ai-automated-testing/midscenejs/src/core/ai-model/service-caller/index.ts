@@ -99,7 +99,7 @@ export async function call(
     | FireworksResponseFormat,
   stream: boolean = true,
 ): Promise<{ content: string; usage?: AIUsageInfo }> {
-  const { completion } = await createChatClient({
+  const openAIClient = await createChatClient({
     AIActionTypeValue,
   });
   const shouldPrintTiming =
@@ -110,35 +110,40 @@ export async function call(
   const startTime = Date.now();
   const model = getModelName();
   const commonConfig = {
-    temperature: getAIConfigInBoolean(MIDSCENE_USE_VLM_UI_TARS) ? 0.0 : 0.1,
-    stream,
+    model,
+    messages,
+    response_format: responseFormat,
+    temperature: 0.1,
     max_tokens:
       typeof maxTokens === 'number'
         ? maxTokens
         : Number.parseInt(maxTokens || '2048', 10),
-    ...(getAIConfigInBoolean(MIDSCENE_USE_QWEN_VL)
-      ? {
-        vl_high_resolution_images: true,
-      }
-      : {}),
   };
 
-  const response: OpenAI.ChatCompletion | AsyncIterable<OpenAI.ChatCompletionChunk> = await completion.create({
-    model,
-    messages,
-    response_format: responseFormat,
-    ...commonConfig,
-  } as any);
+  let content: string | undefined;
+  let usage: OpenAI.CompletionUsage | undefined;
+  if (stream) {
+    const response = await openAIClient.completion.create({
+      ...commonConfig,
+      stream: true
+      // we need to case the argument to return the correct type.
+      // because completion.create is overloaded.
+    } as OpenAI.ChatCompletionCreateParamsStreaming);
+    ({ content, usage } = await handleStreamingResponse(response));
 
-  const { content, usage } = stream
-    ? await handleStreamingResponse(response as unknown as AsyncIterable<OpenAI.ChatCompletionChunk>)
-    : await handleNonStreamingResponse(response);
+  } else {
+    const response: OpenAI.ChatCompletion = await openAIClient.completion.create({
+      ...commonConfig,
+    } as OpenAI.ChatCompletionCreateParamsNonStreaming);
+    ({ content, usage } = await handleNonStreamingResponse(response));
+  }
+
 
   if (shouldPrintTiming) {
     console.log(
       'Midscene - AI call',
-      getAIConfig(MIDSCENE_USE_QWEN_VL) ? 'MIDSCENE_USE_QWEN_VL' : '',
       model,
+      stream ? 'streaming' : 'non-streaming',
       usage,
       `${Date.now() - startTime}ms`,
     );
@@ -243,7 +248,8 @@ export async function callToGetJSONObject<T>(
     responseFormat = { type: AIResponseFormat.JSON };
   }
 
-  const response = await call(messages, AIActionTypeValue, responseFormat);
+  const stream = true;
+  const response = await call(messages, AIActionTypeValue, responseFormat, stream);
   assert(response, 'empty response');
   // we use `safeParseJson` to handle `text` and `json` response format
   const jsonContent = safeParseJson(response.content);
