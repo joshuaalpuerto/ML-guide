@@ -19,7 +19,7 @@ import { describeUserPage } from './prompt/util';
 export async function plan(
   userInstruction: string,
   opts: {
-    log?: string;
+    workflow?: string;
     context: UIContext;
     callAI?: typeof callAiFn<PlanningAIResponse>;
   },
@@ -31,7 +31,7 @@ export async function plan(
   const systemPrompt = await systemPromptToTaskPlanning();
   const taskBackgroundContextText = generateTaskBackgroundContext(
     userInstruction,
-    opts.log,
+    opts.workflow,
   );
   const userInstructionPrompt = await automationUserPrompt().format({
     pageDescription,

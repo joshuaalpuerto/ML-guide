@@ -352,8 +352,6 @@ export class PageTaskExecutor {
           thought: plan.thought,
           element: plan.element,
           executor: async (taskParam, { element }) => {
-            // adjust element information depens on where it is located in the page
-            element = await this.page.scrollElementAndAdjustPositionInformation(element as ElementInfo);
             const startingPoint = element
               ? {
                 left: element.center[0],
@@ -361,7 +359,11 @@ export class PageTaskExecutor {
               }
               : undefined;
             const scrollToEventName = taskParam?.scrollType;
-            if (scrollToEventName === 'untilTop') {
+
+            // if there's element we anyway scroll to it so we don't need to do scroll event
+            if (element) {
+              await this.page.scrollElementAndAdjustPositionInformation(element as ElementInfo);
+            } else if (scrollToEventName === 'untilTop') {
               await this.page.scrollUntilTop(startingPoint);
             } else if (scrollToEventName === 'untilBottom') {
               await this.page.scrollUntilBottom(startingPoint);
@@ -439,19 +441,6 @@ export class PageTaskExecutor {
           },
         };
         tasks.push(taskActionError);
-      } else if (plan.type === 'ExpectedFalsyCondition') {
-        const taskActionFalsyConditionStatement: ExecutionTaskActionApply<null> =
-        {
-          type: 'Action',
-          subType: 'ExpectedFalsyCondition',
-          param: null,
-          thought: plan.param?.reason,
-          element: plan.element,
-          executor: async () => {
-            // console.warn(`[warn]falsy condition: ${plan.thought}`);
-          },
-        };
-        tasks.push(taskActionFalsyConditionStatement);
       } else if (plan.type === 'Finished') {
         const taskActionFinished: ExecutionTaskActionApply<null> = {
           type: 'Action',
@@ -487,14 +476,14 @@ export class PageTaskExecutor {
   private planningTaskFromPrompt(
     userInstruction: string,
     cacheGroup: ReturnType<TaskCache['getCacheGroupByPrompt']>,
-    log?: string,
+    workflow?: string,
   ) {
     const task: ExecutionTaskPlanningApply = {
       type: 'Planning',
       element: null,
       param: {
         userInstruction,
-        log,
+        workflow,
       },
       executor: async (param, executorContext) => {
         const shotTime = Date.now();
@@ -521,12 +510,12 @@ export class PageTaskExecutor {
         } else {
           planResult = await plan(param.userInstruction, {
             context: pageContext,
-            log: param.log,
+            workflow: param.workflow,
           });
         }
 
         // console.log('planResult is', planResult);
-        const { actions, log, finish, error, usage, rawResponse, sleep } =
+        const { actions, workflow, finish, error, usage, rawResponse, sleep } =
           planResult;
 
         let stopCollecting = false;
@@ -621,7 +610,7 @@ export class PageTaskExecutor {
           output: {
             actions: finalActions,
             finish,
-            log,
+            workflow,
           },
           cache: {
             hit: Boolean(planCache),
@@ -688,8 +677,8 @@ export class PageTaskExecutor {
           executor: taskExecutor,
         };
       }
-      if (planResult?.log) {
-        logLog.push(planResult.log);
+      if (planResult?.workflow) {
+        logLog.push(planResult.workflow);
       }
 
       // console.log('planningResult is', planResult);

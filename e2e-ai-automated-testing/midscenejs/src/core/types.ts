@@ -263,7 +263,6 @@ export interface PlanningAction<ParamType = any> {
   | 'KeyboardPress'
   | 'Scroll'
   | 'Error'
-  | 'ExpectedFalsyCondition'
   | 'Assert'
   | 'AssertWithoutThrow'
   | 'Sleep'
@@ -276,7 +275,7 @@ export interface PlanningAIResponse {
   action?: PlanningAction; // this is the qwen mode
   actions?: PlanningAction[];
   finish: boolean;
-  log: string;
+  workflow: string;
   sleep?: number;
   error?: string;
   usage?: AIUsageInfo;
@@ -497,7 +496,7 @@ export type ExecutionTaskPlanningApply = ExecutionTaskApply<
   'Planning',
   {
     userInstruction: string;
-    log?: string;
+    workflow?: string;
   },
   PlanningAIResponse
 >;

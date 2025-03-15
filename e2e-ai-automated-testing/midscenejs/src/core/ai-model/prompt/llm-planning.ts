@@ -8,7 +8,7 @@ import OpenAI from 'openai';
 import { samplePageDescription } from './util';
 
 const commonOutputFields = `"finish": boolean, // If all the actions described in the instruction have been covered by this action and logs, set this field to true.
-  "log": string, // Log what the action(s) do. Use the same language as the user's instruction.
+  "workflow": string, // Overall sequence and purpose of the action(s). Use the same language as the user's instruction.
   "error"?: string // Error messages about unexpected situations, if any. Use the same language as the user's instruction.`;
 
 const llmElementParam = `element: {{"id": string, "prompt": string}} | null`;
@@ -73,9 +73,6 @@ Each action has a \`type\` and corresponding \`param\`. To be detailed:
     }}
     * To scroll some specific element, put the element at the center of the region in the \`element\` field. If it's a page scroll, put \`null\` in the \`element\` field. 
     * \`param\` is required in this action. If some fields are not specified, use direction \`down\`, \`once\` scroll type, and \`null\` distance.
-- type: 'ExpectedFalsyCondition'
-  * {{ param: {{ reason: string }} }}
-  * use this action when the conditional statement talked about in the instruction is falsy.
 - type: 'Sleep'
   * {{ param: {{ timeMs: number }} }}
 `;
@@ -120,7 +117,7 @@ By viewing the page screenshot and description, you should consider this and out
   ],
   "error": null,
   "finish": false,
-  "log": "Click the language switch button to open the language options. Wait for 1 second",
+  "workflow": "Click the language switch button to open the language options. Wait for 1 second",
 }}
 
 ### Example: Update the \'email\' with \'test@example.com\'.
@@ -155,7 +152,7 @@ By viewing the page screenshot and description, you should consider this and out
   ],
   "error": null,
   "finish": true,
-  "log": "Scroll down the page to make the email field visible. Update the email field with \'test@example.com\'."
+  "workflow": "Scroll down the page to make the email field visible. Update the email field with \'test@example.com\'."
 }}
 
 ### Example: "Replace the current search term with 'automation tools' and press Enter."
@@ -183,7 +180,7 @@ By viewing the page screenshot and description, you should consider this and out
   ],
   "error": null,
   "finish": true,
-  "log": "Replace the current search term with 'automation tools' and pressed Enter to submit the search."
+  "workflow": "Replace the current search term with 'automation tools' and pressed Enter to submit the search."
 }}
 
 ### Example: Hover over a menu item and click a submenu option
@@ -209,54 +206,8 @@ By viewing the page screenshot and description, you should consider this and out
     ],
     "error": null,
     "finish": true,
-  "log": "Hovered over the 'Settings' menu to reveal the submenu and clicked the 'Preferences' option."
+  "workflow": "Hovered over the 'Settings' menu to reveal the submenu and clicked the 'Preferences' option."
 }}
-
-### Example: Handle a falsy condition
-
-**Instruction:** "If the 'Submit' button is disabled, log a message indicating it cannot be clicked."
-
-**Screenshot Description:** The screenshot shows a 'Submit' button that is currently disabled.
-
-{{
-  "actions": [
-    {{
-      "type": "ExpectedFalsyCondition",
-            "thought": "The 'Submit' button is disabled, so it cannot be clicked.",
-      "param": {{ "reason": "The 'Submit' button is disabled and cannot be clicked." }}
-    }}
-  ],
-  "error": null,
-  "finish": false,
-  "log": "The 'Submit' button is disabled and cannot be clicked."
-}}
-
-### Example: What NOT to do
-Wrong output:
-{{
-  "actions":[
-    {{
-      "type": "Tap",
-      "thought": "Click the language switch button to open the language options.",
-      "param": null,
-      "element": {{
-        {{ "id": "c81c4e9a33" }}, // WRONG: prompt is missing
-      }}
-    }},
-    {{
-      "type": "Tap", 
-      "thought": "Click the English option",
-      "param": null,
-      "element": null, // This means the 'English' option is not shown in the screenshot, the task cannot be accomplished
-    }}
-  ],
-  "finish": true, // WRONG: should be false
-  "log": "Click the language switch button to open the language options",
-}}
-
-Reason:
-* The \`prompt\` is missing in the first 'element' action
-* Since the option button is not shown in the screenshot, there are still more actions to be done, so the \`finish\` field should be false
 `;
 
 export async function systemPromptToTaskPlanning() {
@@ -292,7 +243,7 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
                   'Reasons for generating this task, and why this task is feasible on this page',
               },
               type: {
-                enum: ['Tap', 'Hover', 'Input', 'KeyboardPress', 'Scroll', 'ExpectedFalsyCondition', 'Sleep'],
+                enum: ['Tap', 'Hover', 'Input', 'KeyboardPress', 'Scroll', 'Sleep'],
                 description:
                   'Select only one type from the list',
               },
@@ -352,17 +303,16 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
           description:
             'If all the actions described in the instruction have been covered by this action and logs, set this field to true.',
         },
-        log: {
-          type: 'string',
-          description:
-            'Log what these planned actions do. Do not include further actions that have not been planned.',
+        workflow: {
+          type: "string",
+          description: "Outlines the sequence and purpose of actions, representing the overall approach to achieve the goal."
         },
         error: {
           type: ['string', 'null'],
           description: 'Error messages about unexpected situations',
         },
       },
-      required: ['actions', 'finish', 'log', 'error'],
+      required: ['actions', 'finish', 'workflow', 'error'],
       additionalProperties: false,
     },
   },
@@ -370,9 +320,9 @@ export const planSchema: OpenAI.ResponseFormatJSONSchema = {
 
 export const generateTaskBackgroundContext = (
   userInstruction: string,
-  log?: string,
+  workflow?: string,
 ) => {
-  if (log) {
+  if (workflow) {
     return `
 Here is the user's instruction:
 =============
@@ -382,7 +332,7 @@ ${userInstruction}
 These are the logs from previous executions, which indicate what was done in the previous actions.
 Do NOT repeat these actions.
 =============
-${log}
+${workflow}
 =============
 `;
   }
