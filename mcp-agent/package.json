@@ -1,0 +1,25 @@
+{
+  "name": "mcp-agent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "run:dev": "node --loader ts-node/esm src/agent.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.7.0",
+    "dotenv": "16.4.7",
+    "openai": "4.87.3",
+    "zod": "3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "22.13.10",
+    "ts-node": "10.9.2",
+    "typescript": "5.8.2"
+  }
+}
