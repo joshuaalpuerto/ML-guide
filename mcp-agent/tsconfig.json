@@ -8,8 +8,13 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
   },
-  "include": ["src", "index.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "index.ts"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    // we don't need to emit the files, just transpiles them
+    "transpileOnly": true,
+    "esm": true,
+  }
 }
