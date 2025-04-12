@@ -1,0 +1,1 @@
+export { softwareEngineeringPrinciples } from './miroSoftwareEngineerBoard/index'
