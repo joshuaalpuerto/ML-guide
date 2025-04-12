@@ -48,3 +48,5 @@ Thumbs.db
 **/assets/sample/interpolated*
 
 .auth
+
+node_modules/
