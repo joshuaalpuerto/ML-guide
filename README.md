@@ -6,7 +6,7 @@
   - Dense embedding
      - Sentence bert
      - Cross encoder
-- Retriaval augmented generation
+- Retrieval augmented generation
 - Knowledge graph
 - Prompt engineering
     - ReAct
