@@ -1,4 +1,4 @@
-# My Guiding Principles
+# My Engineering Guiding Principles
 
 A command-line tool powered by AI that provides pragmatic and concise software engineering principles and guidance for various engineering scenarios.
 
