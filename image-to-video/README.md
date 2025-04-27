@@ -55,14 +55,6 @@ To run this project, ensure you have the following installed:
 
 6. The generated video will be saved in the generated `thread_id` inside assets directory.
 
-## Example Video Output
-Below is a sample of the generated video:
-
-<video width="600" controls>
-  <source src="image_to_video/assets/sample/sample-video.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
 ## Troubleshooting
 - Ensure FFmpeg is correctly installed and added to your system PATH.
 - Verify your Fireworks.ai API credentials are correctly configured in the `.env` file.
