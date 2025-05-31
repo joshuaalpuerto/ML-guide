@@ -22,3 +22,5 @@
 - Fine-tuning
     - Classifications
     - Chatbot
+- MCP
+- Web automation
