@@ -42,7 +42,7 @@
 ## Tasks
 
 - [ ] 1.0 Setup Project and Conversational UI
-  - [ ] 1.1 Initialize Node.js/TypeScript project with dependencies (Express, Jest, dotenv, multer)
+  - [x] 1.1 Initialize Node.js/TypeScript project with dependencies (Express, Jest, dotenv, multer)
   - [ ] 1.2 Create project structure with src/ folder and subfolders for chat, upload, parsing, evaluation, etc.
   - [ ] 1.3 Set up TypeScript configuration and build scripts
   - [ ] 1.4 Set up configuration management for API keys and settings using environment variables
