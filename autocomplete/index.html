@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Auto-complete (next-token-prediction)</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        font: normal normal 14px/21px sans-serif;
+        background: #ebebef;
+        color: #4e4c53;
+      }
+
+      input {
+        appearance: none;
+        padding: 1rem;
+        border: none;
+        font: normal normal 14px/21px sans-serif;
+        background: white;
+        border-radius: 1rem;
+        color: #4e4c53;
+        outline: none;
+        width: inherit;
+      }
+
+      input:disabled {
+        background: #ccc;
+      }
+
+      h1,
+      h2 {
+        color: #3d3747;
+        font-weight: 200;
+        margin: 0;
+      }
+
+      h1 {
+        margin: 2rem 0;
+        display: block;
+        width: 100%;
+      }
+
+      h2 {
+        font-size: 1em;
+      }
+
+      #root {
+        padding: 1rem;
+      }
+
+      #root,
+      #form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+      }
+
+      #form,
+      h1 {
+        justify-content: flex-start;
+        margin: 2rem 4rem;
+        width: calc(100% - 8rem);
+      }
+
+      #form > * {
+        flex: 1;
+        width: 100%;
+      }
+
+      #suggestions {
+        background: white;
+        align-items: flex-start;
+        border-radius: 1rem;
+        box-shadow: 0 0 3rem #3d374725;
+        font-style: italic;
+        height: 10rem;
+        overflow-y: auto;
+      }
+      #completion {
+        background: white;
+        align-items: flex-start;
+        border-radius: 1rem;
+        box-shadow: 0 0 3rem #3d374725;
+        font-style: italic;
+        height: 10rem;
+        overflow-y: auto;
+      }
+
+      #suggestions,
+      #suggestions > li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1rem;
+      }
+
+      #suggestions > li {
+        flex: 1;
+        width: 100%;
+        max-width: 10rem;
+        align-items: flex-start;
+        justify-content: center;
+        text-align: center;
+        padding: 0.5rem 1rem;
+        color: white;
+        margin: 0.5rem;
+        background: dodgerblue;
+        border-radius: 0.5rem;
+      }
+
+      #suggestions > li:hover {
+        background: dodgerblue;
+        color: white;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <h1>Next-Token Prediction (<b id="readiness">Not ready</b>)</h1>
+      <div id="form">
+        <h2>Use <strong>TAB</strong> to autocomplete:</h2>
+        <input id="input" placeholder="Type something..." disabled />
+        <ul id="suggestions"></ul>
+      </div>
+    </div>
+    <script src="autocomplete.js"></script>
+    <script>
+      const state = {
+        value: "",
+        token: "",
+        next_tokens: [],
+        completion: "",
+      };
+
+      function renderSuggestions(state) {
+        const suggestions = document.getElementById("suggestions");
+
+        suggestions.innerHTML = state.next_tokens
+          ?.map(
+            (suggestion) =>
+              suggestion.trim() &&
+              `<li class="suggestion">${suggestion.trim()}</li>`
+          )
+          .filter(Boolean)
+          .join("");
+      }
+
+      // Handle input change
+
+      const onChange = (autocomplete) => (event) => {
+        const {
+          key,
+          target: { value },
+        } = event;
+        const input = document.getElementById("input");
+        const suggestions = document.getElementById("suggestions");
+        const suggestion = suggestions?.children[0]?.innerHTML?.trim();
+
+        if (key === "Tab" && suggestion) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          // remove last word as probabilities of suggestion is the same
+          const withoutLastWord = value?.split(" ")?.slice(0, -1)?.join(" ");
+
+          onChange(autocomplete)({
+            key: " ",
+            target: {
+              value: `${withoutLastWord?.trim()} ${suggestion?.trim()} `,
+            },
+          });
+          return;
+        }
+
+        state.value = input.value = value;
+
+        const shouldRequestToAPI = value?.split(" ")?.length >= 3;
+
+        if (key === " " && shouldRequestToAPI && autocomplete) {
+          const cleanValue = value?.trim();
+          let next_tokens = autocomplete.predictNextTokens(cleanValue);
+          next_tokens = autocomplete.preprocessTokensSuggestion(next_tokens);
+
+          const completion =
+            autocomplete.createCompletionFromPhrase(cleanValue);
+
+          state.token = next_tokens?.[0] ?? "";
+          state.next_tokens = next_tokens ?? [];
+          state.completion = completion;
+        } else if (!value) {
+          // reset state
+          state.token = "";
+          state.next_tokens = [];
+          state.completion = "";
+        }
+
+        const [onlyLastWord = ""] =
+          (value?.trim() + key)?.split(" ")?.reverse() ?? [];
+
+        // if the last word matches the completion or user is starting to type just show that
+        // otherwise suggest the next highes token
+        const isCompletionPartialMatch =
+          state.completion?.startsWith(onlyLastWord) &&
+          value?.trim() !== state.completion;
+        const conditional_next_tokens = isCompletionPartialMatch
+          ? [state.completion]
+          : state.next_tokens
+              ?.filter((suggestion) =>
+                suggestion?.toLowerCase()?.trim().startsWith(onlyLastWord)
+              )
+              ?.slice(0, 1);
+
+        renderSuggestions({
+          ...state,
+          next_tokens: conditional_next_tokens,
+        });
+      };
+
+      // Handle page load
+
+      const onLoad = (autocomplete) => {
+        const input = document.getElementById("input");
+        input.removeAttribute("disabled");
+        input.addEventListener("keydown", onChange(autocomplete));
+      };
+      // you must run script to generate the updated-freq.json file
+      fetch("updated-freq.json")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not ok " + response.statusText
+            );
+          }
+          return response.json();
+        })
+        .then((data) => {
+          embeddings = data.fourgrams;
+          const autocomplete = Autocomplete(embeddings);
+          const readiness = document.getElementById("readiness");
+          readiness.innerHTML = "Ready";
+          // Page load
+          onLoad(autocomplete);
+          // You can now work with the JSON data here
+        })
+        .catch((error) => {
+          console.error("There was a problem with the fetch operation:", error);
+        });
+    </script>
+  </body>
+</html>
