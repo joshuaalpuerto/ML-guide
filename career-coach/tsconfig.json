@@ -1,96 +1,52 @@
 {
   "compilerOptions": {
-    // Specifies ECMAScript target version - ES2022 provides modern JS features like class fields, top-level await
     "target": "ES2022",
-    
-    // Uses the latest module system - ESNext supports the most recent module syntax and features
     "module": "ESNext",
-    
-    // Includes ES2022 library definitions - provides type definitions for ES2022 features like Array.prototype.at()
     "lib": ["ES2022"],
-    
-    // Output directory for compiled JavaScript files - keeps build artifacts separate from source
     "outDir": "./dist",
-    
-    // Root directory for source files - helps TypeScript understand the project structure
     "rootDir": "./src",
-    
-    // Enables all strict type checking options - catches more potential errors at compile time
     "strict": true,
-    
-    // Module resolution strategy - 'node' follows Node.js module resolution rules
     "moduleResolution": "node",
-    
-    // Enables compatibility with CommonJS modules - allows importing from packages that use require()
     "esModuleInterop": true,
-    
-    // Skips type checking of declaration files - speeds up compilation by not checking .d.ts files
     "skipLibCheck": true,
-    
-    // Enforces consistent file naming - prevents issues on case-sensitive file systems
     "forceConsistentCasingInFileNames": true,
-    
-    // Allows importing JSON files as modules - useful for configuration files and data
     "resolveJsonModule": true,
-    
-    // Generates .d.ts declaration files - enables other projects to use this as a library
     "declaration": true,
-    
-    // Generates source maps for declaration files - helps with debugging when using as a library
     "declarationMap": true,
-    
-    // Generates source maps for JavaScript files - enables debugging of original TypeScript code
     "sourceMap": true,
-    
-    // Removes comments from output - reduces bundle size in production builds
     "removeComments": true,
-    
-    // Disallows implicit 'any' types - forces explicit type annotations for better type safety
     "noImplicitAny": true,
-    
-    // Ensures all code paths return a value - prevents functions from returning undefined unexpectedly
     "noImplicitReturns": true,
-    
-    // Disallows implicit 'this' usage - prevents 'this' context issues in functions
     "noImplicitThis": true,
-    
-    // Reports unused local variables - helps keep code clean and identifies dead code
     "noUnusedLocals": true,
-    
-    // Reports unused parameters - helps identify unused function parameters
     "noUnusedParameters": true,
-    
-    // Enforces exact optional property types - prevents undefined from being assigned to optional properties
     "exactOptionalPropertyTypes": true,
-    
-    // Base URL for module resolution - enables absolute imports from the src directory
     "baseUrl": "./src",
-    
-    // Path mapping for absolute imports - provides convenient aliases for common directories
     "paths": {
-      "@/*": ["*"],           // @/ points to src directory
-      "@/types/*": ["types/*"], // @/types/ points to src/types directory
-      "@/utils/*": ["utils/*"], // @/utils/ points to src/utils directory
-      "@/config/*": ["config/*"] // @/config/ points to src/config directory
+      "@/*": ["*"],
+      "@/types/*": ["types/*"],
+      "@/utils/*": ["utils/*"],
+      "@/config/*": ["config/*"]
     }
   },
-  
   // Files to include in compilation - processes all TypeScript files in src directory
   "include": [
     "src/**/*"
   ],
+
   
-  // Files to exclude from compilation - ignores node_modules, build output, and test files
+  // Files to exclude from compilation - ignores node_modules,
+  // build output,
+  // and test files
   "exclude": [
-    "node_modules",     // External dependencies
-    "dist",            // Build output directory
-    "**/*.test.ts",    // Test files
-    "**/*.spec.ts"     // Spec files
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts"
   ],
-  
   // ts-node configuration for running TypeScript directly
   "ts-node": {
-    "esm": true,                           // // this is needed so we don't have to specify the extension for import
-    "experimentalSpecifierResolution": "node" // Uses Node.js module resolution for experimental features
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   }
 }
