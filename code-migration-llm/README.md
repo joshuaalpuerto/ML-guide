@@ -108,22 +108,6 @@ The tool follows strict migration guidelines including:
 - ❌ **Never** modifying `FieldController` components
 - ❌ **Never** replacing `useFormContext()` with `useForm()`
 
-## Testing
-
-The project includes comprehensive test fixtures covering:
-
-- Register API updates
-- Error handling migration
-- Field array transformations
-- Watch API changes
-- SetError API updates
-
-Run tests to validate transformations:
-
-```bash
-npm test
-```
-
 ## Configuration
 
 - **MAX_FILES**: Limits processing to 20 files per run
