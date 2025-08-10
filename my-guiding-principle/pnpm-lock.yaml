@@ -8,8 +8,8 @@ importers:
 
   .:
     dependencies:
-      '@joshuaalpuerto/mcp-agent':
-        specifier: ^1.0.4
+      '@joshuacalpuerto/mcp-agent':
+        specifier: ^1.0.6
         version: 1.0.6(react@19.1.0)
       dotenv:
         specifier: 16.4.7
@@ -39,8 +39,8 @@ packages:
     peerDependencies:
       react: ^16.13 || ^17 || ^18 || ^19
 
-  '@joshuaalpuerto/mcp-agent@1.0.6':
-    resolution: {integrity: sha512-ydHBDkzuTmgXYPBfxu9+pTubz0fIWnBmmn/Jf9gPWWZvyjmjC08alQrShm4B1TAumysLbXWBoaMiNeiN4F7HSA==, tarball: https://npm.pkg.github.com/download/@joshuaalpuerto/mcp-agent/1.0.6/0dee38064ec57298abe9699bf7fe82335ab91a4e}
+  '@joshuacalpuerto/mcp-agent@1.0.6':
+    resolution: {integrity: sha512-nbQYpovCm3zsk+tZvy5Y6YypeTbzPg03nDtfwn6ttghvpSTlwBfZsa1YMMJgpXYwkITQ7RgRrY7t+1+WXcvo9g==}
     engines: {node: '>=21.0.0'}
 
   '@jridgewell/resolve-uri@3.1.2':
@@ -390,6 +390,7 @@ packages:
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
+    deprecated: Use your platform's native DOMException instead
 
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
@@ -651,7 +652,7 @@ snapshots:
     dependencies:
       react: 19.1.0
 
-  '@joshuaalpuerto/mcp-agent@1.0.6(react@19.1.0)':
+  '@joshuacalpuerto/mcp-agent@1.0.6(react@19.1.0)':
     dependencies:
       '@modelcontextprotocol/sdk': 1.11.0
       '@smithery/sdk': 1.0.2(react@19.1.0)(zod@3.24.2)
