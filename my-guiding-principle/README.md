@@ -26,8 +26,27 @@ Here are some example scenarios you can ask about:
 - Code review guidelines
 - Testing strategies
 
+## Update Miro board (fetch and store mindmap locally)
+
+This script fetches the mind map nodes from your Miro board and writes them to `src/tools/miroSoftwareEngineerBoard/board.json`.
+
+1) Create a `.env` in the project root with:
+```bash
+MIRO_REST_API_KEY=<your_miro_access_token>
+MIRO_SOFTWARE_ENGINEERING_BOARD_ID=<your_board_id>
+```
+- The board ID can be taken from your Miro URL: `https://miro.com/app/board/<BOARD_ID>/`
+
+2) Run the update script:
+```bash
+pnpm run update-principles
+```
+
+3) Output:
+- A fresh or updated `src/tools/miroSoftwareEngineerBoard/board.json` containing the mind map tree.
+
 ## Tech Stack
 
 - TypeScript
 - Node.js
-- @joshuaalpuerto/mcp-agent
+- @joshuacalpuerto/mcp-agent
