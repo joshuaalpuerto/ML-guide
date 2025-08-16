@@ -30,6 +30,9 @@ Here are some example scenarios you can ask about:
 
 This script fetches the mind map nodes from your Miro board and writes them to `src/tools/miroSoftwareEngineerBoard/board.json`.
 
+Follow this [guide](https://developers.miro.com/docs/rest-api-build-your-first-hello-world-app) to get your access-token. You don't have to publish your app since you only need it for personal use.
+Make sure `boards:read` only as scope.
+
 1) Create a `.env` in the project root with:
 ```bash
 MIRO_REST_API_KEY=<your_miro_access_token>
