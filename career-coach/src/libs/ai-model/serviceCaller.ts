@@ -1,11 +1,11 @@
-import { generateText, type LanguageModel } from 'ai';
+import { generateText, streamText, type CoreMessage, type LanguageModel } from 'ai';
 import { createOpenAI } from '@ai-sdk/openai';
 
 type LLMClientParams = {
-  model: LanguageModel;
+  model?: LanguageModel;
 }
 
-export async function createLLMClient(config: LLMClientParams) {
+export async function createLLMClient(config: LLMClientParams = {}) {
   let model = config.model;
 
   if (!model) {
@@ -20,6 +20,12 @@ export async function createLLMClient(config: LLMClientParams) {
       return generateText({
         model: model,
         prompt
+      });
+    },
+    streamText: async (messages: CoreMessage[]) => {
+      return streamText({
+        model: model,
+        messages,
       });
     }
   }

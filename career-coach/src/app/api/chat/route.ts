@@ -1,5 +1,4 @@
-import { streamText } from 'ai';
-import { openai } from '@ai-sdk/openai';
+import { createLLMClient } from '@/libs/ai-model/serviceCaller';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -7,10 +6,8 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
-  const result = await streamText({
-    model: openai('gpt-4-turbo'),
-    messages,
-  });
+  const llmClient = await createLLMClient();
+  const result = await llmClient.streamText(messages);
 
   return result.toDataStreamResponse();
 }
