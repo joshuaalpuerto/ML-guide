@@ -17,6 +17,13 @@ export async function POST(req: Request) {
     llm,
     name: "researcher",
     description: `Your expertise is to find information.`,
+    serverConfigs: [
+      {
+        name: "search_web",
+        type: "http",
+        url: getSmitheryUrl()
+      }
+    ],
   });
 
   const result = await researcher.generateStr(latestMessage);
@@ -36,4 +43,12 @@ export async function POST(req: Request) {
   return new Response(stream, {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },
   });
+}
+
+function getSmitheryUrl() {
+  const url = new URL("https://server.smithery.ai/exa/mcp")
+  url.searchParams.set("api_key", process.env.SMITHERY_KEY as string)
+  url.searchParams.set("profile", process.env.SMITHERY_PROFILE as string)
+  return url.toString()
+
 }
