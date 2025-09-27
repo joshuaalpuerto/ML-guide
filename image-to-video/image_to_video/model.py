@@ -24,7 +24,7 @@ def completion_llm(messages, **args):
 
 
 def generate_text_to_image(prompt):
-    inference_client = ImageInference(model="playground-v2-1024px-aesthetic")
+    inference_client = ImageInference(model="flux-kontext-max")
 
     # Generate an image using the text_to_image method
     answer: Answer = inference_client.text_to_image(
@@ -46,7 +46,7 @@ def generate_text_to_image(prompt):
 
 
 def generate_image_to_image(init_image, prompt):
-    inference_client = ImageInference(model="playground-v2-1024px-aesthetic")
+    inference_client = ImageInference(model="flux-kontext-max")
     # Modify an existing image using the image_to_image method
     answer: Answer = inference_client.image_to_image(
         init_image=init_image,

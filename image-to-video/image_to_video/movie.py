@@ -1,6 +1,7 @@
 import os
 import cv2
 from moviepy.editor import ImageClip, concatenate_videoclips, vfx
+from image_to_video.file import get_thread_id_assets_folder
 
 
 # Motivation https://www.reddit.com/r/StableDiffusion/comments/1evhrro/making_video_with_flux_images_workflow_included/
@@ -108,3 +109,16 @@ def generate_interpolated_images(
     final_frame = cv2.imread(os.path.join(folder_path, image_files[-1]))
     interpolated_filename = f"{interpolation_prefix}{counter:04d}.jpg"
     cv2.imwrite(os.path.join(folder_path, interpolated_filename), final_frame)
+
+
+if __name__ == "__main__":
+    folder_path = get_thread_id_assets_folder("5334")
+    print(folder_path)
+    interpolation_prefix = "interpolated_"
+    video_file_name = "sample-video.mp4"
+
+    # Simple image interpolation
+    generate_interpolated_images(interpolation_prefix, folder_path)
+
+    # create the video
+    create_video_from_images(video_file_name, folder_path, interpolation_prefix)
