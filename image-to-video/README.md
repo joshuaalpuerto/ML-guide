@@ -2,6 +2,23 @@
 
 This project allows you to generate a video from a given plot or sentence. Using the LLaMA 3.1 70B model, the system generates scenes based on the input plot, converts each scene into an image using a text-to-image model, and then stitches the images into a video using a Python script.
 
+## Poetry Installation
+
+This project uses [Poetry](https://python-poetry.org/) for dependency management. If you don't have Poetry installed, follow these steps:
+
+1. **Install Poetry**
+   - Run the following command:
+     ```bash
+     pipx install poetry
+     ```
+   - After installation, ensure `poetry` is in your PATH. You may need to restart your terminal or follow the instructions provided by the installer.
+
+2. **Verify Installation**
+   - Run:
+     ```bash
+     poetry --version
+     ```
+
 ## Workflow
 1. **Scene Generation:**
    - Input a plot or sentence into the system.
