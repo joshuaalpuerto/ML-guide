@@ -42,7 +42,7 @@
 
 ## Tasks
 
-- [ ] 1.0 Setup Project and Conversational UI
+- [x] 1.0 Setup Project and Conversational UI
   - [x] 1.1 Initialize Next.js project with TypeScript and required dependencies
   - [x] 1.2 Create Next.js project structure with app router, components, and lib folders
   - [x] 1.3 Set up Tailwind CSS for styling and responsive design
