@@ -1,16 +1,32 @@
 'use client';
-
+import { useState } from 'react';
 import { useChat } from '@ai-sdk/react';
 import MessageBubble from './MessageBubble';
 import { Button } from '@/components/ui/button';
+import { TextStreamChatTransport } from 'ai';
 import { Input } from '@/components/ui/input';
 import { Send, Paperclip, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function ChatInterface() {
-  const { messages, input, handleInputChange, handleSubmit, status } = useChat();
+  const { messages, sendMessage, status } = useChat({
+    transport: new TextStreamChatTransport({ api: '/api/chat' }),
+  });
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (inputValue.trim() === '') return;
+    sendMessage({ text: inputValue });
+    setInputValue('');
+  }
 
   const isSubmitting = status === 'submitted' || status === 'streaming'
+
   return (
     <Card className="flex flex-col h-full w-full rounded-lg shadow-none border-none">
       <CardHeader className="border-b">
@@ -28,12 +44,12 @@ export default function ChatInterface() {
         ))}
       </CardContent>
       <CardFooter className="p-4 border-t">
-        <form onSubmit={handleSubmit} className="flex items-center w-full space-x-2">
+        <form onSubmit={onSubmit} className="flex items-center w-full space-x-2">
           <Button variant="ghost" size="icon" disabled={isSubmitting}>
             <Paperclip className="h-5 w-5" />
           </Button>
           <Input
-            value={input}
+            value={inputValue}
             onChange={handleInputChange}
             placeholder="Type your message..."
             className="flex-1"
