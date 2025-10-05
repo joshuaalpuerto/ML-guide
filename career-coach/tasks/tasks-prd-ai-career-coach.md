@@ -54,7 +54,7 @@
   - [x] 1.9 Add basic error handling and logging infrastructure
 
 - [ ] 2.0 Implement CV Upload and Parsing
-  - [ ] 2.1 Create file upload component with drag-and-drop functionality
+  - [x] 2.1 Create file upload component with drag-and-drop functionality
   - [ ] 2.2 Implement secure file upload API route that accepts PDF files
   - [ ] 2.3 Add file validation (file type, size limits, security checks) on both client and server
   - [ ] 2.4 Integrate PDF parsing library (e.g., pdf-parse) to extract text content
