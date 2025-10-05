@@ -50,4 +50,4 @@
 
 **When in doubt, follow the structure and patterns in the `src/` directory.**
 
-For questions, check the PRD in `tasks/tasks-prd-ai-career-coach.md`.
+For questions about the requirements, check the PRD in `tasks/prd-ai-career-coach.md`.
