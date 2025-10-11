@@ -1,10 +1,11 @@
 import { convertToModelMessages, ModelMessage } from 'ai'
 import { Agent, LLMFireworks, Orchestrator, WORKFLOW_EVENTS, WorkflowLifecycleEvent, SimpleMemory } from '@joshuacalpuerto/mcp-agent';
 
+
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-const llm = new LLMFireworks("accounts/fireworks/models/deepseek-v3", {
+const llm = new LLMFireworks(process.env.OPENAI_MODEL ?? "", {
   maxTokens: 2048,
   temperature: 0.1,
   stream: true
