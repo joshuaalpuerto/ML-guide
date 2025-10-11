@@ -5,9 +5,11 @@ import { Card, CardContent } from '@/components/ui/card';
 
 interface FileUploadProps {
   onUploaded: (result: { filename: string; size: number; profile?: any }) => void;
+  onUploadInitiated?: (file: File) => void;
+  onUploadError?: (errorMessage: string) => void;
 }
 
-export default function FileUpload({ onUploaded }: FileUploadProps) {
+export default function FileUpload({ onUploaded, onUploadInitiated, onUploadError }: FileUploadProps) {
   const [dragActive, setDragActive] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,6 +31,7 @@ export default function FileUpload({ onUploaded }: FileUploadProps) {
     const form = new FormData();
     form.append('file', file);
     setUploading(true);
+    onUploadInitiated?.(file);
     try {
       const res = await fetch('/api/upload', {
         method: 'POST',
@@ -44,6 +47,7 @@ export default function FileUpload({ onUploaded }: FileUploadProps) {
       onUploaded({ filename: file.name, size: file.size, profile: json.profile });
     } catch (e: any) {
       setError(e.message || 'Unexpected error');
+      onUploadError?.(e.message || 'Unexpected error');
     } finally {
       setUploading(false);
     }

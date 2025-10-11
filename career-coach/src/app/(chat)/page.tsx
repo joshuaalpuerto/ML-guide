@@ -7,6 +7,8 @@ export default function Home() {
   const [cvUploaded, setCvUploaded] = useState(false);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [parsedProfile, setParsedProfile] = useState<any | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
@@ -20,10 +22,20 @@ export default function Home() {
               </p>
             </div>
             <FileUpload
+              onUploadInitiated={(file) => {
+                setUploading(true);
+                setUploadedFileName(file.name);
+              }}
               onUploaded={(info) => {
-                setUploadedFileName(info.filename);
+                setUploading(false);
                 if (info.profile) setParsedProfile(info.profile);
-                setCvUploaded(true);
+              }}
+              onUploadError={(msg) => {
+                setUploading(false);
+                setUploadError(msg);
+                // If error, revert gating state
+                setCvUploaded(false);
+                setUploadedFileName(null);
               }}
             />
             <p className="text-xs text-gray-500 dark:text-gray-400">Your file is processed securely and not shared externally.</p>
@@ -32,9 +44,14 @@ export default function Home() {
           <div className="flex flex-col h-full w-full">
             {uploadedFileName && (
               <div className="px-4 py-2 text-xs bg-gray-50 dark:bg-gray-900/40 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 flex flex-col gap-1">
-                <span>CV Loaded: {uploadedFileName}. You can now chat with the AI Career Coach.</span>
-                {parsedProfile && (
-                  <span className="text-[10px] text-gray-500 dark:text-gray-400">Parsed {parsedProfile.skills?.length || 0} skills. Education & experience summaries captured.</span>
+                <span>
+                  {uploading ? 'Uploading & parsing CV…' : 'CV Loaded:'} {uploadedFileName}. You can now chat with the AI Career Coach.
+                </span>
+                {uploadError && (
+                  <span className="text-[10px] text-red-600 dark:text-red-400">Upload error: {uploadError}</span>
+                )}
+                {parsedProfile && !uploading && (
+                  <span className="text-[10px] text-gray-500 dark:text-gray-400">Parsed {parsedProfile.skills?.length || 0} skills, {parsedProfile.workExperience?.length || 0} work experience entries, {parsedProfile.education?.length || 0} education entries.</span>
                 )}
               </div>
             )}
