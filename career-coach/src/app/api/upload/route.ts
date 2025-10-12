@@ -16,13 +16,13 @@ PDFParse.setWorker(workerUrl);
 
 // Updated schema: workExperience replaces experienceSummary (array of objects)
 const ParsedProfileSchema = z.object({
-  skills: z.array(z.string()).max(200),
+  skills: z.array(z.string()),
   workExperience: z.array(
     z.object({
       companyName: z.string().min(1).max(120),
       startDate: z.string().min(4).max(10), // YYYY or YYYY-MM
       endDate: z.string().min(4).max(10).nullable().optional(), // null if current
-      summary: z.string().min(1).max(400), // concise impact-focused summary
+      summary: z.string()
     })
   ).max(60),
   education: z.array(z.string()), // each item one degree/institution summary
@@ -75,22 +75,10 @@ export async function POST(req: Request) {
 
     // Use agent to generate a direct string completion enforcing response format
     const llmResponse = await agent.generateStr(prompt, { responseFormat: profileContextSchemaResponseFormat as any, stream: true });
-    console.log(llmResponse)
-    // Attempt to locate JSON in response (strip code fences, etc.)
-    const jsonMatch = llmResponse.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      return NextResponse.json({ success: false, message: 'Parser LLM returned no JSON' }, { status: 500 });
-    }
-
-    let parsed: unknown;
-    try {
-      parsed = JSON.parse(jsonMatch[0]);
-    } catch (e) {
-      return NextResponse.json({ success: false, message: 'Invalid JSON from LLM' }, { status: 500 });
-    }
 
     // rawTextSnippet removed from schema; no injection logic.
-
+    const jsonMatch = llmResponse.match(/\{[\s\S]*\}/);
+    const parsed = JSON.parse(jsonMatch?.[0] || '{}');
     const validation = ParsedProfileSchema.safeParse(parsed);
     if (!validation.success) {
       return NextResponse.json({ success: false, message: 'Validation failed', issues: validation.error.issues }, { status: 422 });
