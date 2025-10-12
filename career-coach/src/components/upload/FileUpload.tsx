@@ -2,6 +2,7 @@
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { useApiFetcher } from '@/libs/hooks/useApiFetcher';
 
 interface FileUploadProps {
   onUploaded: (result: { filename: string; size: number; profile?: any }) => void;
@@ -11,45 +12,35 @@ interface FileUploadProps {
 
 export default function FileUpload({ onUploaded, onUploadInitiated, onUploadError }: FileUploadProps) {
   const [dragActive, setDragActive] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [{ loading, error: apiError, response }, makeRequest] = useApiFetcher<any, any>();
 
   const handleFiles = async (fileList: FileList | null) => {
     if (!fileList || fileList.length === 0) return;
     const file = fileList[0];
-    setError(null);
+    setValidationError(null);
     if (file.type !== 'application/pdf') {
-      setError('Please upload a PDF file.');
+      setValidationError('Please upload a PDF file.');
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
-      setError('File too large (max 5MB).');
+      setValidationError('File too large (max 5MB).');
       return;
     }
 
     const form = new FormData();
     form.append('file', file);
-    setUploading(true);
     onUploadInitiated?.(file);
-    try {
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: form,
-      });
-      if (!res.ok) {
-        throw new Error('Upload failed');
+    const result = await makeRequest('/api/upload', { method: 'POST', body: form });
+    if (result) {
+      if (!result.success) {
+        onUploadError?.(result.message || 'Upload failed');
+        return;
       }
-      const json = await res.json();
-      if (!json.success) {
-        throw new Error(json.message || 'Upload failed');
-      }
-      onUploaded({ filename: file.name, size: file.size, profile: json.profile });
-    } catch (e: any) {
-      setError(e.message || 'Unexpected error');
-      onUploadError?.(e.message || 'Unexpected error');
-    } finally {
-      setUploading(false);
+      onUploaded({ filename: file.name, size: file.size, profile: result.profile });
+    } else if (apiError) {
+      onUploadError?.(apiError.message || 'Upload failed');
     }
   };
 
@@ -87,11 +78,11 @@ export default function FileUpload({ onUploaded, onUploadInitiated, onUploadErro
           <Button
             type="button"
             variant="secondary"
-            disabled={uploading}
+            disabled={loading}
             className="mt-2"
             onClick={() => inputRef.current?.click()}
           >
-            {uploading ? 'Uploading…' : 'Select File'}
+            {loading ? 'Uploading…' : 'Select File'}
           </Button>
           <input
             ref={inputRef}
@@ -106,7 +97,11 @@ export default function FileUpload({ onUploaded, onUploadInitiated, onUploadErro
           <li>Max size 5MB</li>
           <li>Used to tailor company & role recommendations</li>
         </ul>
-        {error && <div className="text-sm text-red-600 dark:text-red-400 text-center">{error}</div>}
+        {(validationError || apiError) && (
+          <div className="text-sm text-red-600 dark:text-red-400 text-center">
+            {validationError || apiError?.message}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
