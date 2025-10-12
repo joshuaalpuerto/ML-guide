@@ -3,9 +3,10 @@ import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useApiFetcher } from '@/libs/hooks/useApiFetcher';
+import { UserCVParsed } from '@/types/user-data';
 
 interface FileUploadProps {
-  onUploaded: (result: { filename: string; size: number; profile?: any }) => void;
+  onUploaded: (result: { filename: string; size: number; profile?: UserCVParsed }) => void;
   onUploadInitiated?: (file: File) => void;
   onUploadError?: (errorMessage: string) => void;
 }

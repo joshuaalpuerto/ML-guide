@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
-import { z } from 'zod';
+
 import { Agent, LLMFireworks } from '@joshuacalpuerto/mcp-agent';
 import { PDFParse } from 'pdf-parse';
 import { pathToFileURL, fileURLToPath } from 'url'
 import { dirname, resolve } from 'path';
+import { UserCVParsedSchema, UserCVParsed } from '@/types/user-data';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -14,21 +15,7 @@ console.log(workerUrl);
 // Set worker before creating PDFParse instances
 PDFParse.setWorker(workerUrl);
 
-// Updated schema: workExperience replaces experienceSummary (array of objects)
-const ParsedProfileSchema = z.object({
-  skills: z.array(z.string()),
-  workExperience: z.array(
-    z.object({
-      companyName: z.string().min(1).max(120),
-      startDate: z.string().min(4).max(10), // YYYY or YYYY-MM
-      endDate: z.string().min(4).max(10).nullable().optional(), // null if current
-      summary: z.string()
-    })
-  ).max(60),
-  education: z.array(z.string()), // each item one degree/institution summary
-});
 
-type ParsedProfile = z.infer<typeof ParsedProfileSchema>;
 
 // Initialize LLM outside handler to reuse across requests (stateless)
 const llm = new LLMFireworks(process.env.OPENAI_MODEL ?? "", {
@@ -79,12 +66,12 @@ export async function POST(req: Request) {
     // rawTextSnippet removed from schema; no injection logic.
     const jsonMatch = llmResponse.match(/\{[\s\S]*\}/);
     const parsed = JSON.parse(jsonMatch?.[0] || '{}');
-    const validation = ParsedProfileSchema.safeParse(parsed);
+    const validation = UserCVParsedSchema.safeParse(parsed);
     if (!validation.success) {
       return NextResponse.json({ success: false, message: 'Validation failed', issues: validation.error.issues }, { status: 422 });
     }
 
-    const profile: ParsedProfile = validation.data;
+    const profile: UserCVParsed = validation.data;
 
     return NextResponse.json({ success: true, message: 'File uploaded & parsed', profile });
   } catch (error) {
