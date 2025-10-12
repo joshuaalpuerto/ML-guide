@@ -30,9 +30,17 @@ export async function POST(req: Request) {
     ],
   });
 
-  const messages = convertToModelMessages(_messages).map((m: ModelMessage) => ({ role: m.role, content: (m.content?.[0] as { text?: string })?.text }))
+
+  const messages = convertToModelMessages(_messages).map((m: ModelMessage) => {
+    if (m.role === 'system') {
+      return { role: 'system', content: m.content }
+    }
+
+    return { role: m.role, content: (m.content?.[0] as { text?: string })?.text }
+  });
   const latestMessage = messages[messages.length - 1]?.content;
   const history = SimpleMemory.fromMessages(messages);
+
   const orchestrator = new Orchestrator({
     llm,
     agents: [researcher],
