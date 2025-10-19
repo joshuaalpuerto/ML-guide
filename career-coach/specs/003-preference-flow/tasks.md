@@ -50,15 +50,14 @@ description: "Task list for Preference Gathering Flow feature implementation"
 
 ## Phase 3: User Story 1 - Provide Core Preferences (Priority: P1) 🎯 MVP
 
-**Goal**: Capture Work Arrangement, Location (with conditional restriction), and optional Company Stage selections producing a validated draft ready for interests step.
-**Independent Test**: From a mocked post-CV-parse state, user can make selections respecting conditional rule and obtain a valid draft object without interests.
+**Goal**: Capture Work Arrangement, Location (with conditional restriction), and optional Company Stage selections through a consolidated bulk selection panel (chat disabled while active) producing a validated draft ready to enable the interests input.
+**Independent Test**: From a mocked post-CV-parse state, user bulk-selects required values in any order; interests input remains disabled until minimum criteria (>=1 work arrangement & valid location set) met; conditional rule auto-removes invalid location when switching to in-person only; chat input is disabled throughout.
 
-### Tests for User Story 1
-
-- [ ] T014 [P] [US1] Implement unit tests for work arrangement required rule in `tests/unit/preferences/normalizer.test.ts`
-- [ ] T015 [P] [US1] Implement unit tests for conditional in-person location restriction in `tests/unit/preferences/normalizer.test.ts`
-- [ ] T016 [P] [US1] Add integration test simulating selection flow (no interests) in `tests/integration/preferences/core-flow.test.ts`
-- [ ] T017 [P] [US1] Add accessibility keyboard navigation tests skeleton for MultiSelect in `tests/component/preferences/MultiSelect.a11y.test.tsx`
+### Tests for User Story 1 (added)
+- [X] T014 [P] [US1] Add unit tests for work arrangement required rule & enabling interests precondition in `tests/unit/preferences/normalizer.test.ts`
+- [X] T015 [P] [US1] Add unit tests for conditional location auto-removal (switch to in-person only) in `tests/unit/preferences/normalizer.test.ts`
+- [X] T016 [P] [US1] Add component test ensuring chat input disabled while bulk panel active in `tests/component/preferences/ChatInterface.preferences.test.tsx`
+- [X] T017 [P] [US1] Add component/a11y test for MultiSelect keyboard navigation & ARIA roles in `tests/component/preferences/MultiSelect.a11y.test.tsx`
 
 ### Implementation for User Story 1
 
@@ -67,13 +66,13 @@ description: "Task list for Preference Gathering Flow feature implementation"
 - [X] T020 [P] [US1] Create PreferenceStepWorkArrangement component in `src/components/preferences/PreferenceStepWorkArrangement.tsx`
 - [X] T021 [P] [US1] Create PreferenceStepLocation component in `src/components/preferences/PreferenceStepLocation.tsx`
 - [X] T022 [P] [US1] Create PreferenceStepCompanyStage component in `src/components/preferences/PreferenceStepCompanyStage.tsx`
-- [ ] T023 [US1] Wire step orchestration (advance, validate, error display) into conversation handler in `src/libs/chat/conversation-handler.ts`
-- [ ] T024 [US1] Emit `preferences_started` and per-step completion events in `src/libs/preferences/analytics.ts`
-- [ ] T025 [US1] Implement conditional auto-removal logic for EEA when switching to in-person only in `src/libs/preferences/preference-normalizer.ts`
-- [ ] T026 [US1] Add user-facing validation messaging components (inline errors) in `src/components/preferences/PreferenceValidationMessages.tsx`
-- [ ] T027 [US1] Update chat UI to insert preference steps after CV parse success in `src/components/chat/ChatInterface.tsx`
-- [ ] T028 [US1] Ensure draft persisted in memory across steps via store in `src/libs/preferences/preference-store.ts`
-- [ ] T029 [US1] Add logging instrumentation for draft completion counts in `src/libs/preferences/analytics.ts`
+- [X] T023 [US1] Wire step orchestration (advance, validate, error display) into conversation handler in `src/libs/chat/conversation-handler.ts`
+- [X] T024 [US1] Emit `preferences_started` and per-step completion events in `src/libs/preferences/analytics.ts`
+- [X] T025 [US1] Implement conditional auto-removal logic for EEA when switching to in-person only in `src/libs/preferences/preference-normalizer.ts`
+- [X] T026 [US1] Add user-facing validation messaging components (inline errors) in `src/components/preferences/PreferenceValidationMessages.tsx`
+- [X] T027 [US1] Update chat UI to render consolidated preference panel & disable chat input after CV parse success in `src/components/chat/ChatInterface.tsx`
+- [X] T028 [US1] Ensure draft persisted in memory across steps via store in `src/libs/preferences/preference-store.ts`
+- [X] T029 [US1] Add logging instrumentation for draft completion counts in `src/libs/preferences/analytics.ts`
 
 **Checkpoint**: Core categorical preferences captured & validated; draft ready for interests. Story independently testable.
 
@@ -214,8 +213,8 @@ T043, T044, T046, T048 proceed in parallel (component, store action, analytics, 
 ---
 
 ## Summary
-Total Tasks: 58
-Tasks per Story: US1 (16 tasks: T014–T029), US2 (10 tasks: T030–T039), US3 (10 tasks: T040–T049)
+Total Tasks: 62
+Tasks per Story: US1 (20 tasks: T014–T029), US2 (10 tasks: T030–T039), US3 (10 tasks: T040–T049)
 Parallel Opportunities Identified: Multi-select (US1), Interests parsing (US2), Review & confirmation components (US3), plus constants & analytics
 Independent Test Criteria: Listed at each story phase header
 MVP Scope: Phase 3 (US1) only – provides validated categorical preferences
