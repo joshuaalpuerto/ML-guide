@@ -62,11 +62,11 @@ description: "Task list for Preference Gathering Flow feature implementation"
 
 ### Implementation for User Story 1
 
-- [ ] T018 [P] [US1] Implement full normalization & validation logic (work arrangements, locations, company stages) in `src/libs/preferences/preference-normalizer.ts`
-- [ ] T019 [P] [US1] Implement MultiSelect base component with ARIA roles & keyboard nav in `src/components/ui/MultiSelect.tsx`
-- [ ] T020 [P] [US1] Create PreferenceStepWorkArrangement component in `src/components/preferences/PreferenceStepWorkArrangement.tsx`
-- [ ] T021 [P] [US1] Create PreferenceStepLocation component in `src/components/preferences/PreferenceStepLocation.tsx`
-- [ ] T022 [P] [US1] Create PreferenceStepCompanyStage component in `src/components/preferences/PreferenceStepCompanyStage.tsx`
+- [X] T018 [P] [US1] Implement full normalization & validation logic (work arrangements, locations, company stages) in `src/libs/preferences/preference-normalizer.ts`
+- [X] T019 [P] [US1] Implement MultiSelect base component with ARIA roles & keyboard nav in `src/components/ui/MultiSelect.tsx`
+- [X] T020 [P] [US1] Create PreferenceStepWorkArrangement component in `src/components/preferences/PreferenceStepWorkArrangement.tsx`
+- [X] T021 [P] [US1] Create PreferenceStepLocation component in `src/components/preferences/PreferenceStepLocation.tsx`
+- [X] T022 [P] [US1] Create PreferenceStepCompanyStage component in `src/components/preferences/PreferenceStepCompanyStage.tsx`
 - [ ] T023 [US1] Wire step orchestration (advance, validate, error display) into conversation handler in `src/libs/chat/conversation-handler.ts`
 - [ ] T024 [US1] Emit `preferences_started` and per-step completion events in `src/libs/preferences/analytics.ts`
 - [ ] T025 [US1] Implement conditional auto-removal logic for EEA when switching to in-person only in `src/libs/preferences/preference-normalizer.ts`
