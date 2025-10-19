@@ -16,3 +16,29 @@ export const UserCVParsedSchema = z.object({
 });
 
 export type UserCVParsed = z.infer<typeof UserCVParsedSchema>;
+
+// --- Preference Flow Types (Phase 2) ---
+export interface PreferenceDraft {
+  workArrangements: string[];
+  locations: string[];
+  companyStages: string[];
+  interests: string[];
+  errors: Record<string, string[]>;
+  updatedAt: string;
+}
+
+export interface PreferenceProfile {
+  workArrangements: string[];
+  locations: string[];
+  companyStages: string[];
+  interests: string[];
+  confirmedAt: string;
+  version: number;
+}
+
+export interface PreferenceValidationResult {
+  valid: boolean;
+  errors: Record<string, string[]>;
+  normalized: Partial<PreferenceDraft>;
+}
+
