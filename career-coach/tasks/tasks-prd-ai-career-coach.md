@@ -53,25 +53,29 @@
   - [x] 1.8 Create conversation state management to track user progress through the flow
   - [x] 1.9 Add basic error handling and logging infrastructure
 
-- [ ] 2.0 Implement CV Upload and Parsing
+- [x] 2.0 Implement CV Upload and Parsing
   - [x] 2.1 Create file upload component with drag-and-drop functionality
-  - [ ] 2.2 Implement secure file upload API route that accepts PDF files
-  - [ ] 2.3 Add file validation (file type, size limits, security checks) on both client and server
-  - [ ] 2.4 Integrate PDF parsing library (e.g., pdf-parse) to extract text content
-  - [ ] 2.5 Develop CV parsing logic to extract skills, experience, and job titles using NLP/regex
-  - [ ] 2.6 Create TypeScript interfaces to structure extracted CV information
-  - [ ] 2.7 Add error handling for corrupted or unreadable PDF files
-  - [ ] 2.8 Implement upload progress indicator and success/error feedback in UI
+  - [x] 2.2 Implement secure file upload API route that accepts PDF files
+  - [x] 2.3 Add file validation (file type, size limits, security checks) on both client and server
+  - [x] 2.4 Integrate PDF parsing library (e.g., pdf-parse) to extract text content
+  - [x] 2.5 Develop CV parsing logic to extract skills, experience, and job titles using NLP/regex
+  - [x] 2.6 Create TypeScript interfaces to structure extracted CV information
+  - [x] 2.7 Add error handling for corrupted or unreadable PDF files
+  - [x] 2.8 Implement upload progress indicator and success/error feedback in UI
 
 - [ ] 3.0 Develop Preference Gathering Flow
-  - [ ] 3.1 Create conversational UI components for preference collection
-  - [ ] 3.2 Design conversational prompts for each preference category
-  - [ ] 3.3 Implement work arrangement preference collection (Remote/Hybrid/In-Person)
-  - [ ] 3.4 Implement location preference collection (EEA/Estonia)
-  - [ ] 3.5 Implement company stage preference collection (Well-funded/IPO-ready/Unicorn)
-  - [ ] 3.6 Implement job role preference collection with validation
-  - [ ] 3.7 Add preference validation and confirmation steps in the UI
-  - [ ] 3.8 Store collected preferences in structured format with local state management
+  - [ ] 3.1 Update preference data model (`src/types/user-data.ts`) to support multi-select arrays and interests (string[])
+  - [ ] 3.2 Design conversational prompts and injection points for structured controls (hybrid chat + UI components)
+  - [ ] 3.3 Build reusable `MultiSelect` dropdown component (shadcn-ui + Tailwind) with keyboard accessibility
+  - [ ] 3.4 Implement Work Arrangement multi-select (Remote, Hybrid, In-Person) with at least one required
+  - [ ] 3.5 Implement conditional Location multi-select: if ONLY In-Person selected restrict to Estonia; otherwise allow EEA + Estonia
+  - [ ] 3.6 Implement Company Stage multi-select (Well-funded, Likely to IPO, Unicorn) with dedupe & max selection rule (optional, e.g. up to 3)
+  - [ ] 3.7 Implement Interests free-text comma-separated input; parse, trim, dedupe, limit to 15 entries & 40 chars each
+  - [ ] 3.8 Add validation & user feedback (inline error states + summary confirmation step)
+  - [ ] 3.9 Integrate all controls into conversational flow (`preference-collector.ts`) with state transitions
+  - [ ] 3.10 Persist structured preferences in local state and expose via context/hook for downstream evaluation
+  - [ ] 3.11 Unit tests: interests parsing, conditional location restriction, multi-select selection/deduping
+  - [ ] 3.12 Documentation comment & brief README section for preference flow architecture
 
 - [ ] 4.0 Integrate External APIs for Company Evaluation
   - [ ] 4.1 Create server-side API routes for external data fetching

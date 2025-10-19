@@ -26,11 +26,11 @@ The AI Career Coach is a conversational assistant designed to revolutionize the 
     *   Skills (e.g., Python, React, Project Management).
     *   Years of Experience.
     *   Previous Job Titles and companies.
-3.  **Conversational Preferences:** The system must gather user preferences via a chatbot interface. Preferences include:
-    *   **Work Arrangement:** Remote, Hybrid, or In-Person.
-    *   **Location:** European Economic Area (for remote/hybrid) or Estonia (for in-person).
-    *   **Company Stage:** Well-funded, likely to IPO, or Unicorn status.
-    *   **Job Role:** e.g., Full Stack Engineer, AI Engineer.
+3.  **Job preferences / Selection UI:** The system must gather user preferences via the chatbot and structured UI controls. Categorical preferences are captured with a multi-select dropdown (user can choose one or more). Role interests are captured with a free-text, comma-separated input.
+    *   **Work Arrangement (multi-select dropdown):** Remote, Hybrid, In-Person.
+    *   **Location (multi-select dropdown):** European Economic Area (EEA), Estonia. (If user selects In-Person only, restrict choices to Estonia.)
+    *   **Company Stage (multi-select dropdown):** Well-funded, Likely to IPO, Unicorn.
+    *   **Interests (free-text, comma-separated):** User-entered domains or roles of interest (e.g., "Full Stack Engineering, AI/ML, Developer Productivity").
 4.  **Company Evaluation:** The system must use external tools and APIs to gather data on companies. The evaluation must check for:
     *   Company size and growth trends (e.g., via Crunchbase).
     *   Funding history and market presence.

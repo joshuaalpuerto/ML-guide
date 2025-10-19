@@ -1,0 +1,140 @@
+openapi: 3.0.3
+info:
+  title: Preference Gathering API
+  version: 1.0.0
+  description: API contract for confirming user job preference profile.
+servers:
+  - url: https://api.example.com
+paths:
+  /preferences/confirm:
+    post:
+      summary: Confirm and persist (session) user preference profile
+      operationId: confirmPreferences
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmPreferencesRequest'
+      responses:
+        '200':
+          description: Preference profile confirmed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfirmPreferencesResponse'
+        '400':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '409':
+          description: Profile already confirmed (immutable)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlreadyConfirmedResponse'
+components:
+  schemas:
+    ConfirmPreferencesRequest:
+      type: object
+      required: [workArrangements, locations]
+      properties:
+        workArrangements:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            enum: [Remote, Hybrid, In-Person]
+        locations:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            enum: [EEA, Estonia]
+        companyStages:
+          type: array
+          items:
+            type: string
+            enum: [Well-funded, Likely to IPO, Unicorn]
+        interests:
+          type: array
+          items:
+            type: string
+          maxItems: 15
+    PreferenceProfile:
+      type: object
+      required: [workArrangements, locations, companyStages, interests, confirmedAt, version]
+      properties:
+        workArrangements:
+          type: array
+          items:
+            type: string
+        locations:
+          type: array
+          items:
+            type: string
+        companyStages:
+          type: array
+          items:
+            type: string
+        interests:
+          type: array
+          items:
+            type: string
+        confirmedAt:
+          type: string
+          format: date-time
+        version:
+          type: integer
+          minimum: 1
+    ConfirmPreferencesResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/PreferenceProfile'
+    ValidationErrorResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: VALIDATION_FAILED
+            message:
+              type: string
+            details:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+    AlreadyConfirmedResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: ALREADY_CONFIRMED
+            message:
+              type: string
+      description: Returned if client attempts reconfirm after profile immutable.
+  securitySchemes:
+    sessionAuth:
+      type: http
+      scheme: bearer
+security:
+  - sessionAuth: []
