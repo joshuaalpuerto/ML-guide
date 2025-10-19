@@ -41,7 +41,7 @@ export function validateAndNormalizeDraft(partial: Partial<PreferenceDraft>): Pr
     normalized.companyStages = Array.from(new Set(normalized.companyStages.filter(v => (COMPANY_STAGE_OPTIONS as readonly string[]).includes(v))));
   }
 
-  // Interests logic added in US2
+  // Interests logic (split, trim, dedupe, limit, length validation) will be added in US2 – currently untouched for US1 bulk panel.
 
   return {
     valid: Object.keys(errors).length === 0,

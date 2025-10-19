@@ -1,4 +1,5 @@
 import { PreferenceDraft, PreferenceProfile } from '../../types/user-data';
+import { emitDraftProgress } from './analytics';
 
 let draft: PreferenceDraft | null = null;
 let profile: PreferenceProfile | null = null;
@@ -25,6 +26,12 @@ export function updateDraft(update: Partial<PreferenceDraft>): PreferenceDraft {
     ...update,
     updatedAt: new Date().toISOString(),
   };
+  // Emit progress counts (T029) after each update
+  emitDraftProgress({
+    arrangements: draft.workArrangements.length,
+    locations: draft.locations.length,
+    companyStages: draft.companyStages.length,
+  });
   return draft;
 }
 

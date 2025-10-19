@@ -13,3 +13,9 @@ export function emitConfirmed(summary: { arrangements: number; locations: number
   emitPreferenceEvent(PREFERENCES_EVENTS.CONFIRMED, summary);
 }
 export function emitAbandoned(reason?: string) { emitPreferenceEvent(PREFERENCES_EVENTS.ABANDONED, { reason }); }
+
+// Draft progress instrumentation (T029)
+export function emitDraftProgress(counts: { arrangements: number; locations: number; companyStages: number }) {
+  emitPreferenceEvent('preferences_draft_progress', counts);
+}
+

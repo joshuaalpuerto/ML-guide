@@ -1,13 +1,18 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useChat } from '@ai-sdk/react';
 import MessageBubble from './MessageBubble';
+import { PreferenceStepWorkArrangement } from '@/components/preferences/PreferenceStepWorkArrangement';
+import { PreferenceStepLocation } from '@/components/preferences/PreferenceStepLocation';
+import { PreferenceStepCompanyStage } from '@/components/preferences/PreferenceStepCompanyStage';
+import { PreferenceValidationMessages } from '@/components/preferences/PreferenceValidationMessages';
+import { startPreferencesFlow, getPreferenceState, updatePreferenceStep } from '@/libs/chat/conversation-handler';
 import { Button } from '@/components/ui/button';
 import { TextStreamChatTransport, generateId } from 'ai';
 import { Textarea } from '@/components/ui/textarea';
 import { Send, Paperclip, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { UserCVParsed } from '@/types/user-data';
+import { UserCVParsed, PreferenceProfile } from '@/types/user-data';
 
 export default function ChatInterface({ userCVInfo }: { userCVInfo: UserCVParsed }) {
   const { messages, sendMessage, status } = useChat({
@@ -25,6 +30,13 @@ export default function ChatInterface({ userCVInfo }: { userCVInfo: UserCVParsed
   });
 
   const [compactHeader, setCompactHeader] = useState(false);
+  const [preference, setPreference] = useState<PreferenceProfile>({
+    workArrangements: [],
+    locations: [],
+    companyStages: [],
+    interests: '',
+    valid: false
+  });
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const top = e.currentTarget.scrollTop;
@@ -49,14 +61,43 @@ export default function ChatInterface({ userCVInfo }: { userCVInfo: UserCVParsed
         <CardTitle className={`font-semibold transition-all duration-200 ${compactHeader ? 'text-base' : 'text-lg'}`}>AI Career Coach</CardTitle>
       </CardHeader>
       <CardContent onScroll={handleScroll} className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
-        {messagesWithOutSystemMessage.length === 0 && (
+        {!preference.valid && (
+          <div className="p-3 border rounded bg-white dark:bg-gray-900 space-y-6" aria-label="Preference Selection Panel">
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold">Work Arrangement</h3>
+              <PreferenceStepWorkArrangement
+                values={preference?.workArrangements || []}
+                onChange={(vals) => { setPreference(prev => ({ ...prev, workArrangements: vals })); }}
+              />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold">Location</h3>
+              <PreferenceStepLocation
+                values={preference?.locations || []}
+                inPersonOnly={preference?.workArrangements?.length === 1 && preference.workArrangements[0] === 'In-Person'}
+                onChange={(vals) => { setPreference(prev => ({ ...prev, locations: vals })); }}
+              />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold">Company Stage (Optional)</h3>
+              <PreferenceStepCompanyStage
+                values={preference?.companyStages || []}
+                onChange={(vals) => { setPreference(prev => ({ ...prev, companyStages: vals })); }}
+              />
+            </div>
+            <div className="text-xs text-gray-600 dark:text-gray-400">
+              Chat is temporarily disabled while you select preferences. Provide at least one work arrangement and one location to enable interests next.
+            </div>
+          </div>
+        )}
+        {/* {preference.valid && messagesWithOutSystemMessage.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-gray-500 text-center">
             <p>Please add your criteria so I can start matching Job postings based on your CV and preferences!</p>
           </div>
         )}
         {messagesWithOutSystemMessage.map(m => (
           <MessageBubble key={m.id} message={m} />
-        ))}
+        ))} */}
       </CardContent>
       <CardFooter className="p-4 border-t">
         <ChatInput onSendMessage={onSendMessage} status={status} />
@@ -91,10 +132,13 @@ function ChatInput({ onSendMessage, status }: { onSendMessage: (message: string)
   };
 
   const isSubmitting = status === 'submitted' || status === 'streaming'
+  // Disable chat if preference flow active (exported getter)
+  const prefState = getPreferenceState();
+  const chatDisabled = prefState.active; // FR-001A
 
   return (
     <form onSubmit={onSubmit} className="flex items-start w-full space-x-2">
-      <Button variant="ghost" size="icon" disabled={isSubmitting}>
+      <Button variant="ghost" size="icon" disabled={isSubmitting || chatDisabled} aria-disabled={isSubmitting || chatDisabled} aria-label="Attach file (disabled during preference selection)">
         <Paperclip className="h-5 w-5" />
       </Button>
       <div className="flex-1 flex items-end">
@@ -105,12 +149,17 @@ function ChatInput({ onSendMessage, status }: { onSendMessage: (message: string)
           placeholder="Type your message..."
           className="flex-1 max-h-48 leading-relaxed overflow-y-auto"
           rows={isSubmitting ? 1 : 3}
-          disabled={isSubmitting}
+          disabled={isSubmitting || chatDisabled}
+          aria-disabled={isSubmitting || chatDisabled}
+          aria-describedby={chatDisabled ? 'chat-disabled-hint' : undefined}
         />
       </div>
-      <Button type="submit" size="icon" disabled={isSubmitting}>
+      <Button type="submit" size="icon" disabled={isSubmitting || chatDisabled} aria-disabled={isSubmitting || chatDisabled} aria-label={chatDisabled ? 'Chat disabled while selecting preferences' : 'Send message'}>
         {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
       </Button>
+      {chatDisabled && (
+        <span id="chat-disabled-hint" className="sr-only">Chat is disabled until you finish selecting core preferences.</span>
+      )}
     </form>
   )
 }
