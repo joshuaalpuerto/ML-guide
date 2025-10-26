@@ -9,6 +9,7 @@
 ## Code Map
 - `src/app/globals.css` - Global CSS styles (Tailwind layers, resets, tokens) applied app-wide.
 - `src/app/layout.tsx` - Root layout wrapper; sets HTML scaffold, font imports, providers.
+- `src/app/favicon.ico` - Favicon asset for browser tab/app identity.
 - `src/app/(chat)/page.tsx` - Chat page rendering conversation UI and coordinating CV + preference state.
 - `src/app/api/chat/route.ts` - Chat POST endpoint invoking conversation handler and returning assistant responses.
 - `src/app/api/upload/route.ts` - CV/PDF upload endpoint handling validation and passing file to parsing.
@@ -39,8 +40,8 @@
 - `src/components/ui/MultiSelect.tsx` - Keyboard-accessible multi-select dropdown used in preference steps.
 - `src/components/ui/textarea.tsx` - Styled textarea for free-form multi-line input (e.g., interests).
 
-### Libs (Chat)
-- `src/lib/chat/` - Namespace placeholder; actual conversation logic implemented under `src/libs/chat/`.
+### Components (Misc)
+- `src/components/Sample.tsx` - Sample/demo component (placeholder / confirm usage).
 
 ### Libs (General Utilities)
 - `src/libs/utils.ts` - Shared helper functions (formatting, guards, parsing utilities).
@@ -97,6 +98,16 @@
 - `src/libs/` - Core business logic modules (APIs, parsing, evaluation, preferences, shortlist, hooks, config).
 - `src/types/` - Shared cross-cutting data contracts.
 
+### Inventory Snapshot
+Current tree (2025-10-26): 27 directories, 46 files.
+
+Placeholder / stub directories:
+- `src/app/api/cv/parse/` - Placeholder (no route yet).
+- `src/libs/ai-model/` - Placeholder (future model invocation layer; currently empty).
+
+### Namespace Clarification
+- Legacy placeholder `src/lib/` referenced previously is deprecated; active namespace is `src/libs/` for all logic modules.
+
 ## Suggested Future Enhancements
 - Add `src/app/api/cv/parse/route.ts` for structured CV parse requests.
 - Introduce caching layer (e.g., Redis) inside `company-evaluator` for repeated lookups.
@@ -107,4 +118,4 @@
 Provide only the relevant subset of this map to reduce prompt token usage. Pair file purpose with current task (e.g., "Need to modify company scoring -> shortlist/generator.ts + evaluation/company-evaluator.ts").
 
 ---
-Generated: 2025-10-25
+Generated: 2025-10-26
