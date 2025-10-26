@@ -30,7 +30,7 @@ Shortlist generation MUST produce a deterministic score breakdown per company: c
 Rationale: Clear, fair, explainable rankings foster trust and compliance with ethical guidelines.
 
 ### IV. Codebase Orientation & Context Discipline
-All contributors and automated agents MUST consult `CODE_MAP.md` (canonical location: `career-coach/CODE_MAP.md`; mirrored copy may exist under `.specify/memory/`) before planning, implementing, or refactoring features. Any addition, relocation, or removal of files under `src/` MUST be accompanied by a corresponding update to `CODE_MAP.md` in the same pull request. LLM prompt assemblies or architectural planning MUST reference only relevant entries from the code map to minimize token usage and avoid hallucinated paths. If a discrepancy is found between actual structure and the code map, the inconsistency MUST be resolved prior to merge (treat as blocking). Code map updates follow PATCH version increments unless coupled with structural reorganization (then MINOR). The `CODE_MAP.md` serves as the single source of truth for high-level module intent and SHOULD be used for onboarding, impact analysis, and scoping.
+All contributors and automated agents MUST consult `FOLDER_STRUCTURE.md` (`career-coach/FOLDER_STRUCTURE.md`) before planning, implementing, or refactoring features. LLM prompt assemblies or architectural planning MUST reference only relevant entries from the folder structure map to minimize token usage and avoid hallucinated paths. The `FOLDER_STRUCTURE.md` file serves as the single source of truth for high‑level module intent and SHOULD be used for onboarding, impact analysis, and scoping.
 Rationale: Enforced orientation reduces misrouting of logic, improves LLM guidance accuracy, and accelerates safe evolution.
 
 ## Operational Constraints & Standards
@@ -62,5 +62,5 @@ Violation Handling: Critical violations (privacy, uncontrolled AI output, missin
 Traceability: Plan/spec/tasks templates MUST explicitly reference relevant principles. Automated checks (future) will parse PR descriptions for principle tags. 
 Sunset/Deprecation: Principle changes require deprecation notice period (1 release cycle) unless security/privacy emergency.
 
-**Version**: 1.0.2 | **Ratified**: 2025-10-18 | **Last Amended**: 2025-10-25
+**Version**: 1.0.3 | **Ratified**: 2025-10-18 | **Last Amended**: 2025-10-26
 
