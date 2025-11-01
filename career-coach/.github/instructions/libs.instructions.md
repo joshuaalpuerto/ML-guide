@@ -3,143 +3,262 @@ description: 'Instructions for working with the Libs folder (src/libs/)'
 applyTo: '**/src/libs/**.tsx'
 ---
  
-# Libs Folder
+# Libs Guide (src/libs)
 
-Purpose: `src/libs/` holds ALL non-UI logic (fetch, parse, normalize, evaluate, rank, orchestrate). Nothing here renders JSX. Components call libs; libs stay small, typed, testable.
+Goal: Keep all non-UI logic here—small, typed, testable, reusable—and never mix rendering concerns. Components provide data via props and call libs; libs never import components or emit JSX.
 
-## 1. Folder Roles (Know Where To Put Code)
-apis/  external API clients (Crunchbase, Glassdoor, News) → fetch + normalize
-evaluation/  scoring logic (company metrics)
-shortlist/  ranking + formatting output
-preferences/  collect, normalize, store user job preferences
-parsing/  turn raw CV text/files into structured data
-files/  upload validation + sanitation + lifecycle
-chat/  conversation orchestration (state, turns)
-hooks/  React wrappers exposing libs async logic (data, error, loading, retry)
-config/  env + feature flags via a single access point
-utils.ts  tiny generic helpers only
+---
+## 1. Scope & Placement
+Belongs:
+- Fetching, parsing, normalization, evaluation, ranking, orchestration.
+- Domain errors, pure utilities, rate limiting, caching (light, in-memory), env access.
+Does NOT belong:
+- JSX, styling, Tailwind classes, DOM manipulation, side effects unrelated to data flow, untyped blobs, hard-coded secrets.
+Rationale: Clear separation yields reuse and predictable test coverage.
 
-## 2. What Belongs / What Doesn’t
-DO: pure functions, controlled side effects (fetch, file IO), orchestrators, normalizers, domain errors.
-DO NOT: JSX, styling, direct DOM, hard-coded secrets, giant misc utility dumps.
+---
+## 2. Core Principles
+1. Single responsibility per file (name matches purpose).
+2. All inputs/outputs strictly typed (no any; extend `src/types/`).
+3. Pure first: keep functions deterministic unless performing controlled IO (fetch/file).
+4. Never expose raw external API responses—normalize before return.
+5. Centralize env/flags via `config/settings.ts` (one read per module).
+6. Errors are structured/tagged (no bare string throws).
+7. Keep modules <300 lines; split when growing (e.g. `<domain>-internals.ts`).
+8. Reuse helpers—search before adding new logic (avoid duplication).
+9. Tests accompany logic (happy + edge) before merge.
+10. No silent failure—surface typed error or explicit fallback.
+Rationale: Ensures maintainability, scalability, and safety.
 
-## 3. Decision Quick Flow
-Is logic reusable across components? YES → libs. NO → keep local until reused ≥3 times.
-Does it transform or evaluate data? → libs.
-Uses UI state or rendering? → component.
-Touches secret/env? Access through `config/settings.ts` only.
+---
+## 3. Folder Roles
+`apis/` External API clients (Crunchbase, Glassdoor, News) → fetch + normalize.
+`evaluation/` Company scoring logic (pure deterministic formulas).
+`shortlist/` Ranking + output formatting (no UI; structure only).
+`preferences/` Collect, normalize, store user job preferences & events.
+`parsing/` CV/text parsing → structured types.
+`files/` Upload validation, sanitation, lifecycle operations.
+`chat/` Conversation orchestration (state transitions, turn handling).
+`hooks/` React hooks wrapping libs async flows (data, loading, error, retry).
+`config/` Env + feature flags (single access surface).
+`utils.ts` Tiny generic helpers ONLY (string trims, guards)—no domain clutter.
+Rationale: Predictable placement accelerates discovery and review.
 
-## 4. Before You Add Anything (5 Checks)
-1 Define domain: fetch | transform | evaluate | orchestrate.
-2 Choose correct folder (do NOT invent new top-level folders without approval).
-3 Specify input/output types (reuse or add under `src/types/`).
-4 List error modes (network, missing fields, invalid format, rate limit).
-5 Write minimal tests (happy + one edge case) FIRST or alongside.
+---
+## 4. Decision Flow (Before Adding Code)
+1. Is logic reused (or likely reused) ≥3 times? If yes → libs; else keep local until reuse threshold.
+2. Does it transform, fetch, evaluate, rank, parse, orchestrate? → libs.
+3. Does it reference UI state or styling? If yes → move to component/hook.
+4. Does it need secrets/env? Access through `settings.ts` only.
+5. Are types defined? If missing, add/update under `src/types/` first.
+Rationale: Prevents logic creep in components and maintains purity.
 
-## 5. Standard Workflows (Follow Steps Exactly)
+---
+## 5. Standard Workflows
 ### A. New API Client
-1 File: `src/libs/apis/<service>-client.ts`.
-2 Interface first (e.g. `fetchCompanyProfile(id: string): Promise<CompanyData>`).
-3 Read keys/base URL via `config/settings.ts` once.
-4 Implement fetch: explicit headers, handle non-2xx (throw typed error).
-5 Normalize response → `CompanyData` (extend types if needed).
-6 Add simple rate limit/backoff (timestamp window or queue).
-7 Export only needed high-level functions (no raw fetch leakage).
-8 Tests: success normalized shape + non-2xx error path.
-9 Update this file (Maintenance section).
+1. Create `src/libs/apis/<service>-client.ts`.
+2. Define interface(s) upfront (e.g. `fetchCompanyProfile(id: string): Promise<CompanyData>`).
+3. Read API keys/base URLs via `settings.ts` (once).
+4. Implement fetch with explicit headers + non-2xx handling (typed error).
+5. Normalize raw response → domain type; hide extraneous fields.
+6. Add minimal rate limit/backoff (timestamp window or simple queue).
+7. Export high-level functions only (no raw fetch leakage).
+8. Tests: success normalization + non-2xx error path.
+9. Update Maintenance (API section) in this file.
 
 ### B. Extend Evaluation Scoring
-1 Open `evaluation/company-evaluator.ts`.
-2 Add constant for new dimension + weight.
-3 Implement pure deterministic calculation (document formula inline comment).
-4 Update shortlist ranking logic if needed (`shortlist/generator.ts`).
-5 Tests: min/max boundary, contribution correctness.
-6 Update Maintenance section with new dimension + formula.
+1. Open `evaluation/company-evaluator.ts`.
+2. Add constant for new dimension + weight (document formula inline comment).
+3. Implement pure deterministic calculation.
+4. Adjust `shortlist/generator.ts` ranking if needed.
+5. Tests: min/max boundary + contribution correctness.
+6. Maintenance update (Evaluation section).
 
 ### C. Add / Change Preference Field
-1 Update `preferences/preference-collector.ts` (sequence/state).
-2 Add constants/events if new category.
-3 Normalize in `preferences/preference-normalizer.ts`.
-4 Extend types (`user-data.ts`).
-5 Tests: valid input, invalid input error, sequence transition.
-6 Document change (Maintenance update).
+1. Update `preferences/preference-collector.ts` sequence/state.
+2. Add constants/events if new category in `preferences/constants.ts` & `events.ts`.
+3. Normalize in `preferences/preference-normalizer.ts`.
+4. Extend `src/types/user-data.ts`.
+5. Tests: valid input, invalid input error, sequence transition.
+6. Maintenance update (Preferences section).
 
 ### D. New Hook (Async Data)
-1 File `hooks/use<Thing>.ts`.
-2 Accept single params object.
-3 Internals: `useState({data,error,loading})` + `useEffect` trigger.
-4 Call existing libs function (no fetch inline).
-5 Provide `retry()`.
-6 Tests: success state, error state, retry flow.
+1. File `hooks/use<Thing>.ts`.
+2. Accept single params object (avoid positional args).
+3. Manage `{ data, error, loading }` state + `retry()`.
+4. Call existing libs function only (no fetch inline).
+5. Tests: success, error, retry flow.
+6. Maintenance update if new domain exposure.
 
 ### E. CV Parsing Enhancement
-1 Add function in `parsing/cv-parser.ts`.
-2 Isolate regex/pattern; comment rationale.
-3 Return typed structure (extend `user-data.ts` if needed).
-4 Handle edge cases: missing dates, unusual formatting.
-5 Tests: typical CV, missing sections edge.
-6 Maintenance update (summarize pattern).
+1. Add function in `parsing/cv-parser.ts`.
+2. Isolate regex/pattern; comment rationale & edge cases.
+3. Return typed structure (extend `user-data.ts` if needed).
+4. Handle missing dates/unusual formatting gracefully.
+5. Tests: typical CV + missing sections edge.
+6. Maintenance update (Parsing section).
+Rationale: Consistent, safe extension.
 
-## 6. Error Handling (Never Throw Bare Strings)
-Use tagged objects or classes: `{ type: 'RateLimitError', message, retryAfter? }`.
-Include context: operation, identifiers.
-Wrap external errors; surface domain-specific types.
-Fail fast; do not silently swallow.
+---
+## 6. Types & Contracts
+Before implementation, define interfaces in `src/types/` or reuse existing.
+Contract bullets:
+- Inputs: exhaustive typed shape (no optional unless truly optional).
+- Outputs: stable domain type (avoid union explosion; refine with discriminants).
+- Errors: tagged types (e.g. `{ type: 'RateLimitError'; message; retryAfter? }`).
+- Success criteria: deterministic formatting, normalized fields, weight formulas documented.
+Rationale: Contracts reduce ambiguity and ease testing.
 
-## 7. Edge Case Checklist (Run Through Mentally)
-[] Null/empty fields → default or mark unknown.
-[] Network timeout → retry or escalate error.
+---
+## 7. Error Handling
+Rules:
+1. Never throw bare strings or raw external error objects.
+2. Wrap external failures into domain error types (NetworkError, RateLimitError, ValidationError, ParseError).
+3. Include context: operation, identifiers, attempt count.
+4. Provide actionable fields (`retryAfter`, `missingFields`).
+5. Fail fast; do not silently swallow or auto-retry infinitely.
+Example: `{ type: 'RateLimitError', message, retryAfter: 120 }`.
+Rationale: Structured errors enable consistent UI handling.
+
+---
+## 8. Edge Cases Checklist
+[] Null / empty fields → default or mark unknown.
+[] Network timeout → propagate typed error (optional limited retry).
 [] Rate limit → throw RateLimitError with `retryAfter`.
-[] Malformed user input → normalize or throw ValidationError.
-[] Large dataset → consider chunking (note TODO if future work).
+[] Malformed user input → normalize or ValidationError.
+[] Large dataset → consider chunking; add TODO if deferred.
+[] Missing CV sections → partial structure with `undefined` fields typed.
+Rationale: Pre-flight mental checklist prevents surprises.
 
-## 8. Performance & Security Quick Rules
-Batch external calls where possible.
-Cache repeated idempotent lookups in-memory per evaluation cycle.
-Sanitize user-uploaded text (strip scripts) before storing/returning.
-Never log PII unless behind a debug flag (and note TODO to remove).
-Access env once via `settings.ts` (no scattered `process.env`).
+---
+## 9. Performance & Security
+1. Batch external calls when feasible.
+2. Cache idempotent lookups in-memory per evaluation cycle (document TTL).
+3. Sanitize uploaded text (strip scripts) before returning/storing.
+4. Never log PII outside guarded debug flag.
+5. Single env read via `settings.ts` (no scattered `process.env`).
+6. Avoid heavy dependencies—seek approval before adding.
+Rationale: Efficient & safe logic foundation.
 
-## 9. Testing Minimum (Per New / Changed Module)
-1 Happy path returns correct typed shape.
-2 One representative error path surfaces correct error type.
-3 Boundary input (empty list / malformed text) → defined fallback or error.
-4 Pure deterministic functions produce stable snapshot.
+---
+## 10. Testing Minimum
+Required per module change:
+1. Happy path returns correct typed shape.
+2. Representative error surfaces correct tagged type.
+3. Boundary input (empty list / malformed text) defined fallback or error.
+4. Deterministic functions produce stable snapshot.
+5. Rate limiting logic: one success + one limit scenario (if applicable).
+Rationale: Baseline confidence; expand later as complexity grows.
 
-## 10. Definition of Done Checklist
-[] Single clear responsibility (filename matches purpose)
-[] All inputs/outputs typed (no `any`)
-[] Errors typed & contextual
-[] No UI imports / no JSX
-[] Env access centralized
-[] Tests (happy + edge) passing
-[] No duplicated logic (searched)
-[] Non-trivial logic commented (formula/regex) 
-[] No secrets inline
-[] Reasonable file size (<300 lines) or split plan added
+---
+## 11. Definition of Done (DOD)
+All must pass before merge:
+1. Single clear responsibility.
+2. Fully typed inputs/outputs (no any).
+3. Structured errors with context.
+4. No JSX/UI imports.
+5. Env access centralized.
+6. Tests (happy + edge) passing.
+7. No duplicated logic (searched project).
+8. Comment non-trivial formulas/regex.
+9. No inline secrets.
+10. File size reasonable (<300 lines) or split plan documented.
+11. Maintenance section updated here.
+12. No stray console logs (unless behind debug flag).
+Rationale: Uniform acceptance criteria ensures quality.
 
-## 11. Safe Refactors vs Approval Needed
-Safe: extract helper, consolidate fetch logic, add types, refine error taxonomy.
-Needs approval: new external dependency, persistent storage layer, major folder restructure, complex caching layer.
+---
+## 12. Safe Refactors vs Approval Needed
+Safe (no approval): extract helper, consolidate fetch logic, add types, refine error taxonomy, improve comments, remove duplication.
+Needs approval: new external dependency, persistent storage layer, major folder restructure, complex caching layer, new top-level folder.
+Rationale: Guard rails against risky architectural changes.
 
-## 12. Maintenance Update Triggers (Update This File Same PR)
-Trigger Events:
+---
+## 13. Maintenance Triggers & Update Steps
+Trigger events:
 - New API client
 - New scoring dimension/weight
 - New preference category/event
 - New parsing heuristic/regex
-- New error type taxonomy change
+- New or changed error taxonomy
 - Added caching/backoff logic
 - Deprecated module/function
+- Any addition, deletion, or rename of a file under `src/libs/` (catalog must reflect exact inventory)
+Steps:
+1. Identify trigger.
+2. Update Catalog (Section 15) to reflect every new/removed/renamed file before merge.
+3. Add bullet under relevant maintenance section (API/Evaluation/Preferences/Parsing/Error/Performance) if domain-impacting change.
+4. Commit change in same PR.
+5. Add TODO for follow-up if tests incomplete.
+Rationale: Documentation parity prevents drift.
 
-Update Steps:
-1 Identify trigger.
-2 Add brief bullet under relevant section (API/Evaluation/Preferences/Parsing/Error/Performance).
-3 Commit with same PR.
-4 If large change, add TODO for follow-up tests or refactor.
+---
+## 14. Self-Check Before Commit
+ASK: Is logic reusable & UI-agnostic? Are raw responses hidden? Do tests + types exist? Are errors structured? If any NO → fix first.
+Rationale: Quick gate to avoid rework.
 
-## 13. Quick Self-Check Before Commit
-ASK: Is logic reusable & UI-agnostic? Are raw external responses hidden? Do tests + types exist? If any NO → fix first.
+---
+## 15. Catalog (Keep Updated)
+APIs:
+- `apis/crunchbase-client.ts` – Company data fetch + normalize.
+- `apis/glassdoor-client.ts` – Employer reviews & ratings normalization.
+- `apis/news-client.ts` – Company news retrieval + summarization prep.
+Chat:
+- `chat/conversation-handler.ts` – Turn orchestration logic.
+Files:
+- `files/cv-uploader.ts` – Upload validation flow.
+- `files/file-handler.ts` – File lifecycle helpers.
+Preferences:
+- `preferences/preference-collector.ts` – Collect sequence.
+- `preferences/preference-normalizer.ts` – Data normalization.
+- `preferences/preference-store.ts` – In-memory preference store.
+- `preferences/analytics.ts` – Preference analytics helpers.
+Parsing:
+- `parsing/cv-parser.ts` – CV → structured user data.
+Evaluation:
+- `evaluation/company-evaluator.ts` – Scoring formulas.
+Shortlist:
+- `shortlist/generator.ts` – Ranking orchestration.
+- `shortlist/formatter.ts` – Output shaping.
+Hooks:
+- `hooks/useApiFetcher.ts` – Generic API fetch hook wrapper.
+Config:
+- `config/settings.ts` – Env + flags.
+Utilities:
+- `utils.ts` – Generic helpers.
+Rationale: Inventory speeds onboarding & change impact assessment.
 
-Keep it lean. Ship small, typed, tested pieces.
+---
+## 16. Examples
+Add scoring dimension:
+1. In `company-evaluator.ts` define `const CULTURE_WEIGHT = 0.15` with formula comment.
+2. Integrate into total score aggregator.
+3. Update tests verifying min/max contribution.
+4. Update Maintenance (Evaluation).
+
+New parsing regex:
+1. Add pattern + comment rationale.
+2. Provide fallback when missing matches.
+3. Test typical + edge CV.
+4. Maintenance (Parsing) update.
+Rationale: Demonstrates safe iterative extension.
+
+---
+## 17. Escalation
+If instructions conflict or scenario is ambiguous (e.g. multi-service batch fetch strategy), pause and seek clarification before coding.
+Rationale: Prevents misaligned architectural decisions.
+
+---
+## 18. Forbidden Without Approval
+- New storage layer (DB, persistent cache)
+- Heavy dependencies or large utility libraries
+- Global mutation of env at runtime
+- Complex distributed caching strategy
+Rationale: Controls risk & scope creep.
+
+---
+## 19. Final Reminder
+Keep libs lean, typed, tested, and reusable. When in doubt—push logic out of components and into focused modules here. Prefer clarity over cleverness.
+Rationale: Sustains long-term velocity and reliability.
+
 
