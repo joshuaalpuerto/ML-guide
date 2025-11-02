@@ -24,3 +24,4 @@
     - Chatbot
 - MCP
 - Web automation
+- Spec driven development
