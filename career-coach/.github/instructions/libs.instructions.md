@@ -184,37 +184,9 @@ ASK: Is logic reusable & UI-agnostic? Are raw responses hidden? Do tests + types
 Rationale: Quick gate to avoid rework.
 
 ---
-## 14. Catalog (Keep Updated)
-APIs:
-- `apis/crunchbase-client.ts` – Company data fetch + normalize.
-- `apis/glassdoor-client.ts` – Employer reviews & ratings normalization.
-- `apis/news-client.ts` – Company news retrieval + summarization prep.
-Chat:
-- `chat/conversation-handler.ts` – Turn orchestration logic.
-Files:
-- `files/cv-uploader.ts` – Upload validation flow.
-- `files/file-handler.ts` – File lifecycle helpers.
-Preferences:
-- `preferences/preference-collector.ts` – Collect sequence.
-- `preferences/preference-normalizer.ts` – Data normalization.
-- `preferences/preference-store.ts` – In-memory preference store.
-- `preferences/analytics.ts` – Preference analytics helpers.
-Parsing:
-- `parsing/cv-parser.ts` – CV → structured user data.
-Evaluation:
-- `evaluation/company-evaluator.ts` – Scoring formulas.
-Shortlist:
-- `shortlist/generator.ts` – Ranking orchestration.
-- `shortlist/formatter.ts` – Output shaping.
-Hooks:
-- `hooks/useApiFetcher.ts` – Generic API fetch hook wrapper.
-Config:
-- `config/settings.ts` – Env + flags.
-Utilities:
-- `utils.ts` – Generic helpers.
-Formatters:
-- `formatters/string.ts` – String formatting helpers (normalization, case, truncation) reused across modules.
-Rationale: Inventory speeds onboarding & change impact assessment.
+## 14. Catalog (Authoritative Inventory)
+The living, canonical inventory of every module under `src/libs/` resides in `src/libs/CATALOG.md`. If YOU (especially as a junior developer) perform ANY change—add, delete, rename, refactor, or modify domain behavior of a libs file—you MUST update the relevant catalog entry immediately, in the **same PR before requesting review**. Treat missing updates as a blocker.
+Rationale: Centralizing the catalog eliminates drift, reduces review overhead, and accelerates impact assessment.
 
 ---
 ## 15. Examples
