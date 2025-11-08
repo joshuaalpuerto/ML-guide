@@ -31,21 +31,7 @@ Rationale: Clear separation yields reuse and predictable test coverage.
 Rationale: Ensures maintainability, scalability, and safety.
 
 ---
-## 3. Folder Roles
-`apis/` External API clients (Crunchbase, Glassdoor, News) → fetch + normalize.
-`evaluation/` Company scoring logic (pure deterministic formulas).
-`shortlist/` Ranking + output formatting (no UI; structure only).
-`preferences/` Collect, normalize, store user job preferences & events.
-`parsing/` CV/text parsing → structured types.
-`files/` Upload validation, sanitation, lifecycle operations.
-`chat/` Conversation orchestration (state transitions, turn handling).
-`hooks/` React hooks wrapping libs async flows (data, loading, error, retry).
-`config/` Env + feature flags (single access surface).
-`utils.ts` Tiny generic helpers ONLY (string trims, guards)—no domain clutter.
-Rationale: Predictable placement accelerates discovery and review.
-
----
-## 4. Decision Flow (Before Adding Code)
+## 3. Decision Flow (Before Adding Code)
 1. Is logic reused (or likely reused) ≥3 times? If yes → libs; else keep local until reuse threshold.
 2. Does it transform, fetch, evaluate, rank, parse, orchestrate? → libs.
 3. Does it reference UI state or styling? If yes → move to component/hook.
@@ -54,7 +40,7 @@ Rationale: Predictable placement accelerates discovery and review.
 Rationale: Prevents logic creep in components and maintains purity.
 
 ---
-## 5. Standard Workflows
+## 4. Standard Workflows
 ### A. New API Client
 1. Create `src/libs/apis/<service>-client.ts`.
 2. Define interface(s) upfront (e.g. `fetchCompanyProfile(id: string): Promise<CompanyData>`).
@@ -100,7 +86,7 @@ Rationale: Prevents logic creep in components and maintains purity.
 Rationale: Consistent, safe extension.
 
 ---
-## 6. Types & Contracts
+## 5. Types & Contracts
 Before implementation, define interfaces in `src/types/` or reuse existing.
 Contract bullets:
 - Inputs: exhaustive typed shape (no optional unless truly optional).
@@ -110,7 +96,7 @@ Contract bullets:
 Rationale: Contracts reduce ambiguity and ease testing.
 
 ---
-## 7. Error Handling
+## 6. Error Handling
 Rules:
 1. Never throw bare strings or raw external error objects.
 2. Wrap external failures into domain error types (NetworkError, RateLimitError, ValidationError, ParseError).
@@ -121,7 +107,7 @@ Example: `{ type: 'RateLimitError', message, retryAfter: 120 }`.
 Rationale: Structured errors enable consistent UI handling.
 
 ---
-## 8. Edge Cases Checklist
+## 7. Edge Cases Checklist
 [] Null / empty fields → default or mark unknown.
 [] Network timeout → propagate typed error (optional limited retry).
 [] Rate limit → throw RateLimitError with `retryAfter`.
@@ -131,7 +117,7 @@ Rationale: Structured errors enable consistent UI handling.
 Rationale: Pre-flight mental checklist prevents surprises.
 
 ---
-## 9. Performance & Security
+## 8. Performance & Security
 1. Batch external calls when feasible.
 2. Cache idempotent lookups in-memory per evaluation cycle (document TTL).
 3. Sanitize uploaded text (strip scripts) before returning/storing.
@@ -141,7 +127,7 @@ Rationale: Pre-flight mental checklist prevents surprises.
 Rationale: Efficient & safe logic foundation.
 
 ---
-## 10. Testing Minimum
+## 9. Testing Minimum
 Required per module change:
 1. Happy path returns correct typed shape.
 2. Representative error surfaces correct tagged type.
@@ -151,7 +137,7 @@ Required per module change:
 Rationale: Baseline confidence; expand later as complexity grows.
 
 ---
-## 11. Definition of Done (DOD)
+## 10. Definition of Done (DOD)
 All must pass before merge:
 1. Single clear responsibility.
 2. Fully typed inputs/outputs (no any).
@@ -168,13 +154,13 @@ All must pass before merge:
 Rationale: Uniform acceptance criteria ensures quality.
 
 ---
-## 12. Safe Refactors vs Approval Needed
+## 11. Safe Refactors vs Approval Needed
 Safe (no approval): extract helper, consolidate fetch logic, add types, refine error taxonomy, improve comments, remove duplication.
 Needs approval: new external dependency, persistent storage layer, major folder restructure, complex caching layer, new top-level folder.
 Rationale: Guard rails against risky architectural changes.
 
 ---
-## 13. Maintenance Triggers & Update Steps
+## 12. Maintenance Triggers & Update Steps
 Trigger events:
 - New API client
 - New scoring dimension/weight
@@ -193,12 +179,12 @@ Steps:
 Rationale: Documentation parity prevents drift.
 
 ---
-## 14. Self-Check Before Commit
+## 13. Self-Check Before Commit
 ASK: Is logic reusable & UI-agnostic? Are raw responses hidden? Do tests + types exist? Are errors structured? If any NO → fix first.
 Rationale: Quick gate to avoid rework.
 
 ---
-## 15. Catalog (Keep Updated)
+## 14. Catalog (Keep Updated)
 APIs:
 - `apis/crunchbase-client.ts` – Company data fetch + normalize.
 - `apis/glassdoor-client.ts` – Employer reviews & ratings normalization.
@@ -226,10 +212,12 @@ Config:
 - `config/settings.ts` – Env + flags.
 Utilities:
 - `utils.ts` – Generic helpers.
+Formatters:
+- `formatters/string.ts` – String formatting helpers (normalization, case, truncation) reused across modules.
 Rationale: Inventory speeds onboarding & change impact assessment.
 
 ---
-## 16. Examples
+## 15. Examples
 Add scoring dimension:
 1. In `company-evaluator.ts` define `const CULTURE_WEIGHT = 0.15` with formula comment.
 2. Integrate into total score aggregator.
@@ -244,12 +232,12 @@ New parsing regex:
 Rationale: Demonstrates safe iterative extension.
 
 ---
-## 17. Escalation
+## 16. Escalation
 If instructions conflict or scenario is ambiguous (e.g. multi-service batch fetch strategy), pause and seek clarification before coding.
 Rationale: Prevents misaligned architectural decisions.
 
 ---
-## 18. Forbidden Without Approval
+## 17. Forbidden Without Approval
 - New storage layer (DB, persistent cache)
 - Heavy dependencies or large utility libraries
 - Global mutation of env at runtime
@@ -257,7 +245,7 @@ Rationale: Prevents misaligned architectural decisions.
 Rationale: Controls risk & scope creep.
 
 ---
-## 19. Final Reminder
+## 18. Final Reminder
 Keep libs lean, typed, tested, and reusable. When in doubt—push logic out of components and into focused modules here. Prefer clarity over cleverness.
 Rationale: Sustains long-term velocity and reliability.
 
