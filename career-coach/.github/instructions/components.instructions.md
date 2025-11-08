@@ -182,26 +182,8 @@ Rationale: Shared template reduces cognitive load and diff churn.
 
 ---
 ## 15. Catalog (Keep Updated)
-Chat:
-- `chat/ChatInterface.tsx` – Orchestrates message list + input (UI only).
-- `chat/MessageBubble.tsx` – Role-styled bubble (user vs assistant).
-Upload:
-- `upload/FileUpload.tsx` – Drag/drop CV uploader UI.
-Preferences:
-- `preferences/PreferenceStepCompanyStage.tsx`
-- `preferences/PreferenceStepLocation.tsx`
-- `preferences/PreferenceStepWorkArrangement.tsx`
-- `preferences/PreferenceValidationMessages.tsx`
-Shortlist:
-- `shortlist/ShortlistDisplay.tsx` – Renders ranked companies + scores (display only).
-UI Primitives:
-- `ui/avatar.tsx`
-- `ui/button.tsx`
-- `ui/card.tsx`
-- `ui/input.tsx`
-- `ui/MultiSelect.tsx`
-- `ui/textarea.tsx`
-Rationale: Central inventory enables quick discovery and avoids silent duplication.
+The living, canonical inventory of every components under `src/components/` resides in `src/components/CATALOG.md`. If YOU (especially as a junior developer) perform ANY change—add, delete, rename, refactor, or modify domain behavior of a component file—you MUST update the relevant catalog entry immediately, in the **same PR before requesting review**. Treat missing updates as a blocker.
+Rationale: Central inventory in a dedicated file enables quick discovery and avoids silent duplication while reducing churn in this guide.
 
 ---
 ## 16. Examples
