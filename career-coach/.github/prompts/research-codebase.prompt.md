@@ -31,7 +31,7 @@ Then wait for the user's research query.
 
 1. **Read any directly mentioned files first:**
    - If the user mentions specific files (tickets, docs, JSON), read them FULLY first
-   - **IMPORTANT**: Use #search/readFile tool to read the file completely. 
+   - **IMPORTANT**: Use #tool:readFile tool to read the file completely. 
    - **CRITICAL**: Read these files yourself in the main context before spawning any sub-tasks
    - This ensures you have full context before decomposing the research
 
@@ -47,14 +47,14 @@ Then wait for the user's research query.
    - We now have specialized agents that know how to do specific research tasks:
 
    **For codebase research:**
-   - Use #runSubagent **codebase-locator** agent to find WHERE files and components live
-   - Use #runSubagent **codebase-analyzer** agent to understand HOW specific code works (without critiquing it)
-   - Use #runSubagent **codebase-pattern-finder** agent to find examples of existing patterns (without evaluating them)
+   - Use #tool:runSubagent **codebase-locator** agent to find WHERE files and components live
+   - Use #tool:runSubagent **codebase-analyzer** agent to understand HOW specific code works (without critiquing it)
+   - Use #tool:runSubagent **codebase-pattern-finder** agent to find examples of existing patterns (without evaluating them)
 
    **IMPORTANT**: All agents are documentarians, not critics. They will describe what exists without suggesting improvements or identifying issues.
 
    **For web research (only if user explicitly asks):**
-   - Use #runSubagent **web-search-researcher** agent for external documentation and resources
+   - Use #tool:runSubagent **web-search-researcher** agent for external documentation and resources
    - IF you use web-research agents, instruct them to return LINKS with their findings, and please INCLUDE those links in your final report
 
 
