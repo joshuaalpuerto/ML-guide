@@ -1,5 +1,5 @@
 ---
-mode: agent
+name: update-code-map
 description: 'Identify recent changes in the folder structure and update FOLDER_STRUCTURE.md.'
 ---
 

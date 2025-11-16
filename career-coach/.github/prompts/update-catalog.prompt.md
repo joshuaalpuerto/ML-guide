@@ -1,5 +1,5 @@
 ---
-mode: agent
+name: update-catalog
 description: 'Read folder structure and update code catalog (./CATALOG.md) accordingly.'
 tools: ['edit/editFiles', 'search/listDirectory', 'search/readFile', 'changes']
 ---

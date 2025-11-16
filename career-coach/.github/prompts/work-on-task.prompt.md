@@ -1,5 +1,5 @@
 ---
-mode: agent
+name: work-on-task
 description: 'Work on task as per PRD and provided task.
 ---
 # Rule: Working on a Task Based on a PRD
