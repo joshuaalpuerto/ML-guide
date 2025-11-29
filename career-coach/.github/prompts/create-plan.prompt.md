@@ -78,11 +78,7 @@ Once aligned on approach:
 
 After structure approval:
 
-1. **Write the plan** to `${fileDirname}/YYYY-MM-DD-<distilled-topic>/plan.md`
-   - Format: `YYYY-MM-DD-<distilled-topic>` where:
-     - YYYY-MM-DD is today's date
-     - description is a brief kebab-case description
-   - Examples: `tasks/2025-01-08-improve-error-handling/plan.md`
+1. **Write the plan in the same directory the research ${file} is (`${fileDirname}/plan.md`)**
 2. **Use this template structure**:
 
 ````markdown
