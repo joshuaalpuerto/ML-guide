@@ -71,8 +71,8 @@ Then wait for the user's research query.
    - Answer the user's specific questions with concrete evidence
 
 5. **Gather metadata for the research document:**
-   - Save the information in `tasks/YYYY-MM-DD-ENG-XXXX/research.md`
-     - Format: `YYYY-MM-DD-ENG-XXXX-description.md` where:
+   - Save the information in `tasks/YYYY-MM-DD-<distilled-topic>/research.md`
+     - Format: `YYYY-MM-DD-<distilled-topic>` where:
        - YYYY-MM-DD is today's date
        - description is a brief kebab-case description of the research topic
      - Examples: `tasks/2025-01-08-authentication-flow/research.md`

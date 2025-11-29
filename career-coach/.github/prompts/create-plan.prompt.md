@@ -1,6 +1,5 @@
 ---
 description: Create detailed implementation plans through interactive research and iteration
-model: Claude Sonnet 4.5
 tools: ['search/fileSearch', 'search/listDirectory', 'search/readFile', 'search/codebase', 'todos']
 ---
 
@@ -79,12 +78,11 @@ Once aligned on approach:
 
 After structure approval:
 
-1. **Write the plan** to `${fileDirname}/YYYY-MM-DD-ENG-XXXX/plan.md`
-   - Format: `YYYY-MM-DD-ENG-XXXX-description.md` where:
+1. **Write the plan** to `${fileDirname}/YYYY-MM-DD-<distilled-topic>/plan.md`
+   - Format: `YYYY-MM-DD-<distilled-topic>` where:
      - YYYY-MM-DD is today's date
-     - ENG-XXXX is the ticket number (omit if no ticket)
      - description is a brief kebab-case description
-   - Examples: `thoughts/2025-01-08-improve-error-handling/plan.md`
+   - Examples: `tasks/2025-01-08-improve-error-handling/plan.md`
 2. **Use this template structure**:
 
 ````markdown
