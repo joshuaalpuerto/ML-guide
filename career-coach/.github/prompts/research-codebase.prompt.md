@@ -28,7 +28,7 @@ Then wait for the user's research query.
 
 1. **Read any directly mentioned files first:**
    - If the user mentions specific files (tickets, docs, JSON), read them FULLY first
-   - **IMPORTANT**: Use #tool:readFile tool to read the file completely. 
+   - **IMPORTANT**: Use #tool:search/readFile to read the file completely. 
    - **CRITICAL**: Read these files yourself in the main context before spawning any sub-tasks
    - This ensures you have full context before decomposing the research
 
