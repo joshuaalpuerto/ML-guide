@@ -78,7 +78,7 @@ Once aligned on approach:
 
 After structure approval:
 
-1. **Write the plan in the same directory the research ${file} is (`${fileDirname}/plan.md`)**
+1. **Write the plan in the same directory as the provided research file** (e.g. if research is `path/to/research.md`, create `path/to/plan.md`).
 2. **Use this template structure**:
 
 ````markdown
@@ -183,7 +183,7 @@ After structure approval:
 1. **Present the draft plan location**:
    ```
    I've created the initial implementation plan at:
-   `thoughts/YYYY-MM-DD-ENG-XXXX/plan.md`
+   `path/to/research/directory/plan.md`
 
    Please review it and let me know:
    - Are the phases properly scoped?
