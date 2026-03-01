@@ -1,7 +1,5 @@
 # Vision-Powered Form Automation E2E Testing Framework
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 ## Overview
 
 Manual testing of web forms is a time-consuming and often error-prone process. Ensuring data integrity and proper form behavior across various scenarios requires significant effort. This framework aims to revolutionize form testing by leveraging the power of Vision Language Models (VLMs) to automate end-to-end (E2E) testing and data validation for web forms.
